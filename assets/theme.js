@@ -25,9 +25,9 @@ function initHeroSlider() {
 
     dots.forEach((dot, idx) => {
       if (idx === currentSlide) {
-        dot.className = 'hero-dot w-6 h-1.5 rounded-full bg-[#4A4D3B] transition-all duration-300';
+        dot.className = 'hero-dot w-6 h-2 rounded-full bg-[#2C221E] transition-all duration-300';
       } else {
-        dot.className = 'hero-dot w-2 h-1.5 rounded-full bg-[#EBE3D5] hover:bg-[#555345] transition-all duration-300';
+        dot.className = 'hero-dot w-2 h-2 rounded-full bg-[#7A6B60]/40 hover:bg-[#7A6B60]/80 transition-all duration-300';
       }
     });
   }

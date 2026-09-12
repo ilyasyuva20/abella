@@ -11,11 +11,11 @@
     </div>
 
     <!-- Instagram Handles Subtitle -->
-    <p class="text-center text-xs sm:text-sm font-sans tracking-[0.2em] text-[#7A6B60] mb-8 uppercase">
+    <div class="flex flex-wrap justify-center items-center text-center text-xs sm:text-sm font-sans tracking-[0.18em] sm:tracking-[0.2em] text-[#7A6B60] mb-6 sm:mb-8 uppercase gap-1.5">
       <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="hover:text-[#2C221E] transition-colors">{{ section.settings.handle_1 | default: "@abella_by_sebastians" }}</a>
-      <span class="mx-3 text-[#DFCDC0]">|</span>
+      <span class="text-[#DFCDC0]">|</span>
       <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="hover:text-[#2C221E] transition-colors">{{ section.settings.handle_2 | default: "@liittle_bella____" }}</a>
-    </p>
+    </div>
 
     <!-- 8 Horizontal Square Instagram Tiles Grid with FLEUR Borders -->
     <div class="grid grid-cols-4 sm:grid-cols-8 gap-2.5 sm:gap-3 lg:gap-3.5">

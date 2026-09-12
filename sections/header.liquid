@@ -57,6 +57,34 @@
   </div>
 </header>
 
+<!-- Mobile Drawer Menu -->
+<div id="mobileMenuDrawer" class="fixed inset-0 z-50 bg-[#2C221E]/50 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300">
+  <div class="mobile-drawer-content fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-[#F5EFE8] shadow-2xl p-6 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    <div>
+      <div class="flex justify-between items-center pb-5 border-b border-[#DFCDC0]">
+        <img src="{{ 'logo.png' | asset_url }}" alt="Abella Logo" class="h-12 w-auto mix-blend-multiply" style="mix-blend-mode: multiply;">
+        <button id="closeMobileMenuBtn" aria-label="Close Menu" class="p-2 text-[#2C221E] hover:text-[#7A6B60]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <nav class="flex flex-col space-y-3 py-6 text-xs font-semibold tracking-[0.18em] uppercase text-[#2C221E]">
+        <a href="#home" class="mobile-nav-link hover:text-[#7A6B60] py-2.5 border-b border-[#DFCDC0]/40">HOME</a>
+        <a href="#kids" class="mobile-nav-link hover:text-[#7A6B60] py-2.5 border-b border-[#DFCDC0]/40">KIDS BOUTIQUE</a>
+        <a href="#women" class="mobile-nav-link hover:text-[#7A6B60] py-2.5 border-b border-[#DFCDC0]/40">WOMEN'S COLLECTION</a>
+        <a href="#custom" class="mobile-nav-link hover:text-[#7A6B60] py-2.5 border-b border-[#DFCDC0]/40">CUSTOM ORDERS</a>
+        <a href="#about" class="mobile-nav-link hover:text-[#7A6B60] py-2.5 border-b border-[#DFCDC0]/40">ABOUT</a>
+        <a href="#contact" class="mobile-nav-link hover:text-[#7A6B60] py-2.5 border-b border-[#DFCDC0]/40">CONTACT</a>
+      </nav>
+    </div>
+    <div class="pt-4 border-t border-[#DFCDC0]">
+      <p class="text-[11px] text-[#7A6B60] tracking-widest uppercase mb-2">Custom Assistance</p>
+      <a href="https://wa.me/919446861646?text=Hi%20Abella%2C%20I%20would%20like%20to%20inquire%20about%20custom%20outfits." target="_blank" class="flex items-center justify-center gap-2 w-full py-3 bg-[#2C221E] text-[#F5EFE8] text-xs font-medium uppercase tracking-wider hover:bg-[#4A3B32] transition-colors rounded-none">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
 {% schema %}
 {
   "name": "Header",

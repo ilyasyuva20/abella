@@ -1,14 +1,14 @@
 <footer class="bg-[#E5D5C6] text-[#2C221E] pt-14 pb-8 border-t border-[#DFCDC0]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 mb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 mb-10 sm:mb-12">
       
       <!-- Column 1: Brand Info -->
-      <div class="space-y-4">
-        <a href="{{ routes.root_url }}" class="brand-logo inline-block mb-2">
+      <div class="space-y-3 sm:space-y-4">
+        <a href="{{ routes.root_url }}" class="brand-logo inline-block mb-1 sm:mb-2">
           {%- if section.settings.footer_logo != blank -%}
-            <img src="{{ section.settings.footer_logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[260px] object-contain mix-blend-multiply" style="mix-blend-mode: multiply;">
+            <img src="{{ section.settings.footer_logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="h-20 sm:h-28 lg:h-32 w-auto max-w-[200px] sm:max-w-[260px] object-contain mix-blend-multiply" style="mix-blend-mode: multiply;">
           {%- else -%}
-            <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[260px] object-contain mix-blend-multiply" style="mix-blend-mode: multiply;">
+            <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-20 sm:h-28 lg:h-32 w-auto max-w-[200px] sm:max-w-[260px] object-contain mix-blend-multiply" style="mix-blend-mode: multiply;">
           {%- endif -%}
         </a>
         <p class="text-xs text-[#7A6B60] leading-relaxed">
