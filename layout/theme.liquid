@@ -70,6 +70,9 @@
 
   {% section 'footer' %}
 
+  {% render 'floating-chat' %}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
   {{ 'theme.js' | asset_url | script_tag }}
 </body>
 </html>
