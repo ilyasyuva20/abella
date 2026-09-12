@@ -1,0 +1,52 @@
+<section class="py-12 bg-[#FAF7F2] border-b border-[#EBE3D5]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+      
+      <!-- Card 1: Crafted Just for You -->
+      <div class="editorial-card group relative aspect-[1.94/1] overflow-hidden rounded-none border border-[#E5DFD5] bg-[#FAF8F5] shadow-xs hover:border-[#8C7A6B] transition-all duration-300">
+        {%- if section.settings.card_1_image != blank -%}
+          <img src="{{ section.settings.card_1_image | image_url: width: 800 }}" alt="{{ section.settings.card_1_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        {%- else -%}
+          <img src="{{ 'editorial-1.jpg' | asset_url }}" alt="Crafted Just for You" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        {%- endif -%}
+      </div>
+
+      <!-- Card 2: Premium Fabrics -->
+      <div class="editorial-card group relative aspect-[1.94/1] overflow-hidden rounded-none border border-[#E5DFD5] bg-[#FAF8F5] shadow-xs hover:border-[#8C7A6B] transition-all duration-300">
+        {%- if section.settings.card_2_image != blank -%}
+          <img src="{{ section.settings.card_2_image | image_url: width: 800 }}" alt="{{ section.settings.card_2_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        {%- else -%}
+          <img src="{{ 'editorial-2.jpg' | asset_url }}" alt="Premium Fabrics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        {%- endif -%}
+      </div>
+
+      <!-- Card 3: Gifting Made Special -->
+      <div class="editorial-card group relative aspect-[1.94/1] overflow-hidden rounded-none border border-[#E5DFD5] bg-[#FAF8F5] shadow-xs hover:border-[#8C7A6B] transition-all duration-300">
+        {%- if section.settings.card_3_image != blank -%}
+          <img src="{{ section.settings.card_3_image | image_url: width: 800 }}" alt="{{ section.settings.card_3_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        {%- else -%}
+          <img src="{{ 'editorial-3.jpg' | asset_url }}" alt="Gifting Made Special" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial Feature Row",
+  "settings": [
+    { "type": "text", "id": "card_1_title", "label": "Card 1 Title", "default": "Crafted Just for You" },
+    { "type": "text", "id": "card_1_desc", "label": "Card 1 Description", "default": "Personalised outfits for life's special moments." },
+    { "type": "image_picker", "id": "card_1_image", "label": "Card 1 Image" },
+    { "type": "text", "id": "card_2_title", "label": "Card 2 Title", "default": "Premium Fabrics" },
+    { "type": "text", "id": "card_2_desc", "label": "Card 2 Description", "default": "Because comfort looks beautiful too." },
+    { "type": "image_picker", "id": "card_2_image", "label": "Card 2 Image" },
+    { "type": "text", "id": "card_3_title", "label": "Card 3 Title", "default": "Gifting Made Special" },
+    { "type": "text", "id": "card_3_desc", "label": "Card 3 Description", "default": "Thoughtful pieces for every celebration." },
+    { "type": "image_picker", "id": "card_3_image", "label": "Card 3 Image" }
+  ],
+  "presets": [{ "name": "Editorial Feature Row" }]
+}
+{% endschema %}

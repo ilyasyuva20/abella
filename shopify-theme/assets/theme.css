@@ -1,0 +1,49 @@
+/* ABELLA BY SEBASTIANS — Shopify Theme Stylesheet */
+
+:root {
+  --bg-ivory: #FDFBF7;
+  --bg-champagne: #FAF6EE;
+  --bg-champagne-light: #FAF7F0;
+  --color-sand: #E5E0D5;
+  --color-taupe: #696652;
+  --color-olive: #3F4032;
+  --color-charcoal: #222220;
+}
+
+body {
+  background-color: var(--bg-ivory);
+  color: var(--color-charcoal);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-sans {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.bg-ivory { background-color: var(--bg-ivory); }
+.bg-champagne-light { background-color: var(--bg-champagne-light); }
+.bg-olive { background-color: var(--color-olive); }
+.bg-taupe { background-color: var(--color-taupe); }
+.bg-sand { background-color: var(--color-sand); }
+.text-olive { color: var(--color-olive); }
+.text-taupe { color: var(--color-taupe); }
+.text-charcoal { color: var(--color-charcoal); }
+.border-sand { border-color: var(--color-sand); }
+
+.product-card {
+  transition: transform 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-2px);
+}

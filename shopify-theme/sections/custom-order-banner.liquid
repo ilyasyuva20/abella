@@ -1,0 +1,71 @@
+<section id="custom" class="relative w-full overflow-hidden min-h-[300px] sm:min-h-[340px] md:min-h-[380px] flex items-center bg-[#2B1C19]">
+  
+  <!-- Background Image -->
+  <div class="absolute inset-0 w-full h-full">
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 1800 }}" alt="{{ section.settings.title }}" class="w-full h-full object-cover object-center">
+    {%- else -%}
+      <img src="{{ 'custom-orders-bg.jpg' | asset_url }}" alt="Custom Orders Craftsmanship" class="w-full h-full object-cover object-center">
+    {%- endif -%}
+  </div>
+
+  <!-- Dark Warm Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#201311]/90 via-[#201311]/65 to-[#201311]/40 sm:to-transparent"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full py-12 md:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      
+      <!-- Left Content Block -->
+      <div class="md:col-span-8 lg:col-span-7 space-y-3 sm:space-y-4">
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-normal tracking-wide leading-tight drop-shadow-md">
+          {{ section.settings.title }}
+        </h2>
+        
+        <div class="space-y-1 text-white/95 font-sans">
+          <p class="text-base sm:text-lg md:text-xl font-normal leading-snug drop-shadow-sm">
+            {{ section.settings.tagline }}
+          </p>
+          <p class="text-sm sm:text-base md:text-lg font-light text-white/90 leading-relaxed drop-shadow-sm">
+            {{ section.settings.sub_tagline }}
+          </p>
+        </div>
+
+        <div class="pt-3 sm:pt-4">
+          <a href="https://wa.me/{{ section.settings.whatsapp_number }}?text=Hi%20Abella%2C%20I%20would%20like%20to%20consult%20for%20a%20custom%20order." 
+             target="_blank" 
+             class="inline-flex items-center gap-3 px-6 py-3.5 bg-[#454D35] hover:bg-[#383F2A] text-white text-xs sm:text-sm font-sans font-medium uppercase tracking-widest border border-white/20 shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+            <span>{{ section.settings.button_text }}</span>
+            <span class="text-base leading-none">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Side Tagline Block -->
+      <div class="md:col-span-4 lg:col-span-5 hidden md:flex flex-col items-end text-right self-center pr-2 lg:pr-6">
+        <div class="text-white/90 font-sans text-sm sm:text-base md:text-lg font-light leading-snug space-y-0.5 drop-shadow">
+          <p>Unique outfits</p>
+          <p>for your</p>
+          <p>unique moments.</p>
+        </div>
+        <div class="w-10 h-[2px] bg-white/70 mt-3"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Orders Banner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "CUSTOM ORDERS" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Your ideas, our craftsmanship." },
+    { "type": "text", "id": "sub_tagline", "label": "Sub Tagline", "default": "DM or WhatsApp for personalized designs." },
+    { "type": "text", "id": "button_text", "label": "Button Text", "default": "CHAT ON WHATSAPP" },
+    { "type": "text", "id": "whatsapp_number", "label": "WhatsApp Number (with country code)", "default": "919446861646" },
+    { "type": "text", "id": "side_text", "label": "Side Badge Text", "default": "Unique outfits for your unique moments." },
+    { "type": "image_picker", "id": "image", "label": "Background Image" }
+  ],
+  "presets": [{ "name": "Custom Orders Banner" }]
+}
+{% endschema %}

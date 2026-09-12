@@ -1,0 +1,15 @@
+{
+  "name": "abella-by-sebastians",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Production-quality responsive e-commerce fashion website & Shopify theme for Abella by Sebastians",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "zip-theme": "python3 build_theme_zip.py"
+  },
+  "keywords": ["shopify", "ecommerce", "fashion", "boutique", "liquid", "abella"],
+  "author": "Abella by Sebastians",
+  "license": "ISC"
+}

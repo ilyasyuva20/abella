@@ -1,0 +1,106 @@
+/* ABELLA BY SEBASTIANS — Boutique Stylesheet */
+
+:root {
+  --bg-ivory: #FDFBF7;
+  --bg-champagne: #FAF6EE;
+  --bg-champagne-light: #FAF7F0;
+  --color-sand: #E5E0D5;
+  --color-taupe: #696652;
+  --color-olive: #3F4032;
+  --color-olive-dark: #2E3025;
+  --color-charcoal: #222220;
+}
+
+body {
+  background-color: var(--bg-ivory);
+  color: var(--color-charcoal);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-champagne);
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D2C4;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-taupe);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Vertical Text Utilities */
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* Header Nav Hover Underline */
+.nav-link {
+  position: relative;
+}
+.nav-link.active::after,
+.nav-link:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background-color: var(--color-olive);
+}
+
+/* Product Card Subtle Animation */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-2px);
+}
+.product-image-wrap img {
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.product-card:hover .product-image-wrap img {
+  transform: scale(1.03);
+}
+
+/* Drawer States */
+.drawer-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+.drawer-open .cart-drawer-content,
+.drawer-open .wishlist-drawer-content,
+.drawer-open .mobile-drawer-content {
+  transform: translateX(0) !important;
+}
+
+/* Modal States */
+.modal-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+.modal-open .modal-content {
+  transform: scale(1) !important;
+}
+
+/* Toast State */
+.toast-visible {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+}

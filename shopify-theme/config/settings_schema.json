@@ -1,0 +1,44 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Abella Boutique",
+    "theme_version": "1.0.0",
+    "theme_author": "Abella by Sebastians",
+    "theme_documentation_url": "https://abella.in",
+    "theme_support_url": "https://wa.me/919446861646"
+  },
+  {
+    "name": "Brand & Colors",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "color",
+        "id": "color_ivory",
+        "label": "Ivory Background",
+        "default": "#FDFBF7"
+      },
+      {
+        "type": "color",
+        "id": "color_champagne",
+        "label": "Champagne Accent",
+        "default": "#FAF6EE"
+      },
+      {
+        "type": "color",
+        "id": "color_olive",
+        "label": "Muted Olive Accent",
+        "default": "#3F4032"
+      },
+      {
+        "type": "color",
+        "id": "color_taupe",
+        "label": "Taupe Text",
+        "default": "#696652"
+      }
+    ]
+  }
+]

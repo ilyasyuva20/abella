@@ -1,0 +1,33 @@
+<div class="announcement-bar bg-champagne-light text-taupe text-xs py-2 border-b border-sand text-center font-sans tracking-wide">
+  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+    <span class="hidden md:inline-block">{{ section.settings.message_left }}</span>
+    <span class="mx-auto md:mx-0">{{ section.settings.message_center }}</span>
+    <span class="hidden md:inline-block">{{ section.settings.message_right }}</span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message_left",
+      "label": "Left Message",
+      "default": "💎 Custom Outfits for Your Special Moments"
+    },
+    {
+      "type": "text",
+      "id": "message_center",
+      "label": "Center Message",
+      "default": "🚚 Free Shipping Across India"
+    },
+    {
+      "type": "text",
+      "id": "message_right",
+      "label": "Right Message",
+      "default": "💬 DM for Custom Orders"
+    }
+  ]
+}
+{% endschema %}

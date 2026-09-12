@@ -1,0 +1,90 @@
+<section class="py-8 sm:py-12 bg-[#FAF7F2] border-b border-[#E6E1D7]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      
+      <!-- Left Panel: Kids Boutique -->
+      <div id="kids" class="collection-panel group relative bg-[#F6F1E8] border border-[#E3DDD1] overflow-hidden flex flex-col sm:flex-row items-stretch shadow-sm">
+        <!-- Text Content (50% Width) -->
+        <div class="w-full sm:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-4 z-10">
+          <div class="space-y-2">
+            <span class="text-[10px] sm:text-[11px] font-sans tracking-[0.25em] uppercase text-[#696652] font-semibold block">{{ section.settings.left_tag }}</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-[#222220] leading-[1.1] font-normal">
+              {{ section.settings.left_heading_1 }}<br><span class="font-normal">{{ section.settings.left_heading_2 }}</span>
+            </h2>
+            <p class="text-xs sm:text-[13px] text-[#555340] leading-relaxed pt-1">
+              {{ section.settings.left_desc }}
+            </p>
+          </div>
+          <div class="pt-2">
+            <a href="{{ section.settings.left_link | default: '#featured' }}" class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#4A4C3A] text-ivory text-[11px] font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-xs">
+              {{ section.settings.left_btn_text }} &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Image Right Side (50% Width - Clean FHD) -->
+        <div class="w-full sm:w-1/2 min-h-[260px] sm:min-h-[340px] flex-shrink-0 relative overflow-hidden bg-[#EFE9DD]">
+          {%- if section.settings.left_image != blank -%}
+            <img src="{{ section.settings.left_image | image_url: width: 1000 }}" alt="{{ section.settings.left_tag }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+          {%- else -%}
+            <img src="{{ 'kids-boutique-portrait.jpg' | asset_url }}" alt="Kids Boutique" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+          {%- endif -%}
+        </div>
+      </div>
+
+      <!-- Right Panel: Women's Collection -->
+      <div id="women" class="collection-panel group relative bg-[#F6F1E8] border border-[#E3DDD1] overflow-hidden flex flex-col sm:flex-row items-stretch shadow-sm">
+        <!-- Text Content (50% Width) -->
+        <div class="w-full sm:w-1/2 p-6 sm:p-8 flex flex-col justify-between space-y-4 z-10">
+          <div class="space-y-2">
+            <span class="text-[10px] sm:text-[11px] font-sans tracking-[0.25em] uppercase text-[#696652] font-semibold block">{{ section.settings.right_tag }}</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-[#222220] leading-[1.1] font-normal">
+              {{ section.settings.right_heading_1 }}<br><span class="font-normal">{{ section.settings.right_heading_2 }}</span>
+            </h2>
+            <p class="text-xs sm:text-[13px] text-[#555340] leading-relaxed pt-1">
+              {{ section.settings.right_desc }}
+            </p>
+          </div>
+          <div class="pt-2">
+            <a href="{{ section.settings.right_link | default: '#featured' }}" class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#4A4C3A] text-ivory text-[11px] font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-xs">
+              {{ section.settings.right_btn_text }} &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Image Right Side (50% Width - Clean FHD) -->
+        <div class="w-full sm:w-1/2 min-h-[260px] sm:min-h-[340px] flex-shrink-0 relative overflow-hidden bg-[#EFE9DD]">
+          {%- if section.settings.right_image != blank -%}
+            <img src="{{ section.settings.right_image | image_url: width: 1000 }}" alt="{{ section.settings.right_tag }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+          {%- else -%}
+            <img src="{{ 'womens-collection-portrait.jpg' | asset_url }}" alt="Women's Collection" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+          {%- endif -%}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Split",
+  "settings": [
+    { "type": "text", "id": "left_tag", "label": "Left Tag", "default": "KIDS BOUTIQUE" },
+    { "type": "text", "id": "left_heading_1", "label": "Left Heading 1", "default": "Little Moments" },
+    { "type": "text", "id": "left_heading_2", "label": "Left Heading 2 (Italic)", "default": "Big Dreams" },
+    { "type": "text", "id": "left_desc", "label": "Left Description", "default": "Beautiful outfits for birthdays, celebrations and every special day." },
+    { "type": "text", "id": "left_btn_text", "label": "Left Button Text", "default": "EXPLORE KIDS" },
+    { "type": "url", "id": "left_link", "label": "Left Link", "default": "/collections/kids-boutique" },
+    { "type": "image_picker", "id": "left_image", "label": "Left Image" },
+    { "type": "text", "id": "right_tag", "label": "Right Tag", "default": "WOMEN'S COLLECTION" },
+    { "type": "text", "id": "right_heading_1", "label": "Right Heading 1", "default": "Grace" },
+    { "type": "text", "id": "right_heading_2", "label": "Right Heading 2 (Italic)", "default": "In Every Detail" },
+    { "type": "text", "id": "right_desc", "label": "Right Description", "default": "Elegant sarees, blouses and semi partywear for the modern woman." },
+    { "type": "text", "id": "right_btn_text", "label": "Right Button Text", "default": "EXPLORE WOMEN" },
+    { "type": "url", "id": "right_link", "label": "Right Link", "default": "/collections/womens-collection" },
+    { "type": "image_picker", "id": "right_image", "label": "Right Image" }
+  ],
+  "presets": [{ "name": "Collection Split" }]
+}
+{% endschema %}

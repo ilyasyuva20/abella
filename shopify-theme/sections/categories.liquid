@@ -1,0 +1,101 @@
+<section class="py-12 bg-[#FAF7F2] border-b border-[#EBE3D5]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Main Heading with Flanking Horizontal Lines -->
+    <div class="flex items-center justify-center mb-8">
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1A1A] font-normal px-4 sm:px-8 text-center tracking-tight">
+        {{ section.settings.heading }}
+      </h2>
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+    </div>
+
+    <!-- Sub Group Divider Row (Desktop) -->
+    <div class="hidden sm:grid grid-cols-7 gap-4 lg:gap-6 mb-8 items-center">
+      <div class="col-span-4 flex items-center justify-center">
+        <div class="flex-1 h-[1px] bg-[#D6CEBE]"></div>
+        <span class="px-3 lg:px-4 text-[11px] lg:text-[12px] font-sans font-medium uppercase tracking-[0.2em] text-[#4A4A4A] whitespace-nowrap">
+          KIDS BOUTIQUE
+        </span>
+        <div class="flex-1 h-[1px] bg-[#D6CEBE]"></div>
+      </div>
+      <div class="col-span-3 flex items-center justify-center">
+        <div class="flex-1 h-[1px] bg-[#D6CEBE]"></div>
+        <span class="px-3 lg:px-4 text-[11px] lg:text-[12px] font-sans font-medium uppercase tracking-[0.2em] text-[#4A4A4A] whitespace-nowrap">
+          WOMEN'S COLLECTION
+        </span>
+        <div class="flex-1 h-[1px] bg-[#D6CEBE]"></div>
+      </div>
+    </div>
+
+    <!-- Mobile Sub Group Dividers -->
+    <div class="sm:hidden flex justify-around items-center mb-6 text-[10px] font-sans font-medium uppercase tracking-[0.18em] text-[#4A4A4A]">
+      <div class="flex items-center space-x-2">
+        <div class="w-6 h-[1px] bg-[#D6CEBE]"></div>
+        <span>KIDS BOUTIQUE</span>
+        <div class="w-6 h-[1px] bg-[#D6CEBE]"></div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-6 h-[1px] bg-[#D6CEBE]"></div>
+        <span>WOMEN'S COLLECTION</span>
+        <div class="w-6 h-[1px] bg-[#D6CEBE]"></div>
+      </div>
+    </div>
+
+    <!-- 7 Category Items Container -->
+    <div class="grid grid-cols-4 sm:grid-cols-7 gap-3 sm:gap-4 lg:gap-6 items-start">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            {%- else -%}
+              <div class="w-full h-full rounded-full bg-[#FAF8F5] flex items-center justify-center text-xs text-[#8C7A6B] font-serif">
+                {{ block.settings.title | slice: 0, 2 }}
+              </div>
+            {%- endif -%}
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">
+            {{ block.settings.title }}
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by Category",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Category" },
+    { "type": "url", "id": "view_all_link", "label": "View All Link", "default": "/collections/all" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Category Title" },
+        { "type": "image_picker", "id": "image", "label": "Thumbnail Image" },
+        { "type": "url", "id": "link", "label": "Category Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Category",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Frocks & Dresses" } },
+        { "type": "category", "settings": { "title": "Custom Outfits" } },
+        { "type": "category", "settings": { "title": "Birthday Styles" } },
+        { "type": "category", "settings": { "title": "Sets & Co-ords" } },
+        { "type": "category", "settings": { "title": "Sarees" } },
+        { "type": "category", "settings": { "title": "Blouses" } },
+        { "type": "category", "settings": { "title": "Semi Partywear" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
