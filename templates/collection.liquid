@@ -1,0 +1,18 @@
+<div class="py-12 bg-[#FAF7F2]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="text-center space-y-2">
+      <h1 class="font-serif text-3xl sm:text-4xl text-[#222222]">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <p class="text-sm text-[#666666] max-w-xl mx-auto">{{ collection.description }}</p>
+      {% endif %}
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% else %}
+        <p class="col-span-full text-center py-10 text-sm text-[#666666]">No products found in this collection.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>

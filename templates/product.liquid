@@ -1,0 +1,26 @@
+<div class="py-12 bg-[#FAF7F2]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div>
+        {% if product.featured_image %}
+          <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" class="w-full h-auto object-cover rounded-sm border border-[#E5DFD5]">
+        {% else %}
+          <div class="w-full aspect-square bg-[#F0EDE6] flex items-center justify-center text-[#888888] text-sm">No Image Available</div>
+        {% endif %}
+      </div>
+      <div class="space-y-6">
+        <h1 class="font-serif text-3xl sm:text-4xl text-[#222222]">{{ product.title }}</h1>
+        <p class="text-xl font-medium text-[#4A4D3B]">{{ product.price | money }}</p>
+        <div class="prose text-sm text-[#555555] leading-relaxed">
+          {{ product.description }}
+        </div>
+        {% form 'product', product %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="w-full sm:w-auto px-10 py-4 bg-[#4A4D3B] text-white text-xs font-medium uppercase tracking-widest hover:bg-[#383A2C] transition-colors">
+            Add to Cart
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>

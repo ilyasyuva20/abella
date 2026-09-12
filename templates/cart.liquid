@@ -1,0 +1,34 @@
+<div class="max-w-4xl mx-auto px-4 py-14 space-y-8">
+  <h1 class="font-serif text-3xl sm:text-4xl text-[#222222] text-center">Your Shopping Bag</h1>
+  {% if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post" class="space-y-6">
+      {% for item in cart.items %}
+        <div class="flex items-center justify-between py-4 border-b border-[#E5DFD5]">
+          <div class="flex items-center gap-4">
+            {% if item.image %}
+              <img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title | escape }}" class="w-16 h-16 object-cover border border-[#E5DFD5]">
+            {% endif %}
+            <div>
+              <h3 class="text-sm font-medium text-[#222222]">{{ item.product.title }}</h3>
+              <p class="text-xs text-[#666666]">{{ item.variant.title }}</p>
+            </div>
+          </div>
+          <p class="text-sm font-medium text-[#222222]">{{ item.final_line_price | money }}</p>
+        </div>
+      {% endfor %}
+      <div class="flex justify-between items-center pt-4">
+        <span class="text-lg font-serif text-[#222222]">Total: {{ cart.total_price | money }}</span>
+        <button type="submit" name="checkout" class="px-8 py-3.5 bg-[#4A4D3B] text-white text-xs font-medium uppercase tracking-widest hover:bg-[#383A2C] transition-colors">
+          Checkout
+        </button>
+      </div>
+    </form>
+  {% else %}
+    <div class="text-center py-12 space-y-4">
+      <p class="text-sm text-[#666666]">Your shopping bag is currently empty.</p>
+      <a href="{{ routes.root_url }}" class="inline-block px-8 py-3.5 bg-[#4A4D3B] text-white text-xs uppercase tracking-widest font-medium hover:bg-[#383A2C] transition-colors">
+        Continue Shopping
+      </a>
+    </div>
+  {% endif %}
+</div>
