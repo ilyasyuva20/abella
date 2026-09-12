@@ -6,9 +6,9 @@
       <div class="space-y-4">
         <a href="{{ routes.root_url }}" class="brand-logo inline-block mb-2">
           {%- if section.settings.footer_logo != blank -%}
-            <img src="{{ section.settings.footer_logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[260px] object-contain">
+            <img src="{{ section.settings.footer_logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[260px] object-contain mix-blend-multiply" style="mix-blend-mode: multiply;">
           {%- else -%}
-            <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[260px] object-contain">
+            <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[260px] object-contain mix-blend-multiply" style="mix-blend-mode: multiply;">
           {%- endif -%}
         </a>
         <p class="text-xs text-[#7A6B60] leading-relaxed">

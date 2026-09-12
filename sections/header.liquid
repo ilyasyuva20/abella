@@ -9,9 +9,9 @@
     <!-- Logo (Prominent & Clear) -->
     <a href="{{ routes.root_url }}" class="brand-logo flex items-center gap-2 py-1">
       {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105 filter drop-shadow-xs">
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105 filter drop-shadow-xs mix-blend-multiply" style="mix-blend-mode: multiply;">
       {%- else -%}
-        <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105 filter drop-shadow-xs">
+        <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-16 sm:h-20 w-auto object-contain transition-transform duration-300 hover:scale-105 filter drop-shadow-xs mix-blend-multiply" style="mix-blend-mode: multiply;">
       {%- endif -%}
     </a>
 
