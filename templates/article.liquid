@@ -1,0 +1,7 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+  <h1 class="font-serif text-4xl text-charcoal text-center">{{ article.title }}</h1>
+  <p class="text-xs text-taupe text-center uppercase tracking-widest">{{ article.published_at | date: '%b %d, %Y' }}</p>
+  <div class="prose max-w-none text-xs text-taupe leading-relaxed">
+    {{ article.content }}
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <h1 class="font-serif text-3xl sm:text-4xl text-center text-charcoal mb-8">{{ blog.title }}</h1>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for article in blog.articles %}
+      <div class="border border-sand bg-white p-6 space-y-3">
+        <h2 class="font-serif text-xl text-charcoal"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+        <p class="text-xs text-taupe">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+        <a href="{{ article.url }}" class="inline-block text-xs font-medium text-olive uppercase tracking-wider">Read More &rarr;</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>

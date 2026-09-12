@@ -1,0 +1,16 @@
+{% layout none %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gift Card - {{ shop.name }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#FAF7F2] text-[#1A1A1A] p-8 text-center">
+  <div class="max-w-md mx-auto bg-white p-8 border border-[#E5DFD5]">
+    <h1 class="font-serif text-2xl uppercase mb-4">ABELLA GIFT CARD</h1>
+    <p class="text-xs text-[#555340]">Use this code at checkout:</p>
+    <div class="my-4 p-4 bg-[#FAF7F2] font-mono text-lg font-bold border border-[#E5DFD5]">{{ gift_card.code }}</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <h1 class="font-serif text-3xl sm:text-4xl text-center text-charcoal mb-8">Search Results</h1>
+  
+  <form action="{{ routes.search_url }}" method="get" class="max-w-md mx-auto mb-10 flex">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products..." class="flex-1 px-4 py-2.5 border border-sand bg-white text-xs focus:outline-none focus:border-olive">
+    <button type="submit" class="px-6 py-2.5 bg-olive text-ivory text-xs uppercase tracking-wider font-medium hover:bg-charcoal transition-colors">Search</button>
+  </form>
+
+  {% if search.performed %}
+    {% if search.results_count == 0 %}
+      <p class="text-center text-taupe text-xs">No results found for "{{ search.terms }}".</p>
+    {% else %}
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {% for item in search.results %}
+          <div class="border border-sand p-3 bg-white">
+            <a href="{{ item.url }}" class="block font-medium text-xs text-charcoal hover:text-olive">{{ item.title }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>

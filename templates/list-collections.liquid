@@ -1,0 +1,11 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <h1 class="font-serif text-3xl sm:text-4xl text-center text-charcoal mb-8">All Collections</h1>
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+    {% for collection in collections %}
+      <a href="{{ collection.url }}" class="block border border-sand bg-[#FAF8F5] p-6 text-center hover:border-olive transition-colors shadow-xs">
+        <h2 class="font-serif text-lg text-charcoal font-normal">{{ collection.title }}</h2>
+        <span class="text-xs text-taupe block mt-1">{{ collection.all_products_count }} products</span>
+      </a>
+    {% endfor %}
+  </div>
+</div>

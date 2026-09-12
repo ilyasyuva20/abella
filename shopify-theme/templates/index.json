@@ -1,4 +1,5 @@
 {
+  "name": "Home page",
   "sections": {
     "hero_banner": {
       "type": "hero-banner",
