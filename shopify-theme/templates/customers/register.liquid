@@ -1,0 +1,60 @@
+<div class="bg-[#FAF7F2] min-h-screen py-14 sm:py-20 text-[#2C221E] flex items-center justify-center">
+  <div class="max-w-md w-full mx-auto px-4">
+    
+    <div class="bg-[#EADCD0] p-6 sm:p-8 rounded-3xl border border-[#DFCDC0] shadow-md space-y-6">
+      
+      <!-- Header -->
+      <div class="text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Join Abella</span>
+        <h1 class="font-serif text-3xl text-[#2C221E] font-normal">Create Account</h1>
+      </div>
+
+      <!-- Register Form -->
+      {% form 'create_customer', class: 'space-y-4 font-sans text-xs' %}
+        {{ form.errors | default_errors }}
+
+        <div class="space-y-1.5">
+          <label for="FirstName" class="font-semibold uppercase tracking-wider text-[#2C221E]">First Name</label>
+          <input type="text" name="customer[first_name]" id="FirstName" autocomplete="given-name" 
+                 placeholder="First Name" 
+                 class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="LastName" class="font-semibold uppercase tracking-wider text-[#2C221E]">Last Name</label>
+          <input type="text" name="customer[last_name]" id="LastName" autocomplete="family-name" 
+                 placeholder="Last Name" 
+                 class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="Email" class="font-semibold uppercase tracking-wider text-[#2C221E]">Email Address</label>
+          <input type="email" name="customer[email]" id="Email" autocomplete="email" required
+                 placeholder="name@example.com" 
+                 class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="CreatePassword" class="font-semibold uppercase tracking-wider text-[#2C221E]">Password</label>
+          <input type="password" name="customer[password]" id="CreatePassword" required
+                 placeholder="••••••••" 
+                 class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+        </div>
+
+        <button type="submit" class="w-full py-3.5 bg-[#2C221E] text-white text-xs font-semibold uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-colors shadow-sm mt-2">
+          Create Account
+        </button>
+      {% endform %}
+
+      <!-- Sign In Link Footer -->
+      <div class="text-center pt-4 border-t border-[#DFCDC0] font-sans text-xs text-[#7A6B60]">
+        Already have an account? 
+        <a href="{{ routes.account_login_url }}" class="font-semibold text-[#2C221E] underline hover:text-[#4A3B32] ml-1">
+          Sign In
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>

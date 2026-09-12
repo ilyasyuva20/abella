@@ -1,34 +1,134 @@
-<div class="max-w-4xl mx-auto px-4 py-14 space-y-8">
-  <h1 class="font-serif text-3xl sm:text-4xl text-[#222222] text-center">Your Shopping Bag</h1>
-  {% if cart.item_count > 0 %}
-    <form action="{{ routes.cart_url }}" method="post" class="space-y-6">
-      {% for item in cart.items %}
-        <div class="flex items-center justify-between py-4 border-b border-[#E5DFD5]">
-          <div class="flex items-center gap-4">
-            {% if item.image %}
-              <img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title | escape }}" class="w-16 h-16 object-cover border border-[#E5DFD5]">
-            {% endif %}
-            <div>
-              <h3 class="text-sm font-medium text-[#222222]">{{ item.product.title }}</h3>
-              <p class="text-xs text-[#666666]">{{ item.variant.title }}</p>
-            </div>
-          </div>
-          <p class="text-sm font-medium text-[#222222]">{{ item.final_line_price | money }}</p>
-        </div>
-      {% endfor %}
-      <div class="flex justify-between items-center pt-4">
-        <span class="text-lg font-serif text-[#222222]">Total: {{ cart.total_price | money }}</span>
-        <button type="submit" name="checkout" class="px-8 py-3.5 bg-[#4A4D3B] text-white text-xs font-medium uppercase tracking-widest hover:bg-[#383A2C] transition-colors">
-          Checkout
-        </button>
-      </div>
-    </form>
-  {% else %}
-    <div class="text-center py-12 space-y-4">
-      <p class="text-sm text-[#666666]">Your shopping bag is currently empty.</p>
-      <a href="{{ routes.root_url }}" class="inline-block px-8 py-3.5 bg-[#4A4D3B] text-white text-xs uppercase tracking-widest font-medium hover:bg-[#383A2C] transition-colors">
-        Continue Shopping
-      </a>
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Page Header -->
+    <div class="text-center space-y-2">
+      <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Your Selected Couture</span>
+      <h1 class="font-serif text-3xl sm:text-4xl text-[#2C221E] font-normal">Shopping Bag</h1>
     </div>
-  {% endif %}
+
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        
+        <!-- Cart Items List (8 Cols) -->
+        <div class="lg:col-span-8 space-y-4">
+          {% for item in cart.items %}
+            <div class="bg-[#EADCD0] p-4 sm:p-5 rounded-2xl border border-[#DFCDC0] flex flex-col sm:flex-row items-center gap-4 shadow-xs">
+              
+              <!-- Product Image -->
+              <a href="{{ item.url }}" class="w-24 h-28 flex-shrink-0 bg-[#FAF7F2] rounded-xl overflow-hidden border border-[#DFCDC0]">
+                {% if item.image %}
+                  <img src="{{ item.image | image_url: width: 300 }}" alt="{{ item.title | escape }}" class="w-full h-full object-cover">
+                {% else %}
+                  <div class="w-full h-full flex items-center justify-center text-[10px] text-[#7A6B60]">No Image</div>
+                {% endif %}
+              </a>
+
+              <!-- Details & Controls -->
+              <div class="flex-1 space-y-2 text-center sm:text-left w-full">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-serif text-lg text-[#2C221E] font-normal leading-snug">
+                      <a href="{{ item.url }}" class="hover:text-[#4A3B32] transition-colors">{{ item.product.title }}</a>
+                    </h3>
+                    {% unless item.variant.title contains 'Default' %}
+                      <p class="text-xs text-[#7A6B60] font-sans mt-0.5">{{ item.variant.title }}</p>
+                    {% endunless %}
+                    
+                    {% for property in item.properties %}
+                      {% unless property.last == blank %}
+                        <p class="text-[11px] text-[#7A6B60] font-sans mt-1 italic">
+                          <span class="font-medium text-[#2C221E]">{{ property.first }}:</span> {{ property.last }}
+                        </p>
+                      {% endunless %}
+                    {% endfor %}
+                  </div>
+
+                  <a href="{{ item.url_to_remove }}" class="text-[#7A6B60] hover:text-[#2C221E] p-1 transition-colors" title="Remove item">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </a>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-[#DFCDC0]/60">
+                  <!-- Quantity Stepper -->
+                  <div class="flex items-center border border-[#DFCDC0] bg-[#FAF7F2] rounded-xl overflow-hidden h-9">
+                    <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" class="px-2.5 text-[#2C221E] font-bold text-sm hover:bg-[#EADCD0] transition-colors flex items-center h-full">-</a>
+                    <span class="px-3 text-xs font-sans text-[#2C221E] font-medium">{{ item.quantity }}</span>
+                    <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" class="px-2.5 text-[#2C221E] font-bold text-sm hover:bg-[#EADCD0] transition-colors flex items-center h-full">+</a>
+                  </div>
+
+                  <!-- Item Line Price -->
+                  <span class="font-serif text-lg font-medium text-[#2C221E]">
+                    {{ item.final_line_price | money }}
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+          {% endfor %}
+
+          <!-- Order Note / Custom Instructions Input -->
+          <div class="bg-[#EADCD0]/60 p-5 rounded-2xl border border-[#DFCDC0] space-y-2">
+            <label for="CartNote" class="text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] block">
+              Special Custom Tailoring Instructions
+            </label>
+            <textarea id="CartNote" name="note" rows="3" 
+                      placeholder="Add specific length requests, sleeve modifications, or custom measurement notes for your order..." 
+                      class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E] placeholder-[#7A6B60]">{{ cart.note }}</textarea>
+          </div>
+        </div>
+
+        <!-- Order Summary & Checkout Card (4 Cols) -->
+        <div class="lg:col-span-4 bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] space-y-6 shadow-sm sticky top-28">
+          <h2 class="font-serif text-2xl text-[#2C221E] font-normal border-b border-[#DFCDC0] pb-4">
+            Order Summary
+          </h2>
+
+          <div class="space-y-3 font-sans text-xs">
+            <div class="flex justify-between text-[#7A6B60]">
+              <span>Subtotal</span>
+              <span class="font-serif text-base text-[#2C221E] font-medium">{{ cart.total_price | money }}</span>
+            </div>
+
+            <div class="flex justify-between text-[#7A6B60]">
+              <span>Shipping Across India</span>
+              <span class="text-[#128C7E] font-medium">FREE</span>
+            </div>
+
+            <p class="text-[11px] text-[#7A6B60] leading-relaxed pt-2 border-t border-[#DFCDC0]/60">
+              Taxes calculated at checkout. Custom tailored items dispatch in 7-10 days.
+            </p>
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <button type="submit" name="checkout" class="w-full py-4 bg-[#2C221E] text-[#FAF7F2] text-xs font-sans font-semibold uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-all shadow-md flex items-center justify-center space-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              <span>Proceed to Checkout</span>
+            </button>
+
+            <a href="/collections/all" class="block text-center text-xs font-sans font-medium text-[#7A6B60] hover:text-[#2C221E] transition-colors py-2">
+              &larr; Continue Shopping
+            </a>
+          </div>
+        </div>
+
+      </form>
+    {% else %}
+      <!-- Empty Bag Screen -->
+      <div class="text-center py-20 bg-[#EADCD0]/40 rounded-3xl border border-[#DFCDC0] space-y-6 max-w-2xl mx-auto">
+        <div class="w-16 h-16 rounded-full bg-[#EADCD0] border border-[#DFCDC0] mx-auto flex items-center justify-center text-[#2C221E]">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        </div>
+        <div class="space-y-2">
+          <h2 class="font-serif text-2xl text-[#2C221E] font-normal">Your Shopping Bag is Empty</h2>
+          <p class="text-xs text-[#7A6B60] font-sans">Discover our luxury boutique collections and find your perfect outfit.</p>
+        </div>
+        <a href="/collections/all" class="inline-block px-8 py-3.5 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest font-semibold rounded-xl hover:bg-[#4A3B32] transition-colors shadow-md">
+          Explore Collections
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
 </div>

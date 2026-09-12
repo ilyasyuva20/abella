@@ -1,22 +1,50 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <h1 class="font-serif text-3xl sm:text-4xl text-center text-charcoal mb-8">Search Results</h1>
-  
-  <form action="{{ routes.search_url }}" method="get" class="max-w-md mx-auto mb-10 flex">
-    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products..." class="flex-1 px-4 py-2.5 border border-sand bg-white text-xs focus:outline-none focus:border-olive">
-    <button type="submit" class="px-6 py-2.5 bg-olive text-ivory text-xs uppercase tracking-wider font-medium hover:bg-charcoal transition-colors">Search</button>
-  </form>
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Search Header -->
+    <div class="text-center space-y-4 max-w-2xl mx-auto">
+      <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Boutique Search</span>
+      <h1 class="font-serif text-3xl sm:text-5xl text-[#2C221E] font-normal">
+        {% if search.performed %}
+          Results for "{{ search.terms | escape }}"
+        {% else %}
+          Search Our Collections
+        {% endif %}
+      </h1>
 
-  {% if search.performed %}
-    {% if search.results_count == 0 %}
-      <p class="text-center text-taupe text-xs">No results found for "{{ search.terms }}".</p>
-    {% else %}
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {% for item in search.results %}
-          <div class="border border-sand p-3 bg-white">
-            <a href="{{ item.url }}" class="block font-medium text-xs text-charcoal hover:text-olive">{{ item.title }}</a>
+      <form action="{{ routes.search_url }}" method="get" class="flex gap-2 max-w-lg mx-auto pt-2">
+        <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search dresses, frocks, sarees, custom fits..." 
+               class="flex-1 bg-[#EADCD0] border border-[#DFCDC0] rounded-xl px-4 py-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+        <button type="submit" class="px-6 py-3 bg-[#2C221E] text-white text-xs font-semibold uppercase tracking-wider rounded-xl hover:bg-[#4A3B32] transition-colors">
+          Search
+        </button>
+      </form>
+    </div>
+
+    <!-- Results Grid -->
+    {% if search.performed %}
+      {% paginate search.results by 12 %}
+        {% if search.results_count > 0 %}
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {% for item in search.results %}
+              {% if item.object_type == 'product' %}
+                {% render 'product-card', product: item %}
+              {% endif %}
+            {% endfor %}
           </div>
-        {% endfor %}
-      </div>
+
+          {% if paginate.pages > 1 %}
+            <div class="flex justify-center pt-8 font-sans text-xs">
+              {{ paginate | default_pagination }}
+            </div>
+          {% endif %}
+        {% else %}
+          <div class="text-center py-16 bg-[#EADCD0]/30 rounded-2xl border border-[#DFCDC0] space-y-3 font-sans text-xs text-[#7A6B60]">
+            No designs found matching "{{ search.terms | escape }}". Try searching for different keywords or browse our categories.
+          </div>
+        {% endif %}
+      {% endpaginate %}
     {% endif %}
-  {% endif %}
+
+  </div>
 </div>

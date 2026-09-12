@@ -1,26 +1,218 @@
-<div class="py-12 bg-[#FAF7F2]">
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-      <div>
-        {% if product.featured_image %}
-          <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" class="w-full h-auto object-cover rounded-sm border border-[#E5DFD5]">
-        {% else %}
-          <div class="w-full aspect-square bg-[#F0EDE6] flex items-center justify-center text-[#888888] text-sm">No Image Available</div>
+    
+    <!-- Breadcrumbs -->
+    <nav class="text-xs text-[#7A6B60] mb-8 font-sans flex items-center space-x-2">
+      <a href="{{ routes.root_url }}" class="hover:text-[#2C221E] transition-colors">Home</a>
+      <span>/</span>
+      {% if collection %}
+        <a href="{{ collection.url }}" class="hover:text-[#2C221E] transition-colors">{{ collection.title }}</a>
+        <span>/</span>
+      {% else %}
+        <a href="/collections/all" class="hover:text-[#2C221E] transition-colors">Collections</a>
+        <span>/</span>
+      {% endif %}
+      <span class="text-[#2C221E] font-medium truncate">{{ product.title }}</span>
+    </nav>
+
+    <!-- Main Product Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+      
+      <!-- Product Media Gallery (Left Column - 7 Cols) -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="bg-[#EADCD0] rounded-2xl p-4 border border-[#DFCDC0] shadow-sm relative overflow-hidden group">
+          {% if product.featured_image %}
+            <img id="mainProductImage" 
+                 src="{{ product.featured_image | image_url: width: 1200 }}" 
+                 alt="{{ product.title | escape }}" 
+                 class="w-full h-auto max-h-[650px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105">
+          {% else %}
+            <div class="w-full aspect-[3/4] bg-[#F5EFE8] rounded-xl flex items-center justify-center text-[#7A6B60] text-sm font-serif">
+              High-Resolution Image Coming Soon
+            </div>
+          {% endif %}
+          <span class="absolute top-7 left-7 bg-[#2C221E] text-[#F5EFE8] text-[10px] uppercase font-semibold tracking-widest px-3 py-1 rounded-full">
+            Handcrafted Luxury
+          </span>
+        </div>
+
+        <!-- Media Thumbnails Carousel -->
+        {% if product.images.size > 1 %}
+          <div class="flex items-center space-x-3 overflow-x-auto pb-2 scrollbar-thin">
+            {% for image in product.images %}
+              <button onclick="document.getElementById('mainProductImage').src='{{ image | image_url: width: 1200 }}'" 
+                      class="flex-shrink-0 w-20 h-24 rounded-lg bg-[#EADCD0] border border-[#DFCDC0] p-1 overflow-hidden focus:ring-2 focus:ring-[#2C221E] transition-all">
+                <img src="{{ image | image_url: width: 200 }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover rounded-md">
+              </button>
+            {% endfor %}
+          </div>
         {% endif %}
       </div>
-      <div class="space-y-6">
-        <h1 class="font-serif text-3xl sm:text-4xl text-[#222222]">{{ product.title }}</h1>
-        <p class="text-xl font-medium text-[#4A4D3B]">{{ product.price | money }}</p>
-        <div class="prose text-sm text-[#555555] leading-relaxed">
-          {{ product.description }}
+
+      <!-- Product Meta & Purchase Form (Right Column - 5 Cols) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <div class="border-b border-[#DFCDC0] pb-6 space-y-3">
+          <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium block">
+            {{ product.type | default: "Custom Boutique Fit" }}
+          </span>
+          <h1 class="font-serif text-3xl sm:text-4xl font-normal text-[#2C221E] leading-tight">
+            {{ product.title }}
+          </h1>
+          <div class="flex items-center space-x-4">
+            <span class="text-2xl font-serif font-medium text-[#2C221E]">
+              {{ product.price | money }}
+            </span>
+            {% if product.compare_at_price > product.price %}
+              <span class="text-base text-[#7A6B60] line-through font-sans">
+                {{ product.compare_at_price | money }}
+              </span>
+              <span class="text-xs bg-[#2C221E] text-white px-2.5 py-0.5 rounded-full uppercase font-medium tracking-wider">
+                Sale
+              </span>
+            {% endif %}
+          </div>
         </div>
-        {% form 'product', product %}
+
+        <!-- Product Form -->
+        {% form 'product', product, class: 'space-y-6' %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="submit" class="w-full sm:w-auto px-10 py-4 bg-[#4A4D3B] text-white text-xs font-medium uppercase tracking-widest hover:bg-[#383A2C] transition-colors">
-            Add to Cart
-          </button>
+
+          <!-- Variant Selector -->
+          {% unless product.has_only_default_variant %}
+            <div class="space-y-4">
+              {% for option in product.options_with_values %}
+                <div class="space-y-2">
+                  <label class="text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] block">
+                    Select {{ option.name }}
+                  </label>
+                  <div class="flex flex-wrap gap-2.5">
+                    {% for value in option.values %}
+                      <label class="cursor-pointer">
+                        <input type="radio" name="option-{{ option.position }}" value="{{ value | escape }}" 
+                               {% if option.selected_value == value %}checked{% endif %} 
+                               class="peer sr-only">
+                        <span class="px-4 py-2.5 text-xs font-sans rounded-xl border border-[#DFCDC0] bg-[#F5EFE8] text-[#2C221E] peer-checked:bg-[#2C221E] peer-checked:text-white peer-checked:border-[#2C221E] transition-all inline-block shadow-xs hover:border-[#2C221E]">
+                          {{ value }}
+                        </span>
+                      </label>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          <!-- Custom Measurement Note Box -->
+          <div class="bg-[#EADCD0]/60 p-4 rounded-xl border border-[#DFCDC0] space-y-2">
+            <label for="CustomMeasurement" class="text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] flex items-center justify-between">
+              <span>Need Custom Tailoring?</span>
+              <span class="text-[10px] text-[#7A6B60] font-normal lowercase">(optional)</span>
+            </label>
+            <textarea id="CustomMeasurement" name="properties[Custom Measurements]" rows="2" 
+                      placeholder="Enter your bust, waist, hip or custom length instructions..." 
+                      class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-lg p-2.5 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E] placeholder-[#7A6B60]"></textarea>
+          </div>
+
+          <!-- Quantity Selector & Submit CTA -->
+          <div class="space-y-3">
+            <label class="text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] block">Quantity</label>
+            <div class="flex items-center space-x-3">
+              <div class="flex items-center border border-[#DFCDC0] bg-[#F5EFE8] rounded-xl overflow-hidden h-12">
+                <button type="button" onclick="let q=document.getElementById('Quantity'); if(q.value>1)q.value--" class="px-3.5 text-[#2C221E] font-bold text-base hover:bg-[#EADCD0] transition-colors">-</button>
+                <input type="number" id="Quantity" name="quantity" value="1" min="1" class="w-12 text-center text-xs font-sans bg-transparent border-none focus:outline-none text-[#2C221E]">
+                <button type="button" onclick="let q=document.getElementById('Quantity'); q.value++" class="px-3.5 text-[#2C221E] font-bold text-base hover:bg-[#EADCD0] transition-colors">+</button>
+              </div>
+
+              <button type="submit" name="add" class="flex-1 h-12 bg-[#2C221E] text-[#FAF7F2] text-xs font-sans font-semibold uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-all shadow-md flex items-center justify-center space-x-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                <span>Add to Shopping Bag</span>
+              </button>
+            </div>
+
+            <!-- Direct Buy Now CTA -->
+            {{ form | payment_button }}
+          </div>
         {% endform %}
+
+        <!-- Direct WhatsApp Inquiry -->
+        <a href="https://wa.me/919446861646?text=Hi%20Abella%2C%20I%20am%20interested%20in%20customizing%20the%20{{ product.title | url_encode }}." 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="w-full py-3 px-4 rounded-xl border border-[#25D366] bg-[#25D366]/10 text-[#128C7E] font-sans text-xs font-semibold flex items-center justify-center space-x-2 hover:bg-[#25D366]/20 transition-all">
+          <svg class="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 448 512">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+          </svg>
+          <span>Ask Stylist on WhatsApp</span>
+        </a>
+
+        <!-- Accordions -->
+        <div class="border-t border-[#DFCDC0] pt-4 space-y-3 font-sans text-xs">
+          
+          <details class="group bg-[#EADCD0]/40 rounded-xl border border-[#DFCDC0] p-4 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold uppercase tracking-wider text-[#2C221E]">
+              <span>Product & Fit Details</span>
+              <span class="transition group-open:-rotate-180">
+                <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </summary>
+            <div class="mt-3 text-[#55473E] leading-relaxed prose prose-sm max-w-none">
+              {{ product.description | default: "Handcrafted using premium boutique fabrics with meticulous attention to detail. Designed for comfort and timeless elegance." }}
+            </div>
+          </details>
+
+          <details class="group bg-[#EADCD0]/40 rounded-xl border border-[#DFCDC0] p-4 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold uppercase tracking-wider text-[#2C221E]">
+              <span>Fabric & Care Instructions</span>
+              <span class="transition group-open:-rotate-180">
+                <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </summary>
+            <div class="mt-3 text-[#55473E] leading-relaxed">
+              <p>• Premium Silk/Organza & Hand-embroidered Accents.</p>
+              <p>• Dry Clean Only to preserve delicate handwork and fabric texture.</p>
+              <p>• Store in breathable garment bags away from direct light.</p>
+            </div>
+          </details>
+
+          <details class="group bg-[#EADCD0]/40 rounded-xl border border-[#DFCDC0] p-4 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold uppercase tracking-wider text-[#2C221E]">
+              <span>Shipping & Custom Tailoring Time</span>
+              <span class="transition group-open:-rotate-180">
+                <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </summary>
+            <div class="mt-3 text-[#55473E] leading-relaxed">
+              <p>• Fast Pan-India Delivery (4-7 Business Days).</p>
+              <p>• Custom tailored orders dispatch within 7-10 business days.</p>
+            </div>
+          </details>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Related Recommendations Section -->
+    <div class="mt-20 border-t border-[#DFCDC0] pt-14 space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Curated For You</span>
+        <h2 class="font-serif text-3xl text-[#2C221E] font-normal">You May Also Love</h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        {% if recommendations.products_count > 0 %}
+          {% for recommendation in recommendations.products limit: 4 %}
+            {% render 'product-card', product: recommendation %}
+          {% endfor %}
+        {% else %}
+          {% for product in collections.all.products limit: 4 %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
+
   </div>
 </div>

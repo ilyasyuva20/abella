@@ -1,0 +1,111 @@
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Account Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-[#DFCDC0] pb-6">
+      <div class="text-center sm:text-left space-y-1">
+        <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Customer Portal</span>
+        <h1 class="font-serif text-3xl sm:text-4xl text-[#2C221E] font-normal">
+          Welcome, {{ customer.first_name | default: "Valued Client" }}
+        </h1>
+      </div>
+
+      <a href="{{ routes.account_logout_url }}" class="px-5 py-2.5 bg-[#EADCD0] text-[#2C221E] text-xs font-sans font-semibold uppercase tracking-wider rounded-xl border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-all">
+        Sign Out
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Order History Section (8 Cols) -->
+      <div class="lg:col-span-8 space-y-6">
+        <h2 class="font-serif text-2xl text-[#2C221E] font-normal">Order History</h2>
+
+        {% paginate customer.orders by 10 %}
+          {% if customer.orders.size > 0 %}
+            <div class="space-y-4">
+              {% for order in customer.orders %}
+                <div class="bg-[#EADCD0] p-5 rounded-2xl border border-[#DFCDC0] space-y-4 shadow-xs">
+                  <div class="flex flex-wrap justify-between items-center gap-2 border-b border-[#DFCDC0]/60 pb-3 font-sans text-xs">
+                    <div>
+                      <span class="font-semibold text-[#2C221E]">Order {{ order.name }}</span>
+                      <span class="text-[#7A6B60] ml-2">{{ order.created_at | date: "%b %d, %Y" }}</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <span class="px-2.5 py-1 rounded-full text-[10px] uppercase font-semibold tracking-wider bg-[#FAF7F2] text-[#2C221E] border border-[#DFCDC0]">
+                        {{ order.financial_status_label }}
+                      </span>
+                      <span class="px-2.5 py-1 rounded-full text-[10px] uppercase font-semibold tracking-wider bg-[#2C221E] text-white">
+                        {{ order.fulfillment_status_label }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-between items-center pt-1">
+                    <span class="font-serif text-lg font-medium text-[#2C221E]">
+                      Total: {{ order.total_price | money }}
+                    </span>
+
+                    <a href="{{ order.customer_url }}" class="text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] hover:underline">
+                      View Order Details &rarr;
+                    </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if paginate.pages > 1 %}
+              <div class="flex justify-center pt-4 font-sans text-xs">
+                {{ paginate | default_pagination }}
+              </div>
+            {% endif %}
+          {% else %}
+            <div class="text-center py-12 bg-[#EADCD0]/40 rounded-2xl border border-[#DFCDC0] space-y-3">
+              <p class="text-xs text-[#7A6B60] font-sans">You haven't placed any orders yet.</p>
+              <a href="/collections/all" class="inline-block px-6 py-2.5 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest font-semibold rounded-xl hover:bg-[#4A3B32] transition-colors">
+                Start Shopping
+              </a>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
+
+      <!-- Account Details & Address Box (4 Cols) -->
+      <div class="lg:col-span-4 bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] space-y-6 shadow-sm">
+        <h2 class="font-serif text-2xl text-[#2C221E] font-normal border-b border-[#DFCDC0] pb-4">
+          Account Details
+        </h2>
+
+        <div class="space-y-3 font-sans text-xs text-[#7A6B60]">
+          <div>
+            <span class="font-semibold text-[#2C221E] block">Name:</span>
+            <span>{{ customer.name }}</span>
+          </div>
+
+          <div>
+            <span class="font-semibold text-[#2C221E] block">Email:</span>
+            <span>{{ customer.email }}</span>
+          </div>
+
+          {% if customer.default_address %}
+            <div class="pt-3 border-t border-[#DFCDC0]/60 space-y-1">
+              <span class="font-semibold text-[#2C221E] block">Primary Address:</span>
+              <p>{{ customer.default_address.address1 }}</p>
+              {% if customer.default_address.address2 != blank %}
+                <p>{{ customer.default_address.address2 }}</p>
+              {% endif %}
+              <p>{{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}</p>
+              <p>{{ customer.default_address.country }}</p>
+            </div>
+          {% endif %}
+        </div>
+
+        <a href="{{ routes.account_addresses_url }}" class="block text-center w-full py-3 bg-[#FAF7F2] text-[#2C221E] text-xs font-sans font-semibold uppercase tracking-wider rounded-xl border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-all">
+          Manage Addresses ({{ customer.addresses_count }})
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    
+    <!-- Order Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-[#DFCDC0] pb-6">
+      <div class="text-center sm:text-left space-y-1">
+        <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">
+          Order Details • {{ order.created_at | date: "%B %d, %Y" }}
+        </span>
+        <h1 class="font-serif text-3xl sm:text-4xl text-[#2C221E] font-normal">
+          Order {{ order.name }}
+        </h1>
+      </div>
+
+      <a href="{{ routes.account_url }}" class="text-xs font-sans font-semibold uppercase tracking-wider text-[#7A6B60] hover:text-[#2C221E] transition-colors">
+        &larr; Back to Order History
+      </a>
+    </div>
+
+    <!-- Order Items Card -->
+    <div class="bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] space-y-6 shadow-xs">
+      <h2 class="font-serif text-2xl text-[#2C221E] font-normal border-b border-[#DFCDC0] pb-4">
+        Ordered Items
+      </h2>
+
+      <div class="space-y-4 font-sans text-xs">
+        {% for line_item in order.line_items %}
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center py-3 border-b border-[#DFCDC0]/60 gap-3">
+            <div class="space-y-1">
+              <h3 class="font-serif text-lg font-normal text-[#2C221E]">{{ line_item.title }}</h3>
+              <p class="text-[#7A6B60]">SKU: {{ line_item.sku | default: "Custom Fit" }}</p>
+              <p class="text-[#7A6B60]">Quantity: {{ line_item.quantity }}</p>
+            </div>
+            <div class="font-serif text-lg font-medium text-[#2C221E]">
+              {{ line_item.final_line_price | money }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Financial & Fulfillment Breakdown -->
+      <div class="pt-4 space-y-2 font-sans text-xs border-t border-[#DFCDC0]">
+        <div class="flex justify-between text-[#7A6B60]">
+          <span>Subtotal:</span>
+          <span class="font-serif text-base text-[#2C221E] font-medium">{{ order.line_items_subtotal_price | money }}</span>
+        </div>
+        {% for shipping_method in order.shipping_methods %}
+          <div class="flex justify-between text-[#7A6B60]">
+            <span>Shipping ({{ shipping_method.title }}):</span>
+            <span class="font-serif text-base text-[#2C221E] font-medium">{{ shipping_method.price | money }}</span>
+          </div>
+        {% endfor %}
+        <div class="flex justify-between text-[#2C221E] font-semibold text-sm pt-2 border-t border-[#DFCDC0]/60">
+          <span>Total Paid:</span>
+          <span class="font-serif text-xl font-medium">{{ order.total_price | money }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

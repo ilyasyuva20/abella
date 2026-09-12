@@ -1,18 +1,71 @@
-<div class="py-12 bg-[#FAF7F2]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-    <div class="text-center space-y-2">
-      <h1 class="font-serif text-3xl sm:text-4xl text-[#222222]">{{ collection.title }}</h1>
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Collection Hero Banner -->
+    <div class="bg-[#EADCD0] rounded-3xl p-8 sm:p-12 border border-[#DFCDC0] shadow-sm relative overflow-hidden text-center space-y-4">
+      <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Boutique Collection</span>
+      <h1 class="font-serif text-3xl sm:text-5xl text-[#2C221E] font-normal tracking-wide">
+        {{ collection.title }}
+      </h1>
       {% if collection.description != blank %}
-        <p class="text-sm text-[#666666] max-w-xl mx-auto">{{ collection.description }}</p>
+        <p class="text-xs sm:text-sm text-[#7A6B60] max-w-2xl mx-auto font-sans leading-relaxed">
+          {{ collection.description }}
+        </p>
+      {% else %}
+        <p class="text-xs sm:text-sm text-[#7A6B60] max-w-2xl mx-auto font-sans leading-relaxed">
+          Explore our exclusive collection of handcrafted couture, custom fits, and luxury silhouettes for women and kids.
+        </p>
       {% endif %}
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      {% for product in collection.products %}
-        {% render 'product-card', product: product %}
-      {% else %}
-        <p class="col-span-full text-center py-10 text-sm text-[#666666]">No products found in this collection.</p>
-      {% endfor %}
+    <!-- Filter & Sort Bar -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-[#EADCD0]/50 p-4 rounded-2xl border border-[#DFCDC0] font-sans text-xs">
+      <div class="text-[#7A6B60] font-medium">
+        Showing <span class="text-[#2C221E] font-semibold">{{ collection.products_count }}</span> products
+      </div>
+
+      <div class="flex items-center space-x-3 w-full sm:w-auto">
+        <label for="SortBy" class="text-[#7A6B60] whitespace-nowrap font-medium">Sort by:</label>
+        <select id="SortBy" onchange="location.href = this.value;" class="bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl px-3 py-2 text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E] cursor-pointer">
+          <option value="{{ collection.url }}?sort_by=manual">Featured</option>
+          <option value="{{ collection.url }}?sort_by=price-ascending">Price: Low to High</option>
+          <option value="{{ collection.url }}?sort_by=price-descending">Price: High to Low</option>
+          <option value="{{ collection.url }}?sort_by=created-descending">Newest Arrivals</option>
+          <option value="{{ collection.url }}?sort_by=best-selling">Best Sellers</option>
+        </select>
+      </div>
     </div>
+
+    <!-- Product Grid -->
+    {% paginate collection.products by 12 %}
+      {% if collection.products.size > 0 %}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {% for product in collection.products %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if paginate.pages > 1 %}
+          <div class="flex justify-center items-center space-x-2 pt-8 font-sans text-xs">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" class="px-4 py-2 rounded-xl bg-[#EADCD0] text-[#2C221E] border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-colors">Previous</a>
+            {% endif %}
+            <span class="px-4 py-2 font-medium text-[#7A6B60]">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" class="px-4 py-2 rounded-xl bg-[#EADCD0] text-[#2C221E] border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-colors">Next</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="text-center py-16 bg-[#EADCD0]/30 rounded-2xl border border-[#DFCDC0] space-y-4">
+          <p class="text-sm font-serif text-[#7A6B60]">No products currently available in this collection.</p>
+          <a href="/collections/all" class="inline-block px-6 py-3 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-colors">
+            Explore All Collections
+          </a>
+        </div>
+      {% endif %}
+    {% endpaginate %}
+
   </div>
 </div>

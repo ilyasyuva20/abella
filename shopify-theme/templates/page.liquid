@@ -1,6 +1,17 @@
-<div class="max-w-4xl mx-auto px-4 sm:px-6 py-14 space-y-6">
-  <h1 class="font-serif text-3xl sm:text-4xl text-[#222222] text-center">{{ page.title }}</h1>
-  <div class="prose max-w-none text-sm text-[#4A4A4A] leading-relaxed">
-    {{ page.content }}
+<div class="bg-[#FAF7F2] min-h-screen py-12 sm:py-16 text-[#2C221E]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Header -->
+    <div class="text-center space-y-3">
+      <h1 class="font-serif text-4xl sm:text-5xl text-[#2C221E] font-normal">
+        {{ page.title }}
+      </h1>
+    </div>
+
+    <!-- Content Card Frame -->
+    <div class="bg-[#EADCD0] p-6 sm:p-10 rounded-3xl border border-[#DFCDC0] shadow-sm font-sans text-xs sm:text-sm text-[#55473E] leading-relaxed prose prose-sm max-w-none">
+      {{ page.content }}
+    </div>
+
   </div>
 </div>

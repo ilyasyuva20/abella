@@ -1,11 +1,48 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <h1 class="font-serif text-3xl sm:text-4xl text-center text-charcoal mb-8">All Collections</h1>
-  <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
-    {% for collection in collections %}
-      <a href="{{ collection.url }}" class="block border border-sand bg-[#FAF8F5] p-6 text-center hover:border-olive transition-colors shadow-xs">
-        <h2 class="font-serif text-lg text-charcoal font-normal">{{ collection.title }}</h2>
-        <span class="text-xs text-taupe block mt-1">{{ collection.all_products_count }} products</span>
-      </a>
-    {% endfor %}
+<div class="bg-[#FAF7F2] min-h-screen py-10 sm:py-14 text-[#2C221E]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    
+    <!-- Section Header -->
+    <div class="text-center space-y-3 max-w-2xl mx-auto">
+      <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Curated Categories</span>
+      <h1 class="font-serif text-3xl sm:text-5xl text-[#2C221E] font-normal">All Collections</h1>
+      <p class="text-xs sm:text-sm text-[#7A6B60] font-sans leading-relaxed">
+        Browse through our handcrafted collections designed for celebrations, birthday attire, matching mom & me sets, and custom boutique fits.
+      </p>
+    </div>
+
+    <!-- Collections Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {% for collection in collections %}
+        {% unless collection.handle == 'frontpage' %}
+          <a href="{{ collection.url }}" class="group bg-[#EADCD0] rounded-2xl border border-[#DFCDC0] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between p-4">
+            <div class="aspect-[4/3] rounded-xl overflow-hidden bg-[#FAF7F2] relative mb-4">
+              {% if collection.image %}
+                <img src="{{ collection.image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              {% elsif collection.products.first.featured_image %}
+                <img src="{{ collection.products.first.featured_image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              {% else %}
+                <div class="w-full h-full flex items-center justify-center text-[#7A6B60] text-xs font-serif">
+                  Boutique Collection
+                </div>
+              {% endif %}
+              <span class="absolute top-3 right-3 bg-[#2C221E] text-white text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full">
+                {{ collection.all_products_count }} Designs
+              </span>
+            </div>
+
+            <div class="space-y-2 text-center pb-2">
+              <h2 class="font-serif text-2xl text-[#2C221E] font-normal group-hover:text-[#4A3B32] transition-colors">
+                {{ collection.title }}
+              </h2>
+              <span class="inline-flex items-center text-xs font-sans font-semibold uppercase tracking-wider text-[#7A6B60] group-hover:text-[#2C221E] transition-colors space-x-1">
+                <span>Explore Collection</span>
+                <span>&rarr;</span>
+              </span>
+            </div>
+          </a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+
   </div>
 </div>

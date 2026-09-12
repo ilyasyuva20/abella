@@ -1,0 +1,66 @@
+<div class="bg-[#FAF7F2] min-h-screen py-14 sm:py-20 text-[#2C221E] flex items-center justify-center">
+  <div class="max-w-md w-full mx-auto px-4">
+    
+    <div class="bg-[#EADCD0] p-6 sm:p-8 rounded-3xl border border-[#DFCDC0] shadow-md space-y-6">
+      
+      <!-- Header -->
+      <div class="text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">Boutique Account</span>
+        <h1 class="font-serif text-3xl text-[#2C221E] font-normal">Sign In</h1>
+      </div>
+
+      <!-- Login Form -->
+      {% form 'customer_login', class: 'space-y-4 font-sans text-xs' %}
+        {{ form.errors | default_errors }}
+
+        <div class="space-y-1.5">
+          <label for="CustomerEmail" class="font-semibold uppercase tracking-wider text-[#2C221E]">Email Address</label>
+          <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required
+                 placeholder="name@example.com" 
+                 class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+        </div>
+
+        {% if form.password_needed %}
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label for="CustomerPassword" class="font-semibold uppercase tracking-wider text-[#2C221E]">Password</label>
+              <a href="#recover" onclick="document.getElementById('RecoverPassword').classList.remove('hidden');" class="text-[11px] text-[#7A6B60] hover:underline">Forgot password?</a>
+            </div>
+            <input type="password" name="customer[password]" id="CustomerPassword" required
+                   placeholder="••••••••" 
+                   class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+          </div>
+        {% endif %}
+
+        <button type="submit" class="w-full py-3.5 bg-[#2C221E] text-white text-xs font-semibold uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-colors shadow-sm mt-2">
+          Sign In
+        </button>
+      {% endform %}
+
+      <!-- Password Recover Drawer Form -->
+      <div id="RecoverPassword" class="hidden pt-4 border-t border-[#DFCDC0] space-y-3 font-sans text-xs">
+        <h3 class="font-serif text-xl text-[#2C221E]">Reset Password</h3>
+        <p class="text-[#7A6B60]">We will send you an email to reset your password.</p>
+        
+        {% form 'recover_customer_password', class: 'space-y-3' %}
+          <input type="email" name="email" placeholder="name@example.com" required 
+                 class="w-full bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl p-3 text-xs text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E]">
+          <div class="flex gap-2">
+            <button type="submit" class="flex-1 py-2.5 bg-[#2C221E] text-white font-semibold uppercase tracking-wider rounded-xl hover:bg-[#4A3B32]">Submit</button>
+            <button type="button" onclick="document.getElementById('RecoverPassword').classList.add('hidden');" class="px-4 py-2.5 bg-[#FAF7F2] text-[#2C221E] rounded-xl border border-[#DFCDC0]">Cancel</button>
+          </div>
+        {% endform %}
+      </div>
+
+      <!-- Register Link Footer -->
+      <div class="text-center pt-4 border-t border-[#DFCDC0] font-sans text-xs text-[#7A6B60]">
+        Don't have an account? 
+        <a href="{{ routes.account_register_url }}" class="font-semibold text-[#2C221E] underline hover:text-[#4A3B32] ml-1">
+          Create One
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>

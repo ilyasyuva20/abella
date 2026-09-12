@@ -1,16 +1,81 @@
 {% layout none %}
 <!doctype html>
-<html>
+<html lang="{{ request.locale.iso_code }}">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Gift Card - {{ shop.name }}</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-serif { font-family: 'Cormorant Garamond', serif; }
+  </style>
 </head>
-<body class="bg-[#FAF7F2] text-[#1A1A1A] p-8 text-center">
-  <div class="max-w-md mx-auto bg-white p-8 border border-[#E5DFD5]">
-    <h1 class="font-serif text-2xl uppercase mb-4">ABELLA GIFT CARD</h1>
-    <p class="text-xs text-[#555340]">Use this code at checkout:</p>
-    <div class="my-4 p-4 bg-[#FAF7F2] font-mono text-lg font-bold border border-[#E5DFD5]">{{ gift_card.code }}</div>
+<body class="bg-[#FAF7F2] text-[#2C221E] min-h-screen flex items-center justify-center p-4 sm:p-8">
+
+  <div class="max-w-md w-full bg-[#EADCD0] p-6 sm:p-8 rounded-3xl border border-[#DFCDC0] shadow-xl text-center space-y-6 relative overflow-hidden">
+    
+    <!-- Decorative Brand Emblem Header -->
+    <div class="space-y-2">
+      <span class="text-[10px] uppercase font-sans font-semibold tracking-widest text-[#7A6B60]">Official Digital Voucher</span>
+      <h1 class="font-serif text-3xl font-normal tracking-wide text-[#2C221E]">
+        {{ shop.name | uppercase }}
+      </h1>
+      <div class="w-12 h-0.5 bg-[#2C221E]/30 mx-auto"></div>
+    </div>
+
+    <!-- Voucher Card Frame -->
+    <div class="bg-[#FAF7F2] p-6 rounded-2xl border border-[#DFCDC0] space-y-4 shadow-inner">
+      <div class="space-y-1">
+        <span class="text-xs text-[#7A6B60] font-sans">Gift Card Value</span>
+        <div class="font-serif text-4xl font-semibold text-[#2C221E]">
+          {{ gift_card.initial_value | money }}
+        </div>
+        {% if gift_card.balance != gift_card.initial_value %}
+          <p class="text-xs text-[#128C7E] font-medium">
+            Remaining Balance: {{ gift_card.balance | money }}
+          </p>
+        {% endif %}
+      </div>
+
+      <!-- Code Box -->
+      <div class="space-y-2 pt-2">
+        <span class="text-[11px] uppercase tracking-wider text-[#7A6B60] font-medium block">
+          Use this code at checkout
+        </span>
+        <div id="GiftCode" class="p-3 bg-[#EADCD0] font-mono text-lg font-bold text-[#2C221E] tracking-widest rounded-xl border border-[#DFCDC0] select-all cursor-pointer">
+          {{ gift_card.code | format_code }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions & Actions -->
+    <div class="space-y-3 pt-2">
+      <p class="text-xs text-[#7A6B60] leading-relaxed">
+        Present or enter this code during online checkout to redeem your custom boutique gift voucher.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 pt-2">
+        <button onclick="navigator.clipboard.writeText('{{ gift_card.code }}'); alert('Gift card code copied to clipboard!');" 
+                class="flex-1 py-3 px-4 bg-[#2C221E] text-white text-xs font-semibold uppercase tracking-wider rounded-xl hover:bg-[#4A3B32] transition-colors shadow-sm">
+          Copy Code
+        </button>
+
+        <button onclick="window.print();" 
+                class="px-4 py-3 bg-[#FAF7F2] text-[#2C221E] text-xs font-semibold uppercase tracking-wider rounded-xl border border-[#DFCDC0] hover:bg-[#FAF7F2]/80 transition-colors">
+          Print Voucher
+        </button>
+      </div>
+
+      <a href="{{ shop.url }}" class="inline-block text-xs text-[#7A6B60] hover:text-[#2C221E] font-medium pt-2 transition-colors">
+        &larr; Start Shopping at {{ shop.name }}
+      </a>
+    </div>
+
   </div>
+
 </body>
 </html>
