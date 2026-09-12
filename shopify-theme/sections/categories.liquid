@@ -5,7 +5,7 @@
     <div class="flex items-center justify-center mb-8">
       <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
       <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1A1A] font-normal px-4 sm:px-8 text-center tracking-tight">
-        {{ section.settings.heading }}
+        {{ section.settings.heading | default: "Shop by Category" }}
       </h2>
       <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
     </div>
@@ -52,13 +52,13 @@
                 <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
               {%- else -%}
                 {%- assign cat_idx = forloop.index -%}
-                {%- assign cat_img = 'hd-frocks-dresses.jpg' -%}
-                {%- if cat_idx == 2 %}{% assign cat_img = 'hd-custom-outfits.jpg' %}{% endif -%}
-                {%- if cat_idx == 3 %}{% assign cat_img = 'hd-birthday-styles.jpg' %}{% endif -%}
-                {%- if cat_idx == 4 %}{% assign cat_img = 'hd-sets-coords.jpg' %}{% endif -%}
-                {%- if cat_idx == 5 %}{% assign cat_img = 'hd-sarees.jpg' %}{% endif -%}
-                {%- if cat_idx == 6 %}{% assign cat_img = 'hd-blouses.jpg' %}{% endif -%}
-                {%- if cat_idx == 7 %}{% assign cat_img = 'hd-partywear.jpg' %}{% endif -%}
+                {%- assign cat_img = 'cat-frocks.jpg' -%}
+                {%- if cat_idx == 2 %}{% assign cat_img = 'cat-custom.jpg' %}{% endif -%}
+                {%- if cat_idx == 3 %}{% assign cat_img = 'cat-birthday.jpg' %}{% endif -%}
+                {%- if cat_idx == 4 %}{% assign cat_img = 'cat-coords.jpg' %}{% endif -%}
+                {%- if cat_idx == 5 %}{% assign cat_img = 'cat-sarees.jpg' %}{% endif -%}
+                {%- if cat_idx == 6 %}{% assign cat_img = 'cat-blouses.jpg' %}{% endif -%}
+                {%- if cat_idx == 7 %}{% assign cat_img = 'cat-semi-partywear.jpg' %}{% endif -%}
                 <img src="{{ cat_img | asset_url }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
               {%- endif -%}
             </div>
@@ -71,43 +71,43 @@
         <!-- Fallback 7 default items -->
         <a href="#featured" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-frocks-dresses.jpg' | asset_url }}" alt="Frocks & Dresses" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-frocks.jpg' | asset_url }}" alt="Frocks & Dresses" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Frocks & Dresses</span>
         </a>
         <a href="#custom" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-custom-outfits.jpg' | asset_url }}" alt="Custom Outfits" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-custom.jpg' | asset_url }}" alt="Custom Outfits" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Custom Outfits</span>
         </a>
         <a href="#featured" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-birthday-styles.jpg' | asset_url }}" alt="Birthday Styles" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-birthday.jpg' | asset_url }}" alt="Birthday Styles" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Birthday Styles</span>
         </a>
         <a href="#featured" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-sets-coords.jpg' | asset_url }}" alt="Sets & Co-ords" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-coords.jpg' | asset_url }}" alt="Sets & Co-ords" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Sets & Co-ords</span>
         </a>
         <a href="#women" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-sarees.jpg' | asset_url }}" alt="Sarees" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-sarees.jpg' | asset_url }}" alt="Sarees" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Sarees</span>
         </a>
         <a href="#women" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-blouses.jpg' | asset_url }}" alt="Blouses" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-blouses.jpg' | asset_url }}" alt="Blouses" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Blouses</span>
         </a>
         <a href="#women" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            <img src="{{ 'hd-partywear.jpg' | asset_url }}" alt="Semi Partywear" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+            <img src="{{ 'cat-semi-partywear.jpg' | asset_url }}" alt="Semi Partywear" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
           <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Semi Partywear</span>
         </a>
@@ -121,17 +121,38 @@
 {
   "name": "Shop by Category",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by Category" },
-    { "type": "url", "id": "view_all_link", "label": "View All Link", "default": "/collections/all" }
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    }
   ],
   "blocks": [
     {
       "type": "category",
       "name": "Category Item",
       "settings": [
-        { "type": "text", "id": "title", "label": "Category Title" },
-        { "type": "image_picker", "id": "image", "label": "Thumbnail Image" },
-        { "type": "url", "id": "link", "label": "Category Link" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
       ]
     }
   ],

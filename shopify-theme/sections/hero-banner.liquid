@@ -134,25 +134,77 @@
 
 </section>
 
-{% schema %}
-{
+{% schema %}{
   "name": "Hero Banner Carousel",
   "blocks": [
     {
       "type": "slide",
       "name": "Banner Slide",
       "settings": [
-        { "type": "text", "id": "sub_heading_1", "label": "Sub Heading 1", "default": "TWO GENERATIONS" },
-        { "type": "text", "id": "sub_heading_2", "label": "Sub Heading 2", "default": "ONE BEAUTIFUL STORY" },
-        { "type": "text", "id": "heading_line_1", "label": "Heading Line 1", "default": "For Every" },
-        { "type": "text", "id": "heading_line_2", "label": "Heading Line 2 (Italic)", "default": "Chapter" },
-        { "type": "text", "id": "description", "label": "Description", "default": "Kids Boutique | Women's Collection" },
-        { "type": "text", "id": "button_text", "label": "Button Text", "default": "EXPLORE OUR COLLECTION" },
-        { "type": "url", "id": "button_link", "label": "Button Link", "default": "/collections/all" },
-        { "type": "text", "id": "vert_1", "label": "Vertical Text 1", "default": "TIMELESS" },
-        { "type": "text", "id": "vert_2", "label": "Vertical Text 2", "default": "ELEGANT" },
-        { "type": "text", "id": "vert_3", "label": "Vertical Text 3", "default": "YOU" },
-        { "type": "image_picker", "id": "image", "label": "Slide Background Image" }
+        {
+          "type": "text",
+          "id": "sub_heading_1",
+          "label": "Sub Heading 1",
+          "default": "TWO GENERATIONS"
+        },
+        {
+          "type": "text",
+          "id": "sub_heading_2",
+          "label": "Sub Heading 2",
+          "default": "ONE BEAUTIFUL STORY"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_1",
+          "label": "Heading Line 1",
+          "default": "For Every"
+        },
+        {
+          "type": "text",
+          "id": "heading_line_2",
+          "label": "Heading Line 2 (Italic)",
+          "default": "Chapter"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Kids Boutique | Women's Collection"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "EXPLORE OUR COLLECTION"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "text",
+          "id": "vert_1",
+          "label": "Vertical Text 1",
+          "default": "TIMELESS"
+        },
+        {
+          "type": "text",
+          "id": "vert_2",
+          "label": "Vertical Text 2",
+          "default": "ELEGANT"
+        },
+        {
+          "type": "text",
+          "id": "vert_3",
+          "label": "Vertical Text 3",
+          "default": "YOU"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide Background Image"
+        }
       ]
     }
   ],
@@ -160,11 +212,32 @@
     {
       "name": "Hero Banner Carousel",
       "blocks": [
-        { "type": "slide" },
-        { "type": "slide", "settings": { "heading_line_1": "Little", "heading_line_2": "Dreams", "button_text": "EXPLORE KIDS BOUTIQUE", "vert_1": "CHARMING", "vert_2": "PLAYFUL", "vert_3": "JOY" } },
-        { "type": "slide", "settings": { "heading_line_1": "Grace In", "heading_line_2": "Detail", "button_text": "EXPLORE WOMEN'S COLLECTION", "vert_1": "LUXURY", "vert_2": "GRACE", "vert_3": "HERITAGE" } }
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "heading_line_1": "Little",
+            "heading_line_2": "Dreams",
+            "button_text": "EXPLORE KIDS BOUTIQUE",
+            "vert_1": "CHARMING",
+            "vert_2": "PLAYFUL",
+            "vert_3": "JOY"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "heading_line_1": "Grace In",
+            "heading_line_2": "Detail",
+            "button_text": "EXPLORE WOMEN'S COLLECTION",
+            "vert_1": "LUXURY",
+            "vert_2": "GRACE",
+            "vert_3": "HERITAGE"
+          }
+        }
       ]
     }
   ]
-}
-{% endschema %}
+}{% endschema %}
