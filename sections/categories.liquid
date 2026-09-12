@@ -44,22 +44,74 @@
 
     <!-- 7 Category Items Container -->
     <div class="grid grid-cols-4 sm:grid-cols-7 gap-3 sm:gap-4 lg:gap-6 items-start">
-      {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link }}" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.link | default: '#featured' }}" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none" {{ block.shopify_attributes }}>
+            <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+              {%- else -%}
+                {%- assign cat_idx = forloop.index -%}
+                {%- assign cat_img = 'hd-frocks-dresses.jpg' -%}
+                {%- if cat_idx == 2 %}{% assign cat_img = 'hd-custom-outfits.jpg' %}{% endif -%}
+                {%- if cat_idx == 3 %}{% assign cat_img = 'hd-birthday-styles.jpg' %}{% endif -%}
+                {%- if cat_idx == 4 %}{% assign cat_img = 'hd-sets-coords.jpg' %}{% endif -%}
+                {%- if cat_idx == 5 %}{% assign cat_img = 'hd-sarees.jpg' %}{% endif -%}
+                {%- if cat_idx == 6 %}{% assign cat_img = 'hd-blouses.jpg' %}{% endif -%}
+                {%- if cat_idx == 7 %}{% assign cat_img = 'hd-partywear.jpg' %}{% endif -%}
+                <img src="{{ cat_img | asset_url }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+              {%- endif -%}
+            </div>
+            <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">
+              {{ block.settings.title }}
+            </span>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback 7 default items -->
+        <a href="#featured" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
           <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
-            {%- else -%}
-              <div class="w-full h-full rounded-full bg-[#FAF8F5] flex items-center justify-center text-xs text-[#8C7A6B] font-serif">
-                {{ block.settings.title | slice: 0, 2 }}
-              </div>
-            {%- endif -%}
+            <img src="{{ 'hd-frocks-dresses.jpg' | asset_url }}" alt="Frocks & Dresses" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
           </div>
-          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">
-            {{ block.settings.title }}
-          </span>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Frocks & Dresses</span>
         </a>
-      {%- endfor -%}
+        <a href="#custom" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            <img src="{{ 'hd-custom-outfits.jpg' | asset_url }}" alt="Custom Outfits" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Custom Outfits</span>
+        </a>
+        <a href="#featured" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            <img src="{{ 'hd-birthday-styles.jpg' | asset_url }}" alt="Birthday Styles" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Birthday Styles</span>
+        </a>
+        <a href="#featured" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            <img src="{{ 'hd-sets-coords.jpg' | asset_url }}" alt="Sets & Co-ords" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Sets & Co-ords</span>
+        </a>
+        <a href="#women" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            <img src="{{ 'hd-sarees.jpg' | asset_url }}" alt="Sarees" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Sarees</span>
+        </a>
+        <a href="#women" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            <img src="{{ 'hd-blouses.jpg' | asset_url }}" alt="Blouses" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Blouses</span>
+        </a>
+        <a href="#women" class="category-btn group flex flex-col items-center text-center space-y-2 focus:outline-none">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 rounded-full overflow-hidden border border-[#E2DACD] shadow-sm bg-[#FAF8F5] group-hover:border-[#8C7A6B] transition-all duration-300">
+            <img src="{{ 'hd-partywear.jpg' | asset_url }}" alt="Semi Partywear" class="w-full h-full object-cover rounded-full group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="text-xs sm:text-sm font-medium text-[#242424] group-hover:text-[#8C7A6B] transition-colors leading-snug">Semi Partywear</span>
+        </a>
+      {%- endif -%}
     </div>
 
   </div>

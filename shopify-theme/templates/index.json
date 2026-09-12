@@ -2,43 +2,136 @@
   "sections": {
     "hero_banner": {
       "type": "hero-banner",
-      "settings": {}
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "sub_heading_1": "TWO GENERATIONS",
+            "sub_heading_2": "ONE BEAUTIFUL STORY",
+            "heading_line_1": "For Every",
+            "heading_line_2": "Chapter",
+            "description": "Kids Boutique | Women's Collection",
+            "button_text": "EXPLORE OUR COLLECTION",
+            "button_link": "#featured"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "sub_heading_1": "FOR LITTLE ONES",
+            "sub_heading_2": "HANDMADE WITH LOVE",
+            "heading_line_1": "Little",
+            "heading_line_2": "Dreams",
+            "description": "Frocks, Dresses & Custom Birthday Outfits",
+            "button_text": "EXPLORE KIDS BOUTIQUE",
+            "button_link": "#kids"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "sub_heading_1": "HERITAGE & ELEGANCE",
+            "sub_heading_2": "CRAFTED FOR YOU",
+            "heading_line_1": "Grace In",
+            "heading_line_2": "Detail",
+            "description": "Sarees, Blouses & Semi Partywear",
+            "button_text": "EXPLORE WOMEN'S COLLECTION",
+            "button_link": "#women"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ]
     },
     "benefit_strip": {
-      "type": "benefit-strip",
-      "settings": {}
+      "type": "benefit-strip"
     },
     "collection_split": {
-      "type": "collection-split",
-      "settings": {}
+      "type": "collection-split"
     },
     "categories": {
       "type": "categories",
-      "settings": {}
+      "blocks": {
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "title": "Frocks & Dresses",
+            "link": "#featured"
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "title": "Custom Outfits",
+            "link": "#custom"
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "title": "Birthday Styles",
+            "link": "#featured"
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "title": "Sets & Co-ords",
+            "link": "#featured"
+          }
+        },
+        "cat_5": {
+          "type": "category",
+          "settings": {
+            "title": "Sarees",
+            "link": "#women"
+          }
+        },
+        "cat_6": {
+          "type": "category",
+          "settings": {
+            "title": "Blouses",
+            "link": "#women"
+          }
+        },
+        "cat_7": {
+          "type": "category",
+          "settings": {
+            "title": "Semi Partywear",
+            "link": "#women"
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4",
+        "cat_5",
+        "cat_6",
+        "cat_7"
+      ]
     },
     "custom_order_banner": {
-      "type": "custom-order-banner",
-      "settings": {}
+      "type": "custom-order-banner"
     },
     "featured_collections": {
-      "type": "featured-collections",
-      "settings": {}
+      "type": "featured-collections"
     },
     "editorial_cards": {
-      "type": "editorial-cards",
-      "settings": {}
+      "type": "editorial-cards"
     },
     "instagram_gallery": {
-      "type": "instagram-gallery",
-      "settings": {}
+      "type": "instagram-gallery"
     },
     "trust_strip": {
-      "type": "trust-strip",
-      "settings": {}
+      "type": "trust-strip"
     },
     "newsletter": {
-      "type": "newsletter",
-      "settings": {}
+      "type": "newsletter"
     }
   },
   "order": [

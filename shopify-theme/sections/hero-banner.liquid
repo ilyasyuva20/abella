@@ -1,43 +1,117 @@
 <section id="home" class="relative bg-champagne-hero overflow-hidden border-b border-sand group w-full">
   
   <div id="heroSliderTrack" class="flex w-full transition-transform duration-700 ease-in-out">
-    {%- for block in section.blocks -%}
-      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
-        <!-- Background Photo -->
-        {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | image_url: width: 2000 }}" alt="{{ block.settings.heading_line_1 | escape }}" class="absolute inset-0 w-full h-full object-cover object-center">
-        {%- else -%}
-          <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center">
-        {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center" {{ block.shopify_attributes }}>
+          <!-- Background Photo -->
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 2000 }}" alt="{{ block.settings.heading_line_1 | escape }}" class="absolute inset-0 w-full h-full object-cover object-center">
+          {%- else -%}
+            <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center">
+          {%- endif -%}
 
-        <!-- Content Overlay Container -->
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
-          
-          <!-- Left Text Content -->
-          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg backdrop-blur-xs sm:backdrop-blur-none">
-            <div class="space-y-1">
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">{{ block.settings.sub_heading_1 }}</span>
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">{{ block.settings.sub_heading_2 }}</span>
+          <!-- Content Overlay Container -->
+          <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
+            
+            <!-- Left Text Content -->
+            <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg backdrop-blur-xs sm:backdrop-blur-none">
+              <div class="space-y-1">
+                <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">{{ block.settings.sub_heading_1 }}</span>
+                <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">{{ block.settings.sub_heading_2 }}</span>
+              </div>
+
+              <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
+                {{ block.settings.heading_line_1 }}<br><span class="italic font-light">{{ block.settings.heading_line_2 }}</span>
+              </h1>
+
+              <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+                {{ block.settings.description }}
+              </p>
+
+              <div class="pt-2">
+                <a href="{{ block.settings.button_link | default: '#featured' }}" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+                  {{ block.settings.button_text }} &rarr;
+                </a>
+              </div>
             </div>
 
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <!-- Default Slide 1 -->
+      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
+        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
+          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg">
+            <div class="space-y-1">
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">TWO GENERATIONS</span>
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">ONE BEAUTIFUL STORY</span>
+            </div>
             <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
-              {{ block.settings.heading_line_1 }}<br><span class="italic font-light">{{ block.settings.heading_line_2 }}</span>
+              For Every<br><span class="italic font-light">Chapter</span>
             </h1>
-
             <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
-              {{ block.settings.description }}
+              Kids Boutique | Women's Collection
             </p>
-
             <div class="pt-2">
-              <a href="{{ block.settings.button_link | default: '#featured' }}" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
-                {{ block.settings.button_text }} &rarr;
+              <a href="#featured" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+                EXPLORE OUR COLLECTION &rarr;
               </a>
             </div>
           </div>
-
         </div>
       </div>
-    {%- endfor -%}
+
+      <!-- Default Slide 2 -->
+      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
+        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Kids Boutique" class="absolute inset-0 w-full h-full object-cover object-center">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
+          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg">
+            <div class="space-y-1">
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">FOR LITTLE ONES</span>
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">HANDMADE WITH LOVE</span>
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
+              Little<br><span class="italic font-light">Dreams</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+              Frocks, Dresses & Custom Birthday Outfits
+            </p>
+            <div class="pt-2">
+              <a href="#kids" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+                EXPLORE KIDS BOUTIQUE &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Default Slide 3 -->
+      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
+        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Women's Collection" class="absolute inset-0 w-full h-full object-cover object-center">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
+          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg">
+            <div class="space-y-1">
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">HERITAGE & ELEGANCE</span>
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">CRAFTED FOR YOU</span>
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
+              Grace In<br><span class="italic font-light">Detail</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+              Sarees, Blouses & Semi Partywear
+            </p>
+            <div class="pt-2">
+              <a href="#women" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+                EXPLORE WOMEN'S COLLECTION &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
   </div>
 
   <!-- Carousel Arrow Buttons -->
@@ -51,7 +125,9 @@
 
   <!-- Carousel Dot Indicators -->
   <div id="heroDotContainer" class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center space-x-2">
-    {%- for block in section.blocks -%}
+    {%- assign total_slides = section.blocks.size -%}
+    {%- if total_slides == 0 %}{% assign total_slides = 3 %}{% endif -%}
+    {%- for i in (1..total_slides) -%}
       <button class="hero-dot w-2.5 h-2.5 rounded-full {% if forloop.first %}bg-olive{% else %}bg-taupe/30 hover:bg-taupe/60{% endif %} transition-all duration-300" data-slide="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
     {%- endfor -%}
   </div>
