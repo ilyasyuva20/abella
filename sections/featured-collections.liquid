@@ -1,0 +1,125 @@
+<section id="featured" class="py-12 bg-[#FAF7F2] border-b border-[#EBE3D5]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Main Heading with Flanking Horizontal Lines -->
+    <div class="flex items-center justify-center mb-8">
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1A1A] font-normal px-4 sm:px-8 text-center tracking-tight">
+        {{ section.settings.heading }}
+      </h2>
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-5">
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: 6 -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Fallback static preview cards matching reference screenshot -->
+        <div class="product-card group relative flex flex-col justify-between focus:outline-none">
+          <div class="relative cursor-pointer aspect-[4/5] overflow-hidden bg-[#FAF8F5] border border-[#E5DFD5] shadow-xs">
+            <img src="{{ 'feat-floral-frock.jpg' | asset_url }}" alt="Floral Frock" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <button aria-label="Add to wishlist" class="absolute top-2.5 right-2.5 z-10 p-1 text-[#222222] hover:text-red-500 transition-colors">
+              <svg class="w-4 h-4 fill-none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2.5 text-left space-y-0.5">
+            <h3 class="font-sans text-xs sm:text-sm font-medium text-[#222222] group-hover:text-[#8C7A6B] transition-colors leading-snug">Floral Frock</h3>
+            <p class="font-sans text-xs sm:text-sm font-semibold text-[#1A1A1A]">₹ 2,499</p>
+          </div>
+        </div>
+
+        <div class="product-card group relative flex flex-col justify-between focus:outline-none">
+          <div class="relative cursor-pointer aspect-[4/5] overflow-hidden bg-[#FAF8F5] border border-[#E5DFD5] shadow-xs">
+            <img src="{{ 'feat-birthday-dress.jpg' | asset_url }}" alt="Birthday Dress" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <button aria-label="Add to wishlist" class="absolute top-2.5 right-2.5 z-10 p-1 text-[#222222] hover:text-red-500 transition-colors">
+              <svg class="w-4 h-4 fill-none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2.5 text-left space-y-0.5">
+            <h3 class="font-sans text-xs sm:text-sm font-medium text-[#222222] group-hover:text-[#8C7A6B] transition-colors leading-snug">Birthday Dress</h3>
+            <p class="font-sans text-xs sm:text-sm font-semibold text-[#1A1A1A]">₹ 3,299</p>
+          </div>
+        </div>
+
+        <div class="product-card group relative flex flex-col justify-between focus:outline-none">
+          <div class="relative cursor-pointer aspect-[4/5] overflow-hidden bg-[#FAF8F5] border border-[#E5DFD5] shadow-xs">
+            <img src="{{ 'feat-kids-coord.jpg' | asset_url }}" alt="Kids Co-ord Set" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <button aria-label="Add to wishlist" class="absolute top-2.5 right-2.5 z-10 p-1 text-[#222222] hover:text-red-500 transition-colors">
+              <svg class="w-4 h-4 fill-none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2.5 text-left space-y-0.5">
+            <h3 class="font-sans text-xs sm:text-sm font-medium text-[#222222] group-hover:text-[#8C7A6B] transition-colors leading-snug">Kids Co-ord Set</h3>
+            <p class="font-sans text-xs sm:text-sm font-semibold text-[#1A1A1A]">₹ 1,899</p>
+          </div>
+        </div>
+
+        <div class="product-card group relative flex flex-col justify-between focus:outline-none">
+          <div class="relative cursor-pointer aspect-[4/5] overflow-hidden bg-[#FAF8F5] border border-[#E5DFD5] shadow-xs">
+            <img src="{{ 'feat-chanderi-saree.jpg' | asset_url }}" alt="Chanderi Saree" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <button aria-label="Add to wishlist" class="absolute top-2.5 right-2.5 z-10 p-1 text-[#222222] hover:text-red-500 transition-colors">
+              <svg class="w-4 h-4 fill-none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2.5 text-left space-y-0.5">
+            <h3 class="font-sans text-xs sm:text-sm font-medium text-[#222222] group-hover:text-[#8C7A6B] transition-colors leading-snug">Chanderi Saree</h3>
+            <p class="font-sans text-xs sm:text-sm font-semibold text-[#1A1A1A]">₹ 4,299</p>
+          </div>
+        </div>
+
+        <div class="product-card group relative flex flex-col justify-between focus:outline-none">
+          <div class="relative cursor-pointer aspect-[4/5] overflow-hidden bg-[#FAF8F5] border border-[#E5DFD5] shadow-xs">
+            <img src="{{ 'feat-designer-blouse.jpg' | asset_url }}" alt="Designer Blouse" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <button aria-label="Add to wishlist" class="absolute top-2.5 right-2.5 z-10 p-1 text-[#222222] hover:text-red-500 transition-colors">
+              <svg class="w-4 h-4 fill-none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2.5 text-left space-y-0.5">
+            <h3 class="font-sans text-xs sm:text-sm font-medium text-[#222222] group-hover:text-[#8C7A6B] transition-colors leading-snug">Designer Blouse</h3>
+            <p class="font-sans text-xs sm:text-sm font-semibold text-[#1A1A1A]">₹ 1,799</p>
+          </div>
+        </div>
+
+        <div class="product-card group relative flex flex-col justify-between focus:outline-none">
+          <div class="relative cursor-pointer aspect-[4/5] overflow-hidden bg-[#FAF8F5] border border-[#E5DFD5] shadow-xs">
+            <img src="{{ 'feat-semi-partywear.jpg' | asset_url }}" alt="Semi Partywear" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <button aria-label="Add to wishlist" class="absolute top-2.5 right-2.5 z-10 p-1 text-[#222222] hover:text-red-500 transition-colors">
+              <svg class="w-4 h-4 fill-none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="mt-2.5 text-left space-y-0.5">
+            <h3 class="font-sans text-xs sm:text-sm font-medium text-[#222222] group-hover:text-[#8C7A6B] transition-colors leading-snug">Semi Partywear</h3>
+            <p class="font-sans text-xs sm:text-sm font-semibold text-[#1A1A1A]">₹ 3,499</p>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured Collections" },
+    { "type": "collection", "id": "collection", "label": "Shopify Collection" }
+  ],
+  "presets": [{ "name": "Featured Collections" }]
+}
+{% endschema %}

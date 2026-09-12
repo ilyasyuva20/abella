@@ -1,0 +1,61 @@
+<section class="py-7 bg-[#FAF7F2] border-t border-b border-[#EBE3D5] text-[#222222]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-y-6 md:gap-y-0 items-center">
+      
+      <!-- 1. Shipping Across India -->
+      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
+        <svg class="w-7 h-7 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.75a1.125 1.125 0 01-1.125-1.125V6.75A1.125 1.125 0 013.75 5.625h11.25c.621 0 1.125.504 1.125 1.125v3.659M18 10.5h2.472c.479 0 .916.273 1.122.704l1.328 2.766a1.125 1.125 0 01-.131 1.152l-.84.975a1.125 1.125 0 01-.853.393h-1.403m-4.5 0a1.5 1.5 0 103 0m-3 0a1.5 1.5 0 113 0"/>
+        </svg>
+        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_1 }}</span>
+      </div>
+
+      <!-- 2. Secure Payments -->
+      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
+        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+        </svg>
+        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_2 }}</span>
+      </div>
+
+      <!-- 3. Custom Orders -->
+      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
+        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.875 14.25l1.214 1.942a2.25 2.25 0 001.9 1.058h1.022a2.25 2.25 0 001.9-1.058l1.214-1.942M2.25 9.75h19.5m-16.5 0a3 3 0 003-3 3 3 0 00-3-3m0 6a3 3 0 013-3 3 3 0 01-3-3m13.5 6a3 3 0 003-3 3 3 0 00-3-3m0 6a3 3 0 013-3 3 3 0 01-3-3"/>
+        </svg>
+        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_3 }}</span>
+      </div>
+
+      <!-- 4. Made with Love -->
+      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
+        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+        </svg>
+        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_4 }}</span>
+      </div>
+
+      <!-- 5. Personal Support -->
+      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 col-span-2 md:col-span-1">
+        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
+        </svg>
+        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_5 }}</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust / Service Strip",
+  "settings": [
+    { "type": "text", "id": "item_1", "label": "Item 1", "default": "Shipping Across India" },
+    { "type": "text", "id": "item_2", "label": "Item 2", "default": "Secure Payments" },
+    { "type": "text", "id": "item_3", "label": "Item 3", "default": "Custom Orders" },
+    { "type": "text", "id": "item_4", "label": "Item 4", "default": "Made with Love" },
+    { "type": "text", "id": "item_5", "label": "Item 5", "default": "Personal Support" }
+  ],
+  "presets": [{ "name": "Trust / Service Strip" }]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+<section class="py-12 bg-[#FAF7F2] border-b border-[#EBE3D5]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Main Heading with Flanking Horizontal Lines -->
+    <div class="flex items-center justify-center mb-3">
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1A1A] font-normal px-4 sm:px-8 text-center tracking-tight">
+        {{ section.settings.heading }}
+      </h2>
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+    </div>
+
+    <!-- Instagram Handles Subtitle -->
+    <p class="text-center text-xs sm:text-sm font-sans tracking-[0.18em] text-[#4A4A4A] mb-8">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="hover:text-[#8C7A6B] transition-colors">{{ section.settings.handle_1 }}</a>
+      <span class="mx-3 text-[#B8AFA0]">|</span>
+      <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="hover:text-[#8C7A6B] transition-colors">{{ section.settings.handle_2 }}</a>
+    </p>
+
+    <!-- 8 Horizontal Square Instagram Tiles Grid -->
+    <div class="grid grid-cols-4 sm:grid-cols-8 gap-2.5 sm:gap-3 lg:gap-3.5">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-1.jpg' | asset_url }}" alt="Instagram Post 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-2.jpg' | asset_url }}" alt="Instagram Post 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-3.jpg' | asset_url }}" alt="Instagram Post 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-4.jpg' | asset_url }}" alt="Instagram Post 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-5.jpg' | asset_url }}" alt="Instagram Post 5" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-6.jpg' | asset_url }}" alt="Instagram Post 6" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-7.jpg' | asset_url }}" alt="Instagram Post 7" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+        <img src="{{ 'insta-8.jpg' | asset_url }}" alt="GOOD OUTFITS BRIGHTER DAYS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram Gallery",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Follow Our Journey" },
+    { "type": "text", "id": "handle_1", "label": "Instagram Handle 1", "default": "@abella_by_sebastians" },
+    { "type": "text", "id": "handle_2", "label": "Instagram Handle 2", "default": "@liittle_bella____" }
+  ],
+  "presets": [{ "name": "Instagram Gallery" }]
+}
+{% endschema %}
