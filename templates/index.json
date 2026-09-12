@@ -1,105 +1,34 @@
 {
   "sections": {
     "hero_banner": {
-      "type": "hero-banner",
-      "settings": {
-        "sub_heading_1": "TWO GENERATIONS",
-        "sub_heading_2": "ONE BEAUTIFUL STORY",
-        "heading_line_1": "For Every",
-        "heading_line_2": "Chapter",
-        "description": "Kids Boutique | Women's Collection",
-        "button_text": "EXPLORE OUR COLLECTION",
-        "button_link": "#featured"
-      }
+      "type": "hero-banner"
     },
     "benefit_strip": {
-      "type": "benefit-strip",
-      "settings": {
-        "item_1": "Premium Quality",
-        "item_2": "Custom Orders",
-        "item_3": "Shipping Across India",
-        "item_4": "Easy Returns",
-        "item_5": "Loved by Customers"
-      }
+      "type": "benefit-strip"
     },
     "collection_split": {
-      "type": "collection-split",
-      "settings": {
-        "left_tag": "KIDS BOUTIQUE",
-        "left_heading_1": "Little Moments",
-        "left_heading_2": "Big Dreams",
-        "left_desc": "Beautiful outfits for birthdays, celebrations and every special day.",
-        "left_btn_text": "EXPLORE KIDS",
-        "left_link": "/collections/kids",
-        "right_tag": "WOMEN'S COLLECTION",
-        "right_heading_1": "Grace",
-        "right_heading_2": "In Every Detail",
-        "right_desc": "Elegant sarees, blouses and semi partywear for the modern woman.",
-        "right_btn_text": "EXPLORE WOMEN",
-        "right_link": "/collections/women"
-      }
+      "type": "collection-split"
     },
     "categories": {
-      "type": "categories",
-      "settings": {
-        "heading": "Shop by Category",
-        "view_all_link": "/collections/all"
-      }
+      "type": "categories"
     },
     "custom_order_banner": {
-      "type": "custom-order-banner",
-      "settings": {
-        "sub_heading": "TAILORED EXCLUSIVITY",
-        "title": "CUSTOM ORDERS",
-        "tagline": "Your ideas, our craftsmanship.",
-        "description": "DM or WhatsApp for personalized designs, custom measurements, mother-daughter matching sets, and birthday partywear.",
-        "button_text": "CHAT ON WHATSAPP",
-        "whatsapp_number": "919446861646",
-        "side_text": "Unique outfits for your unique moments."
-      }
+      "type": "custom-order-banner"
     },
     "featured_collections": {
-      "type": "featured-collections",
-      "settings": {
-        "heading": "Featured Collections"
-      }
+      "type": "featured-collections"
     },
     "editorial_cards": {
-      "type": "editorial-cards",
-      "settings": {
-        "card_1_title": "Crafted Just for You",
-        "card_1_desc": "Personalised outfits for life's special moments.",
-        "card_2_title": "Premium Fabrics",
-        "card_2_desc": "Because comfort looks beautiful too.",
-        "card_3_title": "Gifting Made Special",
-        "card_3_desc": "Thoughtful pieces for every celebration."
-      }
+      "type": "editorial-cards"
     },
     "instagram_gallery": {
-      "type": "instagram-gallery",
-      "settings": {
-        "heading": "Follow Our Journey",
-        "handle_1": "@abella_by_sebastians",
-        "handle_2": "@little_bella___"
-      }
+      "type": "instagram-gallery"
     },
     "trust_strip": {
-      "type": "trust-strip",
-      "settings": {
-        "item_1": "Shipping Across India",
-        "item_2": "Secure Payments",
-        "item_3": "Custom Orders",
-        "item_4": "Made with Love",
-        "item_5": "Personal Support"
-      }
+      "type": "trust-strip"
     },
     "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "sub_heading": "OUR NEWSLETTER",
-        "heading": "Join the Abella Family",
-        "description": "Get updates on new collections, custom designs and special offers."
-      }
+      "type": "newsletter"
     }
   },
   "order": [
