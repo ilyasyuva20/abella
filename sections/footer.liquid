@@ -1,89 +1,73 @@
-<footer id="contact" class="bg-[#FAF7F2] text-[#222222] pt-14 pb-8 border-t border-[#EBE3D5]">
+<footer class="bg-[#E5D5C6] text-[#2C221E] pt-14 pb-8 border-t border-[#DFCDC0]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <!-- Top 4-Column Grid with Vertical Dividers -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-0 pb-10 border-b border-[#E5DFD5]">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 mb-12">
       
-      <!-- Column 1: Brand -->
-      <div class="space-y-4 pr-4 md:border-r border-[#E5DFD5]">
-        {%- if section.settings.logo != blank -%}
-          <img src="{{ section.settings.logo | image_url: width: 350 }}" alt="{{ shop.name }}" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[240px] sm:max-w-[280px] object-contain">
-        {%- else -%}
-          <img src="{{ 'logo.png' | asset_url }}" alt="Abella Logo" class="h-24 sm:h-28 lg:h-32 w-auto max-w-[240px] sm:max-w-[280px] object-contain">
-        {%- endif -%}
-        <p class="text-xs sm:text-[13px] font-sans font-medium text-[#4A4A4A] tracking-normal">
-          {{ section.settings.tagline }}
+      <!-- Column 1: Brand Info -->
+      <div class="space-y-4">
+        <a href="{{ routes.root_url }}" class="brand-logo inline-block">
+          {%- if section.settings.footer_logo != blank -%}
+            <img src="{{ section.settings.footer_logo | image_url: width: 250 }}" alt="{{ shop.name }}" class="h-12 w-auto object-contain">
+          {%- else -%}
+            <img src="{{ 'logo.png' | asset_url }}" alt="Abella by Sebastians" class="h-12 w-auto object-contain">
+          {%- endif -%}
+        </a>
+        <p class="text-xs text-[#7A6B60] leading-relaxed">
+          {{ section.settings.about_text | default: "Handcrafted kids boutique wear and elegant women's collections. Two generations of passion and design." }}
         </p>
-        <div class="flex items-center space-x-4 pt-1 text-[#222222]">
-          {%- if section.settings.instagram_link != blank -%}
-            <a href="{{ section.settings.instagram_link }}" target="_blank" aria-label="Instagram" class="hover:text-[#4A4D3B] transition-colors">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-          {%- endif -%}
-          <a href="https://facebook.com" target="_blank" aria-label="Facebook" class="hover:text-[#4A4D3B] transition-colors">
-            <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.714 5H18V0h-3.808C10.592 0 9 1.848 9 5.074V8z"/></svg>
-          </a>
-          <a href="https://pinterest.com" target="_blank" aria-label="Pinterest" class="hover:text-[#4A4D3B] transition-colors">
-            <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
-          </a>
-          {%- if section.settings.whatsapp_link != blank -%}
-            <a href="{{ section.settings.whatsapp_link }}" target="_blank" aria-label="WhatsApp" class="hover:text-[#4A4D3B] transition-colors">
-              <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.026 3.748 3.769-.981z"/></svg>
-            </a>
-          {%- endif -%}
-        </div>
       </div>
 
       <!-- Column 2: Quick Links -->
-      <div class="space-y-3 px-0 md:px-6 md:border-r border-[#E5DFD5]">
-        <h4 class="text-sm font-sans font-semibold text-[#1A1A1A] mb-3">Quick Links</h4>
-        <ul class="space-y-2 text-xs sm:text-sm font-sans text-[#4A4A4A]">
-          {%- for link in linklists[section.settings.footer_menu].links -%}
-            <li><a href="{{ link.url }}" class="hover:text-[#222222] transition-colors">{{ link.title }}</a></li>
-          {%- else -%}
-            <li><a href="#home" class="hover:text-[#222222] transition-colors">Home</a></li>
-            <li><a href="#kids" class="hover:text-[#222222] transition-colors">Kids Boutique</a></li>
-            <li><a href="#women" class="hover:text-[#222222] transition-colors">Women's Collection</a></li>
-            <li><a href="#custom" class="hover:text-[#222222] transition-colors">Custom Orders</a></li>
-            <li><a href="#about" class="hover:text-[#222222] transition-colors">About</a></li>
-            <li><a href="#contact" class="hover:text-[#222222] transition-colors">Contact</a></li>
-          {%- endfor -%}
+      <div class="space-y-3">
+        <h3 class="font-serif text-base font-medium text-[#2C221E] uppercase tracking-wider">Quick Links</h3>
+        <ul class="space-y-2 text-xs text-[#7A6B60]">
+          <li><a href="#home" class="hover:text-[#2C221E] transition-colors">Home</a></li>
+          <li><a href="#kids" class="hover:text-[#2C221E] transition-colors">Kids Boutique</a></li>
+          <li><a href="#women" class="hover:text-[#2C221E] transition-colors">Women's Collection</a></li>
+          <li><a href="#custom" class="hover:text-[#2C221E] transition-colors">Custom Orders</a></li>
+          <li><a href="{{ routes.search_url }}" class="hover:text-[#2C221E] transition-colors">Search</a></li>
         </ul>
       </div>
 
-      <!-- Column 3: Contact (Numbers Only) -->
-      <div class="space-y-3 px-0 md:px-6 md:border-r border-[#E5DFD5]">
-        <h4 class="text-sm font-sans font-semibold text-[#1A1A1A] mb-3">Contact</h4>
-        <div class="space-y-2.5 text-xs sm:text-sm font-sans text-[#4A4A4A]">
-          <div class="flex items-start gap-2.5">
-            <svg class="w-4 h-4 text-[#333333] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.896-1.47-5.267-3.84-6.738-6.738l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
-            </svg>
-            <div class="space-y-1 text-[#4A4A4A] font-medium">
-              <p>8089153124</p>
-              <p>+919446861646</p>
-            </div>
-          </div>
-        </div>
+      <!-- Column 3: Customer Care -->
+      <div class="space-y-3">
+        <h3 class="font-serif text-base font-medium text-[#2C221E] uppercase tracking-wider">Customer Care</h3>
+        <ul class="space-y-2 text-xs text-[#7A6B60]">
+          <li><a href="/pages/shipping-policy" class="hover:text-[#2C221E] transition-colors">Shipping & Delivery</a></li>
+          <li><a href="/pages/refund-policy" class="hover:text-[#2C221E] transition-colors">Returns & Exchanges</a></li>
+          <li><a href="/pages/terms-of-service" class="hover:text-[#2C221E] transition-colors">Terms of Service</a></li>
+          <li><a href="/pages/privacy-policy" class="hover:text-[#2C221E] transition-colors">Privacy Policy</a></li>
+          <li><a href="/pages/contact" class="hover:text-[#2C221E] transition-colors">Contact Us</a></li>
+        </ul>
       </div>
 
-      <!-- Column 4: Handwritten Thank You Note -->
-      <div class="px-0 md:pl-6 flex flex-col justify-center">
-        <div class="space-y-2">
-          <p class="font-serif italic text-2xl sm:text-3xl text-[#595543] leading-snug tracking-wide">
-            Thank you for being<br>a part of our story. <span class="not-italic text-sm text-[#595543]">♥</span>
+      <!-- Column 4: Contact & Social -->
+      <div class="space-y-3">
+        <h3 class="font-serif text-base font-medium text-[#2C221E] uppercase tracking-wider">Connect With Us</h3>
+        <div class="space-y-2 text-xs text-[#7A6B60]">
+          <p class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-2.826-1.47-5.11-3.754-6.58-6.58l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+            <span>+91 94468 61646 / 80891 53124</span>
+          </p>
+          <p class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+            <span>contact@abella.co.in</span>
           </p>
         </div>
+
+        <div class="pt-2 flex items-center space-x-3 text-[#2C221E]">
+          <a href="https://instagram.com/abella_by_sebastians" target="_blank" aria-label="Instagram" class="w-8 h-8 rounded-full bg-[#F5EFE8] border border-[#DFCDC0] flex items-center justify-center hover:bg-[#2C221E] hover:text-[#F5EFE8] transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
       </div>
 
     </div>
 
-    <!-- Bottom Footer Strip -->
-    <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-[#666666] font-sans gap-3">
-      <p>&copy; {{ 'now' | date: "%Y" }} Abella. All rights reserved.</p>
-      <p class="text-[10px] sm:text-xs tracking-[0.22em] uppercase text-[#888888]">FASHION &nbsp;|&nbsp; FOR &nbsp;|&nbsp; EVERY &nbsp;|&nbsp; GENERATION</p>
+    <!-- Bottom Copyright -->
+    <div class="border-t border-[#DFCDC0] pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-[#7A6B60] space-y-2 sm:space-y-0">
+      <p>&copy; {{ 'now' | date: '%Y' }} Abella by Sebastians. All Rights Reserved.</p>
+      <p class="text-[11px]">Crafted with love for Kids & Women</p>
     </div>
-
   </div>
 </footer>
 
@@ -91,13 +75,8 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Footer Logo" },
-    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Style for Every Generation." },
-    { "type": "link_list", "id": "footer_menu", "label": "Footer Menu", "default": "footer" },
-    { "type": "text", "id": "phone_1", "label": "Phone Number 1", "default": "8089153124" },
-    { "type": "text", "id": "phone_2", "label": "Phone Number 2", "default": "+919446861646" },
-    { "type": "text", "id": "instagram_link", "label": "Instagram URL", "default": "https://instagram.com/abella_by_sebastians" },
-    { "type": "text", "id": "whatsapp_link", "label": "WhatsApp URL", "default": "https://wa.me/919446861646" }
+    { "type": "image_picker", "id": "footer_logo", "label": "Footer Logo" },
+    { "type": "text", "id": "about_text", "label": "About Text", "default": "Handcrafted kids boutique wear and elegant women's collections. Two generations of passion and design." }
   ]
 }
 {% endschema %}

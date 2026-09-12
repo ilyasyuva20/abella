@@ -1,8 +1,8 @@
-<div class="announcement-bar bg-champagne-light text-taupe text-xs py-2 border-b border-sand text-center font-sans tracking-wide">
+<div class="announcement-bar bg-[#EADCD0] text-[#2C221E] text-xs py-2.5 border-b border-[#DFCDC0] text-center font-sans tracking-widest font-medium uppercase">
   <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-    <span class="hidden md:inline-block">{{ section.settings.message_left }}</span>
-    <span class="mx-auto md:mx-0">{{ section.settings.message_center }}</span>
-    <span class="hidden md:inline-block">{{ section.settings.message_right }}</span>
+    <span class="hidden md:inline-block text-[11px] opacity-90">{{ section.settings.message_left | default: "💎 Custom Outfits for Your Special Moments" }}</span>
+    <span class="mx-auto md:mx-0 text-[11px] font-semibold tracking-widest">{{ section.settings.message_center | default: "🚚 Free Shipping Across India" }}</span>
+    <span class="hidden md:inline-block text-[11px] opacity-90">{{ section.settings.message_right | default: "💬 DM for Custom Orders" }}</span>
   </div>
 </div>
 

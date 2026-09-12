@@ -1,46 +1,46 @@
-<section class="py-12 bg-[#FAF7F2] border-b border-[#EBE3D5]">
+<section class="py-14 sm:py-16 bg-[#F5EFE8] border-b border-[#DFCDC0]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Main Heading with Flanking Horizontal Lines -->
     <div class="flex items-center justify-center mb-3">
-      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
-      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#1A1A1A] font-normal px-4 sm:px-8 text-center tracking-tight">
-        {{ section.settings.heading }}
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#DFCDC0]"></div>
+      <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#2C221E] font-normal px-4 sm:px-8 text-center tracking-tight">
+        {{ section.settings.heading | default: "Follow Our Journey" }}
       </h2>
-      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#D6CEBE]"></div>
+      <div class="w-16 sm:w-28 md:w-40 h-[1px] bg-[#DFCDC0]"></div>
     </div>
 
     <!-- Instagram Handles Subtitle -->
-    <p class="text-center text-xs sm:text-sm font-sans tracking-[0.18em] text-[#4A4A4A] mb-8">
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="hover:text-[#8C7A6B] transition-colors">{{ section.settings.handle_1 }}</a>
-      <span class="mx-3 text-[#B8AFA0]">|</span>
-      <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="hover:text-[#8C7A6B] transition-colors">{{ section.settings.handle_2 }}</a>
+    <p class="text-center text-xs sm:text-sm font-sans tracking-[0.2em] text-[#7A6B60] mb-8 uppercase">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="hover:text-[#2C221E] transition-colors">{{ section.settings.handle_1 | default: "@abella_by_sebastians" }}</a>
+      <span class="mx-3 text-[#DFCDC0]">|</span>
+      <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="hover:text-[#2C221E] transition-colors">{{ section.settings.handle_2 | default: "@liittle_bella____" }}</a>
     </p>
 
-    <!-- 8 Horizontal Square Instagram Tiles Grid -->
+    <!-- 8 Horizontal Square Instagram Tiles Grid with FLEUR Borders -->
     <div class="grid grid-cols-4 sm:grid-cols-8 gap-2.5 sm:gap-3 lg:gap-3.5">
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-1.jpg' | asset_url }}" alt="Instagram Post 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-2.jpg' | asset_url }}" alt="Instagram Post 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-3.jpg' | asset_url }}" alt="Instagram Post 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-4.jpg' | asset_url }}" alt="Instagram Post 4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-5.jpg' | asset_url }}" alt="Instagram Post 5" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-6.jpg' | asset_url }}" alt="Instagram Post 6" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-7.jpg' | asset_url }}" alt="Instagram Post 7" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
-      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden border border-[#E5DFD5] relative group bg-[#FAF8F5]">
+      <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
         <img src="{{ 'insta-8.jpg' | asset_url }}" alt="GOOD OUTFITS BRIGHTER DAYS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
       </a>
     </div>

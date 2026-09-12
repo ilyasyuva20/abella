@@ -1,32 +1,50 @@
-<section class="py-12 bg-[#FAF7F2] border-b border-[#EBE3D5]">
+<section class="py-14 sm:py-16 bg-[#F5EFE8] border-b border-[#DFCDC0]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
       
-      <!-- Card 1: Crafted Just for You -->
-      <div class="editorial-card group relative aspect-[1.94/1] overflow-hidden rounded-none border border-[#E5DFD5] bg-[#FAF8F5] shadow-xs hover:border-[#8C7A6B] transition-all duration-300">
-        {%- if section.settings.card_1_image != blank -%}
-          <img src="{{ section.settings.card_1_image | image_url: width: 800 }}" alt="{{ section.settings.card_1_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        {%- else -%}
-          <img src="{{ 'editorial-1.jpg' | asset_url }}" alt="Crafted Just for You" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        {%- endif -%}
+      <!-- Card 1: Crafted Just for You (FLEUR Top Arch Card) -->
+      <div class="editorial-card group relative bg-[#EADCD0] p-4 rounded-t-[100px] rounded-b-2xl border border-[#DFCDC0] hover:bg-[#E5D2C2] transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+        <div class="w-full aspect-[4/3] rounded-t-[90px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8] mb-4">
+          {%- if section.settings.card_1_image != blank -%}
+            <img src="{{ section.settings.card_1_image | image_url: width: 800 }}" alt="{{ section.settings.card_1_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {%- else -%}
+            <img src="{{ 'editorial-1.jpg' | asset_url }}" alt="Crafted Just for You" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {%- endif -%}
+        </div>
+        <div class="space-y-1.5 p-2 text-center">
+          <h3 class="font-serif text-xl sm:text-2xl text-[#2C221E] font-normal leading-snug">{{ section.settings.card_1_title | default: "Crafted Just for You" }}</h3>
+          <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.card_1_desc | default: "Personalised outfits for life's special moments." }}</p>
+        </div>
       </div>
 
-      <!-- Card 2: Premium Fabrics -->
-      <div class="editorial-card group relative aspect-[1.94/1] overflow-hidden rounded-none border border-[#E5DFD5] bg-[#FAF8F5] shadow-xs hover:border-[#8C7A6B] transition-all duration-300">
-        {%- if section.settings.card_2_image != blank -%}
-          <img src="{{ section.settings.card_2_image | image_url: width: 800 }}" alt="{{ section.settings.card_2_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        {%- else -%}
-          <img src="{{ 'editorial-2.jpg' | asset_url }}" alt="Premium Fabrics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        {%- endif -%}
+      <!-- Card 2: Premium Fabrics (FLEUR Top Arch Card) -->
+      <div class="editorial-card group relative bg-[#EADCD0] p-4 rounded-t-[100px] rounded-b-2xl border border-[#DFCDC0] hover:bg-[#E5D2C2] transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+        <div class="w-full aspect-[4/3] rounded-t-[90px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8] mb-4">
+          {%- if section.settings.card_2_image != blank -%}
+            <img src="{{ section.settings.card_2_image | image_url: width: 800 }}" alt="{{ section.settings.card_2_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {%- else -%}
+            <img src="{{ 'editorial-2.jpg' | asset_url }}" alt="Premium Fabrics" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {%- endif -%}
+        </div>
+        <div class="space-y-1.5 p-2 text-center">
+          <h3 class="font-serif text-xl sm:text-2xl text-[#2C221E] font-normal leading-snug">{{ section.settings.card_2_title | default: "Premium Fabrics" }}</h3>
+          <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.card_2_desc | default: "Because comfort looks beautiful too." }}</p>
+        </div>
       </div>
 
-      <!-- Card 3: Gifting Made Special -->
-      <div class="editorial-card group relative aspect-[1.94/1] overflow-hidden rounded-none border border-[#E5DFD5] bg-[#FAF8F5] shadow-xs hover:border-[#8C7A6B] transition-all duration-300">
-        {%- if section.settings.card_3_image != blank -%}
-          <img src="{{ section.settings.card_3_image | image_url: width: 800 }}" alt="{{ section.settings.card_3_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        {%- else -%}
-          <img src="{{ 'editorial-3.jpg' | asset_url }}" alt="Gifting Made Special" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        {%- endif -%}
+      <!-- Card 3: Gifting Made Special (FLEUR Top Arch Card) -->
+      <div class="editorial-card group relative bg-[#EADCD0] p-4 rounded-t-[100px] rounded-b-2xl border border-[#DFCDC0] hover:bg-[#E5D2C2] transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+        <div class="w-full aspect-[4/3] rounded-t-[90px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8] mb-4">
+          {%- if section.settings.card_3_image != blank -%}
+            <img src="{{ section.settings.card_3_image | image_url: width: 800 }}" alt="{{ section.settings.card_3_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {%- else -%}
+            <img src="{{ 'editorial-3.jpg' | asset_url }}" alt="Gifting Made Special" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          {%- endif -%}
+        </div>
+        <div class="space-y-1.5 p-2 text-center">
+          <h3 class="font-serif text-xl sm:text-2xl text-[#2C221E] font-normal leading-snug">{{ section.settings.card_3_title | default: "Gifting Made Special" }}</h3>
+          <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.card_3_desc | default: "Thoughtful pieces for every celebration." }}</p>
+        </div>
       </div>
 
     </div>

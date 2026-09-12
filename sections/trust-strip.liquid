@@ -1,45 +1,41 @@
-<section class="py-7 bg-[#FAF7F2] border-t border-b border-[#EBE3D5] text-[#222222]">
+<section class="py-14 sm:py-16 bg-[#F5EFE8] border-b border-[#DFCDC0]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-y-6 md:gap-y-0 items-center">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
       
-      <!-- 1. Shipping Across India -->
-      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
-        <svg class="w-7 h-7 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.75a1.125 1.125 0 01-1.125-1.125V6.75A1.125 1.125 0 013.75 5.625h11.25c.621 0 1.125.504 1.125 1.125v3.659M18 10.5h2.472c.479 0 .916.273 1.122.704l1.328 2.766a1.125 1.125 0 01-.131 1.152l-.84.975a1.125 1.125 0 01-.853.393h-1.403m-4.5 0a1.5 1.5 0 103 0m-3 0a1.5 1.5 0 113 0"/>
-        </svg>
-        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_1 }}</span>
+      <!-- Feature 1 -->
+      <div class="bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] text-center space-y-3 shadow-xs hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-[#F5EFE8] border border-[#DFCDC0] mx-auto flex items-center justify-center text-[#2C221E]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21z"/></svg>
+        </div>
+        <h3 class="font-serif text-lg text-[#2C221E] font-normal">{{ section.settings.trust_1_title | default: "Handcrafted Luxury" }}</h3>
+        <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.trust_1_desc | default: "Every stitch crafted with care for two generations." }}</p>
       </div>
 
-      <!-- 2. Secure Payments -->
-      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
-        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
-        </svg>
-        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_2 }}</span>
+      <!-- Feature 2 -->
+      <div class="bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] text-center space-y-3 shadow-xs hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-[#F5EFE8] border border-[#DFCDC0] mx-auto flex items-center justify-center text-[#2C221E]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-7 7m7-7L5 5"/></svg>
+        </div>
+        <h3 class="font-serif text-lg text-[#2C221E] font-normal">{{ section.settings.trust_2_title | default: "Custom Sizing" }}</h3>
+        <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.trust_2_desc | default: "Tailored perfectly to your unique measurements." }}</p>
       </div>
 
-      <!-- 3. Custom Orders -->
-      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
-        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M7.875 14.25l1.214 1.942a2.25 2.25 0 001.9 1.058h1.022a2.25 2.25 0 001.9-1.058l1.214-1.942M2.25 9.75h19.5m-16.5 0a3 3 0 003-3 3 3 0 00-3-3m0 6a3 3 0 013-3 3 3 0 01-3-3m13.5 6a3 3 0 003-3 3 3 0 00-3-3m0 6a3 3 0 013-3 3 3 0 01-3-3"/>
-        </svg>
-        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_3 }}</span>
+      <!-- Feature 3 -->
+      <div class="bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] text-center space-y-3 shadow-xs hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-[#F5EFE8] border border-[#DFCDC0] mx-auto flex items-center justify-center text-[#2C221E]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v1.135m12 0c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-12a1.125 1.125 0 01-1.125-1.125v-4.5c0-.621.504-1.125 1.125-1.125h12z"/></svg>
+        </div>
+        <h3 class="font-serif text-lg text-[#2C221E] font-normal">{{ section.settings.trust_3_title | default: "Pan-India Delivery" }}</h3>
+        <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.trust_3_desc | default: "Safely packaged and delivered to your doorstep." }}</p>
       </div>
 
-      <!-- 4. Made with Love -->
-      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 md:border-r border-[#D6CEBE]/80">
-        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
-        </svg>
-        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_4 }}</span>
-      </div>
-
-      <!-- 5. Personal Support -->
-      <div class="flex flex-col items-center justify-center text-center space-y-2.5 px-2 col-span-2 md:col-span-1">
-        <svg class="w-6 h-6 text-[#222222]" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
-        </svg>
-        <span class="text-xs sm:text-sm font-sans font-medium text-[#222222] tracking-normal">{{ section.settings.item_5 }}</span>
+      <!-- Feature 4 -->
+      <div class="bg-[#EADCD0] p-6 rounded-2xl border border-[#DFCDC0] text-center space-y-3 shadow-xs hover:shadow-md transition-all duration-300">
+        <div class="w-12 h-12 rounded-full bg-[#F5EFE8] border border-[#DFCDC0] mx-auto flex items-center justify-center text-[#2C221E]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-serif text-lg text-[#2C221E] font-normal">{{ section.settings.trust_4_title | default: "Personal Assistance" }}</h3>
+        <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.trust_4_desc | default: "Dedicated support via WhatsApp & Instagram DM." }}</p>
       </div>
 
     </div>
@@ -50,11 +46,14 @@
 {
   "name": "Trust / Service Strip",
   "settings": [
-    { "type": "text", "id": "item_1", "label": "Item 1", "default": "Shipping Across India" },
-    { "type": "text", "id": "item_2", "label": "Item 2", "default": "Secure Payments" },
-    { "type": "text", "id": "item_3", "label": "Item 3", "default": "Custom Orders" },
-    { "type": "text", "id": "item_4", "label": "Item 4", "default": "Made with Love" },
-    { "type": "text", "id": "item_5", "label": "Item 5", "default": "Personal Support" }
+    { "type": "text", "id": "trust_1_title", "label": "Trust 1 Title", "default": "Handcrafted Luxury" },
+    { "type": "text", "id": "trust_1_desc", "label": "Trust 1 Description", "default": "Every stitch crafted with care for two generations." },
+    { "type": "text", "id": "trust_2_title", "label": "Trust 2 Title", "default": "Custom Sizing" },
+    { "type": "text", "id": "trust_2_desc", "label": "Trust 2 Description", "default": "Tailored perfectly to your unique measurements." },
+    { "type": "text", "id": "trust_3_title", "label": "Trust 3 Title", "default": "Pan-India Delivery" },
+    { "type": "text", "id": "trust_3_desc", "label": "Trust 3 Description", "default": "Safely packaged and delivered to your doorstep." },
+    { "type": "text", "id": "trust_4_title", "label": "Trust 4 Title", "default": "Personal Assistance" },
+    { "type": "text", "id": "trust_4_desc", "label": "Trust 4 Description", "default": "Dedicated support via WhatsApp & Instagram DM." }
   ],
   "presets": [{ "name": "Trust / Service Strip" }]
 }

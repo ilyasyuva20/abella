@@ -1,36 +1,40 @@
-<section id="home" class="relative bg-champagne-hero overflow-hidden border-b border-sand group w-full">
+<section id="home" class="relative bg-[#F5EFE8] overflow-hidden border-b border-[#DFCDC0] group w-full">
   
   <div id="heroSliderTrack" class="flex w-full transition-transform duration-700 ease-in-out">
     {%- if section.blocks.size > 0 -%}
       {%- for block in section.blocks -%}
-        <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center" {{ block.shopify_attributes }}>
+        <div class="w-full flex-shrink-0 relative min-h-[460px] sm:min-h-[520px] lg:min-h-[600px] flex items-center" {{ block.shopify_attributes }}>
+          
+          <!-- FLEUR Architectural Decorative Arch Backdrop -->
+          <div class="absolute left-6 sm:left-16 top-6 sm:top-10 bottom-0 w-[85%] sm:w-[48%] bg-[#EADCD0] rounded-t-[180px] sm:rounded-t-[260px] z-0 pointer-events-none opacity-80"></div>
+
           <!-- Background Photo -->
           {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 2000 }}" alt="{{ block.settings.heading_line_1 | escape }}" class="absolute inset-0 w-full h-full object-cover object-center">
+            <img src="{{ block.settings.image | image_url: width: 2000 }}" alt="{{ block.settings.heading_line_1 | escape }}" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90">
           {%- else -%}
-            <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center">
+            <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90">
           {%- endif -%}
 
           <!-- Content Overlay Container -->
           <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
             
             <!-- Left Text Content -->
-            <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg backdrop-blur-xs sm:backdrop-blur-none">
-              <div class="space-y-1">
-                <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">{{ block.settings.sub_heading_1 }}</span>
-                <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">{{ block.settings.sub_heading_2 }}</span>
+            <div class="max-w-lg space-y-5 text-left bg-[#F5EFE8]/70 sm:bg-transparent p-6 sm:p-0 rounded-2xl sm:rounded-none backdrop-blur-xs sm:backdrop-blur-none border border-[#DFCDC0]/40 sm:border-none shadow-xs sm:shadow-none">
+              <div class="space-y-1.5">
+                <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.28em] text-[#7A6B60] font-medium block">{{ block.settings.sub_heading_1 }}</span>
+                <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.22em] text-[#8C7A6E] block">{{ block.settings.sub_heading_2 }}</span>
               </div>
 
-              <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
-                {{ block.settings.heading_line_1 }}<br><span class="italic font-light">{{ block.settings.heading_line_2 }}</span>
+              <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.06] text-[#2C221E] tracking-tight">
+                {{ block.settings.heading_line_1 }}<br><span class="italic font-light text-[#4A3B32]">{{ block.settings.heading_line_2 }}</span>
               </h1>
 
-              <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+              <p class="text-xs sm:text-sm text-[#7A6B60] font-sans tracking-widest uppercase">
                 {{ block.settings.description }}
               </p>
 
-              <div class="pt-2">
-                <a href="{{ block.settings.button_link | default: '#featured' }}" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+              <div class="pt-3">
+                <a href="{{ block.settings.button_link | default: '#featured' }}" class="inline-flex items-center gap-3 px-8 py-3.5 bg-[#2C221E] text-[#F5EFE8] text-xs font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-sm rounded-none">
                   {{ block.settings.button_text }} &rarr;
                 </a>
               </div>
@@ -41,22 +45,25 @@
       {%- endfor -%}
     {%- else -%}
       <!-- Default Slide 1 -->
-      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
-        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center">
+      <div class="w-full flex-shrink-0 relative min-h-[460px] sm:min-h-[520px] lg:min-h-[600px] flex items-center">
+        <!-- FLEUR Architectural Decorative Arch Backdrop -->
+        <div class="absolute left-6 sm:left-16 top-6 sm:top-10 bottom-0 w-[85%] sm:w-[48%] bg-[#EADCD0] rounded-t-[180px] sm:rounded-t-[260px] z-0 pointer-events-none opacity-80"></div>
+        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Abella Hero Banner" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90">
+        
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
-          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg">
-            <div class="space-y-1">
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">TWO GENERATIONS</span>
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">ONE BEAUTIFUL STORY</span>
+          <div class="max-w-lg space-y-5 text-left bg-[#F5EFE8]/70 sm:bg-transparent p-6 sm:p-0 rounded-2xl sm:rounded-none">
+            <div class="space-y-1.5">
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.28em] text-[#7A6B60] font-medium block">TWO GENERATIONS</span>
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.22em] text-[#8C7A6E] block">ONE BEAUTIFUL STORY</span>
             </div>
-            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
-              For Every<br><span class="italic font-light">Chapter</span>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.06] text-[#2C221E] tracking-tight">
+              For Every<br><span class="italic font-light text-[#4A3B32]">Chapter</span>
             </h1>
-            <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+            <p class="text-xs sm:text-sm text-[#7A6B60] font-sans tracking-widest uppercase">
               Kids Boutique | Women's Collection
             </p>
-            <div class="pt-2">
-              <a href="#featured" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+            <div class="pt-3">
+              <a href="#featured" class="inline-flex items-center gap-3 px-8 py-3.5 bg-[#2C221E] text-[#F5EFE8] text-xs font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-sm rounded-none">
                 EXPLORE OUR COLLECTION &rarr;
               </a>
             </div>
@@ -65,22 +72,24 @@
       </div>
 
       <!-- Default Slide 2 -->
-      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
-        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Kids Boutique" class="absolute inset-0 w-full h-full object-cover object-center">
+      <div class="w-full flex-shrink-0 relative min-h-[460px] sm:min-h-[520px] lg:min-h-[600px] flex items-center">
+        <div class="absolute left-6 sm:left-16 top-6 sm:top-10 bottom-0 w-[85%] sm:w-[48%] bg-[#EADCD0] rounded-t-[180px] sm:rounded-t-[260px] z-0 pointer-events-none opacity-80"></div>
+        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Kids Boutique" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90">
+        
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
-          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg">
-            <div class="space-y-1">
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">FOR LITTLE ONES</span>
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">HANDMADE WITH LOVE</span>
+          <div class="max-w-lg space-y-5 text-left bg-[#F5EFE8]/70 sm:bg-transparent p-6 sm:p-0 rounded-2xl sm:rounded-none">
+            <div class="space-y-1.5">
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.28em] text-[#7A6B60] font-medium block">FOR LITTLE ONES</span>
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.22em] text-[#8C7A6E] block">HANDMADE WITH LOVE</span>
             </div>
-            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
-              Little<br><span class="italic font-light">Dreams</span>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.06] text-[#2C221E] tracking-tight">
+              Little<br><span class="italic font-light text-[#4A3B32]">Dreams</span>
             </h1>
-            <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+            <p class="text-xs sm:text-sm text-[#7A6B60] font-sans tracking-widest uppercase">
               Frocks, Dresses & Custom Birthday Outfits
             </p>
-            <div class="pt-2">
-              <a href="#kids" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+            <div class="pt-3">
+              <a href="#kids" class="inline-flex items-center gap-3 px-8 py-3.5 bg-[#2C221E] text-[#F5EFE8] text-xs font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-sm rounded-none">
                 EXPLORE KIDS BOUTIQUE &rarr;
               </a>
             </div>
@@ -89,22 +98,24 @@
       </div>
 
       <!-- Default Slide 3 -->
-      <div class="w-full flex-shrink-0 relative min-h-[440px] sm:min-h-[500px] lg:min-h-[580px] flex items-center">
-        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Women's Collection" class="absolute inset-0 w-full h-full object-cover object-center">
+      <div class="w-full flex-shrink-0 relative min-h-[460px] sm:min-h-[520px] lg:min-h-[600px] flex items-center">
+        <div class="absolute left-6 sm:left-16 top-6 sm:top-10 bottom-0 w-[85%] sm:w-[48%] bg-[#EADCD0] rounded-t-[180px] sm:rounded-t-[260px] z-0 pointer-events-none opacity-80"></div>
+        <img src="{{ 'hero-banner-bg.jpg' | asset_url }}" alt="Women's Collection" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-90">
+        
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-10 sm:py-14 flex items-center justify-start">
-          <div class="max-w-lg space-y-5 text-left bg-ivory/40 sm:bg-transparent p-4 sm:p-0 rounded-lg">
-            <div class="space-y-1">
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.25em] text-[#555340] font-medium block">HERITAGE & ELEGANCE</span>
-              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.2em] text-[#696652] block">CRAFTED FOR YOU</span>
+          <div class="max-w-lg space-y-5 text-left bg-[#F5EFE8]/70 sm:bg-transparent p-6 sm:p-0 rounded-2xl sm:rounded-none">
+            <div class="space-y-1.5">
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.28em] text-[#7A6B60] font-medium block">HERITAGE & ELEGANCE</span>
+              <span class="text-[11px] sm:text-xs font-sans uppercase tracking-[0.22em] text-[#8C7A6E] block">CRAFTED FOR YOU</span>
             </div>
-            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.08] text-[#222220]">
-              Grace In<br><span class="italic font-light">Detail</span>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.06] text-[#2C221E] tracking-tight">
+              Grace In<br><span class="italic font-light text-[#4A3B32]">Detail</span>
             </h1>
-            <p class="text-xs sm:text-sm text-[#555340] font-sans tracking-wider uppercase">
+            <p class="text-xs sm:text-sm text-[#7A6B60] font-sans tracking-widest uppercase">
               Sarees, Blouses & Semi Partywear
             </p>
-            <div class="pt-2">
-              <a href="#women" class="inline-flex items-center gap-3 px-7 py-3.5 bg-[#4A4C3A] text-ivory text-xs font-medium uppercase tracking-widest hover:bg-[#2E3025] transition-all duration-300 shadow-sm">
+            <div class="pt-3">
+              <a href="#women" class="inline-flex items-center gap-3 px-8 py-3.5 bg-[#2C221E] text-[#F5EFE8] text-xs font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-sm rounded-none">
                 EXPLORE WOMEN'S COLLECTION &rarr;
               </a>
             </div>
@@ -115,11 +126,11 @@
   </div>
 
   <!-- Carousel Arrow Buttons -->
-  <button id="heroPrevBtn" aria-label="Previous Slide" class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-ivory/90 hover:bg-white text-charcoal border border-sand/60 shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110">
+  <button id="heroPrevBtn" aria-label="Previous Slide" class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#F5EFE8]/90 hover:bg-white text-[#2C221E] border border-[#DFCDC0] shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
   </button>
   
-  <button id="heroNextBtn" aria-label="Next Slide" class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-ivory/90 hover:bg-white text-charcoal border border-sand/60 shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110">
+  <button id="heroNextBtn" aria-label="Next Slide" class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#F5EFE8]/90 hover:bg-white text-[#2C221E] border border-[#DFCDC0] shadow-md flex items-center justify-center transition-all duration-300 hover:scale-110">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
   </button>
 
@@ -128,83 +139,31 @@
     {%- assign total_slides = section.blocks.size -%}
     {%- if total_slides == 0 %}{% assign total_slides = 3 %}{% endif -%}
     {%- for i in (1..total_slides) -%}
-      <button class="hero-dot w-2.5 h-2.5 rounded-full {% if forloop.first %}bg-olive{% else %}bg-taupe/30 hover:bg-taupe/60{% endif %} transition-all duration-300" data-slide="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+      <button class="hero-dot w-2.5 h-2.5 rounded-full {% if forloop.first %}bg-[#2C221E]{% else %}bg-[#7A6B60]/30 hover:bg-[#7A6B60]/60{% endif %} transition-all duration-300" data-slide="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
     {%- endfor -%}
   </div>
 
 </section>
 
-{% schema %}{
+{% schema %}
+{
   "name": "Hero Banner Carousel",
   "blocks": [
     {
       "type": "slide",
       "name": "Banner Slide",
       "settings": [
-        {
-          "type": "text",
-          "id": "sub_heading_1",
-          "label": "Sub Heading 1",
-          "default": "TWO GENERATIONS"
-        },
-        {
-          "type": "text",
-          "id": "sub_heading_2",
-          "label": "Sub Heading 2",
-          "default": "ONE BEAUTIFUL STORY"
-        },
-        {
-          "type": "text",
-          "id": "heading_line_1",
-          "label": "Heading Line 1",
-          "default": "For Every"
-        },
-        {
-          "type": "text",
-          "id": "heading_line_2",
-          "label": "Heading Line 2 (Italic)",
-          "default": "Chapter"
-        },
-        {
-          "type": "text",
-          "id": "description",
-          "label": "Description",
-          "default": "Kids Boutique | Women's Collection"
-        },
-        {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button Text",
-          "default": "EXPLORE OUR COLLECTION"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
-        },
-        {
-          "type": "text",
-          "id": "vert_1",
-          "label": "Vertical Text 1",
-          "default": "TIMELESS"
-        },
-        {
-          "type": "text",
-          "id": "vert_2",
-          "label": "Vertical Text 2",
-          "default": "ELEGANT"
-        },
-        {
-          "type": "text",
-          "id": "vert_3",
-          "label": "Vertical Text 3",
-          "default": "YOU"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Slide Background Image"
-        }
+        { "type": "text", "id": "sub_heading_1", "label": "Sub Heading 1", "default": "TWO GENERATIONS" },
+        { "type": "text", "id": "sub_heading_2", "label": "Sub Heading 2", "default": "ONE BEAUTIFUL STORY" },
+        { "type": "text", "id": "heading_line_1", "label": "Heading Line 1", "default": "For Every" },
+        { "type": "text", "id": "heading_line_2", "label": "Heading Line 2 (Italic)", "default": "Chapter" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Kids Boutique | Women's Collection" },
+        { "type": "text", "id": "button_text", "label": "Button Text", "default": "EXPLORE OUR COLLECTION" },
+        { "type": "url", "id": "button_link", "label": "Button Link" },
+        { "type": "text", "id": "vert_1", "label": "Vertical Text 1", "default": "TIMELESS" },
+        { "type": "text", "id": "vert_2", "label": "Vertical Text 2", "default": "ELEGANT" },
+        { "type": "text", "id": "vert_3", "label": "Vertical Text 3", "default": "YOU" },
+        { "type": "image_picker", "id": "image", "label": "Slide Background Image" }
       ]
     }
   ],
@@ -212,32 +171,11 @@
     {
       "name": "Hero Banner Carousel",
       "blocks": [
-        {
-          "type": "slide"
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "heading_line_1": "Little",
-            "heading_line_2": "Dreams",
-            "button_text": "EXPLORE KIDS BOUTIQUE",
-            "vert_1": "CHARMING",
-            "vert_2": "PLAYFUL",
-            "vert_3": "JOY"
-          }
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "heading_line_1": "Grace In",
-            "heading_line_2": "Detail",
-            "button_text": "EXPLORE WOMEN'S COLLECTION",
-            "vert_1": "LUXURY",
-            "vert_2": "GRACE",
-            "vert_3": "HERITAGE"
-          }
-        }
+        { "type": "slide" },
+        { "type": "slide", "settings": { "heading_line_1": "Little", "heading_line_2": "Dreams", "button_text": "EXPLORE KIDS BOUTIQUE", "vert_1": "CHARMING", "vert_2": "PLAYFUL", "vert_3": "JOY" } },
+        { "type": "slide", "settings": { "heading_line_1": "Grace In", "heading_line_2": "Detail", "button_text": "EXPLORE WOMEN'S COLLECTION", "vert_1": "LUXURY", "vert_2": "GRACE", "vert_3": "HERITAGE" } }
       ]
     }
   ]
-}{% endschema %}
+}
+{% endschema %}

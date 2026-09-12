@@ -7,21 +7,31 @@
   <link rel="canonical" href="{{ canonical_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS Engine -->
+  <!-- Tailwind CSS Engine with FLEUR Design Tokens -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            ivory: '#FAF7F2',
-            champagne: '#FAF6EE',
-            sand: '#EBE3D5',
-            taupe: '#555345',
-            olive: '#4A4D3B',
-            charcoal: '#1A1A1A'
+            nude: {
+              50: '#FAF6F0',
+              100: '#F5EFE8',
+              200: '#EADCD0',
+              300: '#DFCDC0',
+              400: '#D5BCAB',
+              500: '#A88E7D',
+              800: '#4A3B32',
+              900: '#2C221E'
+            },
+            ivory: '#F5EFE8',
+            champagne: '#EADCD0',
+            sand: '#DFCDC0',
+            taupe: '#7A6B60',
+            olive: '#2C221E',
+            charcoal: '#2C221E'
           },
           fontFamily: {
             serif: ['Cormorant Garamond', 'Georgia', 'serif'],
@@ -50,7 +60,7 @@
   {{ content_for_header }}
 </head>
 
-<body class="bg-ivory text-charcoal font-sans antialiased">
+<body class="bg-[#F5EFE8] text-[#2C221E] font-sans antialiased">
   {% section 'announcement-bar' %}
   {% section 'header' %}
 
