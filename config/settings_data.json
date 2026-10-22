@@ -1,8 +1,198 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
+    "favicon": "shopify://shop_images/Logo.png",
     "color_ivory": "#FDFBF7",
     "color_champagne": "#FAF6EE",
     "color_olive": "#3F4032",
-    "color_taupe": "#696652"
+    "color_taupe": "#696652",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "message_left": "",
+          "message_center": "🚚 Free Shipping Across India",
+          "message_right": ""
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/Logo.png",
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "about_text": "Handcrafted kids boutique wear and elegant women's collections. Two generations of passion and design."
+        }
+      },
+      "hero-banner": {
+        "type": "hero-banner",
+        "settings": {}
+      },
+      "benefit-strip": {
+        "type": "benefit-strip",
+        "settings": {
+          "item_1": "Premium Quality",
+          "item_2": "Custom Orders",
+          "item_3": "Shipping Across India",
+          "item_4": "Loved by Customers",
+          "item_5": ""
+        }
+      },
+      "categories": {
+        "type": "categories",
+        "blocks": {
+          "category_mt9xV4": {
+            "type": "category",
+            "settings": {
+              "title": "Frocks & Dresses",
+              "image": "shopify://shop_images/age_0_1_5000_c661b757-d524-45ea-8476-7499f095f1a9.jpg",
+              "link": "shopify://products/powder-blue-tulle-princess-gown"
+            }
+          },
+          "category_wEDLMc": {
+            "type": "category",
+            "settings": {
+              "title": "Custom Outfits",
+              "link": ""
+            }
+          },
+          "category_KBr8yY": {
+            "type": "category",
+            "settings": {
+              "title": "Birthday Styles",
+              "link": ""
+            }
+          },
+          "category_DAD6cx": {
+            "type": "category",
+            "settings": {
+              "title": "Sets & Co-ords",
+              "link": ""
+            }
+          },
+          "category_mYcBGE": {
+            "type": "category",
+            "settings": {
+              "title": "Sarees",
+              "link": ""
+            }
+          },
+          "category_44fPEk": {
+            "type": "category",
+            "settings": {
+              "title": "Blouses",
+              "link": ""
+            }
+          },
+          "category_efqMbT": {
+            "type": "category",
+            "settings": {
+              "title": "Semi Partywear",
+              "image": "shopify://shop_images/ChatGPT_Image_Sep_12_2026_02_55_45_PM.png",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "category_mt9xV4",
+          "category_wEDLMc",
+          "category_KBr8yY",
+          "category_DAD6cx",
+          "category_mYcBGE",
+          "category_44fPEk",
+          "category_efqMbT"
+        ],
+        "settings": {
+          "heading": "Shop by Category",
+          "view_all_link": "shopify://collections/all"
+        }
+      },
+      "custom-order-banner": {
+        "type": "custom-order-banner",
+        "settings": {
+          "tag": "CUSTOM ORDERS & TAILORING",
+          "heading": "Your Ideas, Our Craftsmanship",
+          "description": "DM or WhatsApp for personalized outfit designs, birthday dresses, and custom sizing.",
+          "btn_text": "CHAT ON WHATSAPP",
+          "whatsapp_link": ""
+        }
+      },
+      "featured-collections": {
+        "type": "featured-collections",
+        "settings": {
+          "heading": "Featured Collections",
+          "collection": ""
+        }
+      },
+      "editorial-cards": {
+        "type": "editorial-cards",
+        "settings": {
+          "card_1_title": "Crafted Just for You",
+          "card_1_desc": "Personalised outfits for life's special moments.",
+          "card_2_title": "Premium Fabrics",
+          "card_2_desc": "Because comfort looks beautiful too.",
+          "card_3_title": "Gifting Made Special",
+          "card_3_desc": "Thoughtful pieces for every celebration."
+        }
+      },
+      "instagram-gallery": {
+        "type": "instagram-gallery",
+        "settings": {
+          "heading": "Follow Our Journey",
+          "handle_1": "@abella_by_sebastians",
+          "handle_2": "@liittle_bella____"
+        }
+      },
+      "trust-strip": {
+        "type": "trust-strip",
+        "settings": {
+          "trust_1_title": "Handcrafted Luxury",
+          "trust_1_desc": "Every stitch crafted with care for two generations.",
+          "trust_2_title": "Custom Sizing",
+          "trust_2_desc": "Tailored perfectly to your unique measurements.",
+          "trust_3_title": "Pan-India Delivery",
+          "trust_3_desc": "Safely packaged and delivered to your doorstep.",
+          "trust_4_title": "Personal Assistance",
+          "trust_4_desc": "Dedicated support via WhatsApp & Instagram DM."
+        }
+      },
+      "newsletter": {
+        "type": "newsletter",
+        "settings": {
+          "heading": "Join the Abella Family",
+          "subheading": "Subscribe to receive updates on new boutique arrivals, festive collections, and custom tailoring previews."
+        }
+      },
+      "collection-split": {
+        "type": "collection-split",
+        "settings": {
+          "left_tag": "KIDS BOUTIQUE",
+          "left_heading_1": "Little Moments",
+          "left_heading_2": "Big Dreams",
+          "left_desc": "Beautiful outfits for birthdays, celebrations and every special day.",
+          "left_btn_text": "EXPLORE KIDS",
+          "left_link": "",
+          "right_tag": "WOMEN'S COLLECTION",
+          "right_heading_1": "Grace",
+          "right_heading_2": "In Every Detail",
+          "right_desc": "Elegant sarees, blouses and semi partywear for the modern woman.",
+          "right_btn_text": "EXPLORE WOMEN",
+          "right_link": ""
+        }
+      }
+    },
+    "content_for_index": []
   }
 }
