@@ -137,39 +137,7 @@
           "heading": "Follow Our Journey",
           "handle_1": "@abella_by_sebastians",
           "handle_2": "@liittle_bella____"
-        },
-        "blocks": {
-          "instagram_post_1": {
-            "type": "instagram_post",
-            "settings": {
-              "url": "https://www.instagram.com/reel/DaiUbf9JlQW/"
-            }
-          },
-          "instagram_post_2": {
-            "type": "instagram_post",
-            "settings": {
-              "url": "https://www.instagram.com/reel/DaVbMRLpQh_/"
-            }
-          },
-          "instagram_post_3": {
-            "type": "instagram_post",
-            "settings": {
-              "url": "https://www.instagram.com/reel/DaQVP8IJOq3/"
-            }
-          },
-          "instagram_post_4": {
-            "type": "instagram_post",
-            "settings": {
-              "url": "https://www.instagram.com/reel/DaI8ohAyqxr/"
-            }
-          }
-        },
-        "block_order": [
-          "instagram_post_1",
-          "instagram_post_2",
-          "instagram_post_3",
-          "instagram_post_4"
-        ]
+        }
       },
       "trust-strip": {
         "type": "trust-strip",

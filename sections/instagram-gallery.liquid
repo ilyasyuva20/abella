@@ -17,73 +17,6 @@
       <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="hover:text-[#2C221E] transition-colors">{{ section.settings.handle_2 | default: "@liittle_bella____" }}</a>
     </div>
 
-    <!-- Instagram reels: arched cards in the site style (one "Instagram post / reel" block each); tap plays the reel in a pop-up -->
-    {%- if section.blocks.size > 0 -%}
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-8 sm:mb-10">
-        {%- for block in section.blocks -%}
-          {%- if block.settings.url != blank -%}
-            {%- assign post_url = block.settings.url | split: '?' | first -%}
-            <a href="{{ post_url }}" target="_blank" rel="noopener noreferrer" data-reel="{{ post_url }}" {{ block.shopify_attributes }}
-               class="group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300">
-              <div class="abella-frame relative w-full aspect-[9/16] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-                {%- if block.settings.cover != blank -%}
-                  <img src="{{ block.settings.cover | image_url: width: 600 }}" alt="Abella reel {{ forloop.index }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                {%- elsif forloop.index <= 4 -%}
-                  {%- capture reel_cover %}insta-reel-{{ forloop.index }}.jpg{% endcapture -%}
-                  <img src="{{ reel_cover | asset_url }}" alt="Abella reel {{ forloop.index }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                {%- endif -%}
-                <span class="absolute inset-0 flex items-center justify-center">
-                  <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FAF7F2]/85 text-[#2C221E] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 001.52.85l10.6-6.86a1 1 0 000-1.7L9.52 4.29A1 1 0 008 5.14z"/></svg>
-                  </span>
-                </span>
-              </div>
-              <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Watch Reel &rarr;</span>
-            </a>
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-
-      <dialog id="ReelDialog-{{ section.id }}" aria-label="Instagram reel"
-              class="w-[calc(100%-2rem)] max-w-[420px] max-h-[92vh] p-0 rounded-2xl border border-[#DFCDC0] bg-[#FAF7F2] shadow-2xl backdrop:bg-[#2C221E]/70">
-        <div class="flex items-center justify-between px-4 py-3 border-b border-[#DFCDC0]">
-          <a data-reel-open href="#" target="_blank" rel="noopener noreferrer" class="text-[11px] font-sans uppercase tracking-widest text-[#7A6B60] hover:text-[#2C221E]">Open on Instagram &rarr;</a>
-          <button type="button" data-reel-close aria-label="Close" class="w-9 h-9 inline-flex items-center justify-center rounded-full hover:bg-[#EADCD0]">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
-        <div data-reel-body class="reel-embed p-3"></div>
-      </dialog>
-      <script>
-        (function () {
-          var dialog = document.getElementById('ReelDialog-{{ section.id }}');
-          if (!dialog) return;
-          var body = dialog.querySelector('[data-reel-body]');
-          function embed() {
-            if (window.instgrm) { window.instgrm.Embeds.process(); return; }
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://www.instagram.com/embed.js';
-            document.body.appendChild(s);
-          }
-          document.querySelectorAll('[data-reel]').forEach(function (card) {
-            card.addEventListener('click', function (e) {
-              e.preventDefault();
-              var url = card.dataset.reel;
-              dialog.querySelector('[data-reel-open]').href = url;
-              body.innerHTML = '<blockquote class="instagram-media" data-instgrm-permalink="' + url + '?utm_source=ig_embed" data-instgrm-version="14" style="margin:0;border:0;width:100%;"></blockquote>';
-              dialog.showModal();
-              embed();
-            });
-          });
-          dialog.querySelector('[data-reel-close]').addEventListener('click', function () { dialog.close(); });
-          dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
-          // Stop playback when closed
-          dialog.addEventListener('close', function () { body.innerHTML = ''; });
-        })();
-      </script>
-    {%- endif -%}
-
     <!-- 8 Horizontal Square Instagram Tiles Grid with FLEUR Borders -->
     <div class="grid grid-cols-4 sm:grid-cols-8 gap-2.5 sm:gap-3 lg:gap-3.5">
       <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="abella-frame aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
@@ -122,17 +55,6 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Follow Our Journey" },
     { "type": "text", "id": "handle_1", "label": "Instagram Handle 1", "default": "@abella_by_sebastians" },
     { "type": "text", "id": "handle_2", "label": "Instagram Handle 2", "default": "@liittle_bella____" }
-  ],
-  "blocks": [
-    {
-      "type": "instagram_post",
-      "name": "Instagram post / reel",
-      "limit": 8,
-      "settings": [
-        { "type": "url", "id": "url", "label": "Post or reel link", "info": "e.g. https://www.instagram.com/reel/XXXXXXXX/" },
-        { "type": "image_picker", "id": "cover", "label": "Cover image", "info": "Tall 9:16 image. The first 4 reels use built-in covers when empty." }
-      ]
-    }
   ],
   "presets": [{ "name": "Instagram Gallery" }]
 }
