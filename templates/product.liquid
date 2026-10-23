@@ -691,26 +691,14 @@
               });
               return picked;
             }
-            // Link, price and image follow the currently selected variant
-            function currentVariant() {
-              var input = document.getElementById('ProductVariantId');
-              var json = document.getElementById('ProductVariantsJSON');
-              if (!input || !json) return null;
-              try {
-                var id = +input.value;
-                return JSON.parse(json.textContent).filter(function (v) { return v.id === id; })[0] || { id: id };
-              } catch (e) { return { id: +input.value }; }
-            }
+            // Same text for WhatsApp and Instagram: name, price, selected options, then the product link
             function message() {
               var d = box.dataset;
-              var v = currentVariant();
-              var link = d.url + (v && v.id ? '?variant=' + v.id : '');
               var priceEl = document.getElementById('ProductPrice');
               var price = (priceEl && priceEl.textContent.replace(/\s+/g, ' ').trim()) || d.price;
-              var image = v && v.image ? (v.image.indexOf('//') === 0 ? 'https:' + v.image : v.image) : d.image;
-              var lines = ['Hi Abella, I would like to customize this product:', '', link, '', d.title, 'Price: ' + price];
+              var lines = ['Hi Abella, I would like to customize this product:', '', d.title, 'Price: ' + price];
               selectedOptions().forEach(function (o) { lines.push(o); });
-              if (image) lines.push('Image: ' + image);
+              lines.push('', 'Product link: ' + d.url);
               return lines.join('\n');
             }
             function note(text) {
