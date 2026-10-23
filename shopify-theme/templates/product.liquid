@@ -121,6 +121,25 @@
           <h1 class="font-serif text-3xl sm:text-4xl font-normal text-[#2C221E] leading-tight">
             {{ product.title }}
           </h1>
+
+          <!-- Rating summary (reads the standard reviews.rating / reviews.rating_count metafields filled by a reviews app such as Judge.me) -->
+          {%- assign review_rating = product.metafields.reviews.rating.value -%}
+          {%- assign review_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+          <a href="#reviews" class="inline-flex items-center gap-2 text-xs font-sans text-[#7A6B60] hover:text-[#2C221E] transition-colors">
+            <span class="relative inline-flex">
+              <span class="flex text-[#DFCDC0]"><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></span>
+              {%- if review_rating and review_count > 0 -%}
+                {%- assign rating_percent = review_rating.rating | times: 100.0 | divided_by: review_rating.scale_max -%}
+                <span class="absolute inset-0 flex overflow-hidden text-[#E0A526]" style="width: {{ rating_percent }}%"><svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></span>
+              {%- endif -%}
+            </span>
+            {%- if review_rating and review_count > 0 -%}
+              <span class="font-semibold text-[#2C221E]">{{ review_rating.rating | round: 1 }}</span>
+              <span>({{ review_count }} {{ review_count | pluralize: 'review', 'reviews' }})</span>
+            {%- else -%}
+              <span>No reviews yet &middot; <span class="underline">Be the first to review</span></span>
+            {%- endif -%}
+          </a>
           <div class="flex items-center space-x-4">
             <span class="text-2xl font-serif font-medium text-[#2C221E]">
               {{ product.price | money }}
@@ -134,6 +153,24 @@
               </span>
             {% endif %}
           </div>
+
+          <!-- Stock status -->
+          {%- assign stock_variant = product.selected_or_first_available_variant -%}
+          {%- if stock_variant.available -%}
+            {%- if stock_variant.inventory_management == 'shopify' and stock_variant.inventory_policy == 'deny' and stock_variant.inventory_quantity > 0 and stock_variant.inventory_quantity <= 5 -%}
+              <p class="inline-flex items-center gap-2 text-xs font-sans font-semibold text-[#B45309]">
+                <span class="w-2 h-2 rounded-full bg-[#F59E0B]"></span>Only {{ stock_variant.inventory_quantity }} left in stock
+              </p>
+            {%- else -%}
+              <p class="inline-flex items-center gap-2 text-xs font-sans font-semibold text-[#15803D]">
+                <span class="w-2 h-2 rounded-full bg-[#22C55E]"></span>In Stock
+              </p>
+            {%- endif -%}
+          {%- else -%}
+            <p class="inline-flex items-center gap-2 text-xs font-sans font-semibold text-[#B91C1C]">
+              <span class="w-2 h-2 rounded-full bg-[#EF4444]"></span>Out of Stock
+            </p>
+          {%- endif -%}
         </div>
 
         <!-- Product Form -->
@@ -255,6 +292,25 @@
           })();
         </script>
 
+        <!-- Trust badges -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-3 text-center font-sans">
+          <div class="flex flex-col items-center gap-1.5 rounded-xl border border-[#DFCDC0] bg-[#FAF7F2]/80 px-2 py-3">
+            <svg class="w-6 h-6 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#2C221E] leading-tight">Fast Shipping</span>
+            <span class="text-[10px] text-[#7A6B60] leading-tight">Packed &amp; dispatched with care</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 rounded-xl border border-[#DFCDC0] bg-[#FAF7F2]/80 px-2 py-3">
+            <svg class="w-6 h-6 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9 9 0 100-18 9 9 0 000 18zM2.25 12h19.5M12 2.25a15.3 15.3 0 014 9.75 15.3 15.3 0 01-4 9.75 15.3 15.3 0 01-4-9.75 15.3 15.3 0 014-9.75z"/></svg>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#2C221E] leading-tight">All Over the World</span>
+            <span class="text-[10px] text-[#7A6B60] leading-tight">We ship worldwide</span>
+          </div>
+          <div class="flex flex-col items-center gap-1.5 rounded-xl border border-[#DFCDC0] bg-[#FAF7F2]/80 px-2 py-3">
+            <svg class="w-6 h-6 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-[#2C221E] leading-tight">Secure Payment</span>
+            <span class="text-[10px] text-[#7A6B60] leading-tight">100% safe checkout</span>
+          </div>
+        </div>
+
         <!-- Accordions -->
         <div class="border-t border-[#DFCDC0] pt-4 space-y-3 font-sans text-xs">
           
@@ -301,6 +357,24 @@
 
       </div>
 
+    </div>
+
+    <!-- Customer Reviews -->
+    <div id="reviews" class="mt-20 border-t border-[#DFCDC0] pt-14 space-y-6 scroll-mt-28">
+      <div class="text-center space-y-2">
+        <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium">What Parents Say</span>
+        <h2 class="font-serif text-3xl text-[#2C221E] font-normal">Customer Reviews</h2>
+      </div>
+      {%- comment -%} Judge.me (free reviews app) renders its widget here once installed {%- endcomment -%}
+      <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget max-w-4xl mx-auto" data-id="{{ product.id }}">
+        {{ product.metafields.judgeme.widget }}
+      </div>
+      {%- if product.metafields.judgeme.widget == blank -%}
+        <div class="max-w-xl mx-auto text-center bg-[#FAF7F2]/80 border border-[#DFCDC0] rounded-2xl p-8 space-y-2 font-sans">
+          <p class="font-serif text-xl text-[#2C221E]">No reviews yet</p>
+          <p class="text-xs text-[#7A6B60]">Bought this outfit? We would love to hear from you &mdash; share your photos and review with us on WhatsApp or Instagram.</p>
+        </div>
+      {%- endif -%}
     </div>
 
     <!-- Related Recommendations Section -->
