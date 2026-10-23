@@ -117,7 +117,7 @@
             </button>
           </div>
           <form id="FilterForm" action="{{ collection.url }}" method="get" class="font-sans text-xs divide-y divide-[#DFCDC0]">
-            <input type="hidden" name="sort_by" value="{{ current_sort }}">
+            {%- if collection.sort_by != blank -%}<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">{%- endif -%}
             {%- for filter in collection.filters -%}
               <details class="group py-4 first:pt-0" {% if forloop.index <= 3 or filter.active_values.size > 0 %}open{% endif %}>
                 <summary class="flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden">
@@ -158,7 +158,7 @@
             {%- endfor -%}
             {%- if active_filter_count > 0 -%}
               <div class="pt-4">
-                <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all filters</a>
+                <a href="{{ collection.url }}{% if collection.sort_by != blank %}?sort_by={{ collection.sort_by }}{% endif %}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all filters</a>
               </div>
             {%- endif -%}
           </form>
@@ -182,7 +182,7 @@
                 {%- endfor -%}
               {%- endif -%}
             {%- endfor -%}
-            <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all</a>
+            <a href="{{ collection.url }}{% if collection.sort_by != blank %}?sort_by={{ collection.sort_by }}{% endif %}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all</a>
           </div>
         {%- endif -%}
 
