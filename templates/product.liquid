@@ -178,6 +178,15 @@
         {% form 'product', product, class: 'space-y-6' %}
           <input type="hidden" name="id" id="ProductVariantId" value="{{ product.selected_or_first_available_variant.id }}">
 
+          <!-- Size Chart trigger (opens #SizeChartDialog below) -->
+          <div class="flex justify-end -mb-3">
+            <button type="button" id="SizeChartOpen" aria-haspopup="dialog" aria-controls="SizeChartDialog"
+                    class="inline-flex items-center gap-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] underline underline-offset-4 decoration-[#DFCDC0] hover:decoration-[#2C221E] transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8.25h18v7.5H3zM7 8.25v3M11 8.25v4.5M15 8.25v3M19 8.25v4.5"/></svg>
+              <span>Size Chart</span>
+            </button>
+          </div>
+
           <!-- Variant Selector -->
           {% unless product.has_only_default_variant %}
             <div class="space-y-4">
@@ -223,6 +232,84 @@
             {{ form | payment_button }}
           </div>
         {% endform %}
+
+        <!-- Size Chart modal: measurements table (cm / inches) + measuring guide image -->
+        {%- capture size_chart_rows -%}
+          14 (upto 6M)|43.2|40.7|35.6
+          16 (6-11M)|45.7|43.2|40.6
+          18 (1-2yrs)|48.3|45.7|45.7
+          20 (2-3yrs)|50.8|48.3|50.8
+          22 (3-4yrs)|54.6|52.1|58.4
+          24 (4-5yrs)|57.2|54.6|63.5
+          26 (5-6yrs)|59.7|55.9|66
+          28 (6-7yrs)|62.2|58.4|68.6
+          30 (7-8yrs)|63.5|59.7|73.7
+          32 (8-9yrs)|66.4|62.2|78.7
+          S (9-10yrs)|68.6|64.8|83.8
+          M (10-11yrs)|71.1|67.3|88.9
+        {%- endcapture -%}
+        <dialog id="SizeChartDialog" aria-labelledby="SizeChartTitle"
+                class="w-[calc(100%-2rem)] max-w-2xl max-h-[90vh] p-0 rounded-2xl border border-[#DFCDC0] bg-[#FAF7F2] text-[#2C221E] shadow-2xl backdrop:bg-[#2C221E]/60">
+          <div class="sticky top-0 z-10 flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[#DFCDC0] bg-[#FAF7F2]">
+            <h2 id="SizeChartTitle" class="font-serif text-2xl font-normal">Size Chart</h2>
+            <button type="button" data-size-chart-close aria-label="Close size chart" class="w-9 h-9 inline-flex items-center justify-center rounded-full hover:bg-[#EADCD0] transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="px-5 sm:px-6 py-5 space-y-6 font-sans">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-xs text-[#7A6B60]">Body measurements by age</p>
+              <div class="inline-flex rounded-full border border-[#DFCDC0] bg-[#F5EFE8] p-0.5 text-[11px] font-semibold uppercase tracking-wider" role="group" aria-label="Units">
+                <button type="button" data-unit="cm" aria-pressed="true" class="px-3 py-1 rounded-full aria-pressed:bg-[#2C221E] aria-pressed:text-white transition-colors">cm</button>
+                <button type="button" data-unit="in" aria-pressed="false" class="px-3 py-1 rounded-full aria-pressed:bg-[#2C221E] aria-pressed:text-white transition-colors">inches</button>
+              </div>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-[#DFCDC0]">
+              <table class="w-full text-xs text-center">
+                <thead class="bg-[#2C221E] text-[#FAF7F2] uppercase tracking-wider text-[11px]">
+                  <tr>
+                    <th scope="col" class="px-3 py-2.5 text-left font-semibold">Age</th>
+                    <th scope="col" class="px-3 py-2.5 font-semibold">Chest</th>
+                    <th scope="col" class="px-3 py-2.5 font-semibold">Waist</th>
+                    <th scope="col" class="px-3 py-2.5 font-semibold">Below Knee</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- assign size_chart_lines = size_chart_rows | strip | newline_to_br | split: '<br />' -%}
+                  {%- for line in size_chart_lines -%}
+                    {%- assign cells = line | strip | split: '|' -%}
+                    <tr class="border-t border-[#DFCDC0] odd:bg-[#F5EFE8]">
+                      <th scope="row" class="px-3 py-2.5 text-left font-semibold whitespace-nowrap">{{ cells[0] }}</th>
+                      {%- for i in (1..3) -%}
+                        {%- assign cm = cells[i] | times: 1.0 -%}
+                        <td class="px-3 py-2.5" data-cm="{{ cm | round: 1 }}" data-in="{{ cm | divided_by: 2.54 | round: 1 }}">{{ cm | round: 1 }}</td>
+                      {%- endfor -%}
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+            <img src="{{ 'size-chart.jpg' | asset_url }}" alt="How to measure: chest, waist, hips and dress lengths – floor, tia, below knee, knee and short length" loading="lazy" width="1254" height="1254" class="w-full h-auto rounded-xl border border-[#DFCDC0]">
+          </div>
+        </dialog>
+        <script>
+          (function () {
+            var dialog = document.getElementById('SizeChartDialog');
+            var open = document.getElementById('SizeChartOpen');
+            if (!dialog || !open) return;
+            open.addEventListener('click', function () { dialog.showModal(); });
+            dialog.querySelector('[data-size-chart-close]').addEventListener('click', function () { dialog.close(); });
+            // Close when clicking the backdrop
+            dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
+            dialog.querySelectorAll('[data-unit]').forEach(function (btn) {
+              btn.addEventListener('click', function () {
+                var unit = btn.dataset.unit;
+                dialog.querySelectorAll('[data-unit]').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+                dialog.querySelectorAll('td[data-cm]').forEach(function (td) { td.textContent = td.dataset[unit]; });
+              });
+            });
+          })();
+        </script>
 
         <!-- Variant data + switching: keeps price, stock, cart variant, image and share/chat details in sync with the selected options -->
         <script type="application/json" id="ProductVariantsJSON">
