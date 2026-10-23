@@ -723,13 +723,33 @@
             box.querySelector('[data-chat="whatsapp"]').addEventListener('click', function () {
               this.href = 'https://wa.me/919446861646?text=' + encodeURIComponent(message());
             });
+            // Copy synchronously inside the click so it still works when Instagram opens in a new tab or the app
+            function copyText(text) {
+              var ok = false;
+              try {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                ta.setSelectionRange(0, text.length);
+                ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+              } catch (e) {}
+              if (!ok && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(function () {});
+                ok = true;
+              }
+              return ok;
+            }
             box.querySelector('[data-chat="instagram"]').addEventListener('click', function () {
-              // Instagram cannot pre-fill a DM, so copy the details for the customer to paste.
+              // Instagram does not pre-fill DMs from websites, so the details are copied for the customer to paste.
               var text = message();
-              if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(function () {
-                  note('Product details copied - paste them in the Instagram chat.');
-                }, function () { note('Please mention "' + box.dataset.title + '" in the Instagram chat.'); });
+              this.href = 'https://ig.me/m/little_bella___?text=' + encodeURIComponent(text);
+              if (copyText(text)) {
+                note('Product link & selected options copied - paste them in the Instagram chat.');
               } else {
                 note('Please mention "' + box.dataset.title + '" in the Instagram chat.');
               }
