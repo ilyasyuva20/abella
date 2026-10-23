@@ -431,7 +431,21 @@
           </div>
         {% endform %}
 
-        <!-- Size Chart modal: measurements table (cm / inches) + measuring guide image -->
+        <!-- Size Chart modal: kids get a measurements table (cm / inches) + measuring guide image;
+             sarees and blouses (Women's Collection) get the saree & blouse size guide image -->
+        {%- liquid
+          assign women_size_chart = false
+          assign product_type_lc = product.type | downcase
+          if product_type_lc contains 'saree' or product_type_lc contains 'blouse'
+            assign women_size_chart = true
+          endif
+          for tag in product.tags
+            assign tag_lc = tag | downcase
+            if tag_lc == 'women' or tag_lc == 'sarees' or tag_lc == 'saree' or tag_lc == 'blouses' or tag_lc == 'blouse'
+              assign women_size_chart = true
+            endif
+          endfor
+        -%}
         {%- capture size_chart_rows -%}
           14 (upto 6M)|43.2|40.7|35.6|0
           16 (6-11M)|45.7|43.2|40.6|0
@@ -456,6 +470,13 @@
             </button>
           </div>
           <div class="px-5 sm:px-6 py-5 space-y-6 font-sans">
+            {%- if women_size_chart -%}
+            <img src="{{ 'size-chart-saree.jpg' | asset_url }}" alt="Size guide: saree length 216 in (5.5 m), width 44 in, blouse piece 36 in; blouse sizes S bust 34 waist 28 hip 38, M 36/30/40, L 38/32/42, XL 40/34/44 inches" width="1386" height="1065" class="w-full h-auto rounded-xl border border-[#DFCDC0]">
+            <a href="https://wa.me/919446861646?text={{ size_help_text | url_encode }}" target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#25D366] bg-[#25D366]/10 text-[#128C7E] text-xs font-semibold hover:bg-[#25D366]/20 transition-all">
+              Need custom blouse sizing? Send us your measurements on WhatsApp
+            </a>
+            {%- else -%}
             <div class="flex items-center justify-between gap-3">
               <p class="text-xs text-[#7A6B60]">Body measurements by age</p>
               <div class="inline-flex rounded-full border border-[#DFCDC0] bg-[#F5EFE8] p-0.5 text-[11px] font-semibold uppercase tracking-wider" role="group" aria-label="Units">
@@ -494,6 +515,7 @@
               Not sure of the size? Send us your child's measurements on WhatsApp
             </a>
             <img src="{{ 'size-chart.jpg' | asset_url }}" alt="How to measure: chest, waist, hips and dress lengths – floor, tia, below knee, knee and short length" loading="lazy" width="1254" height="1254" class="w-full h-auto rounded-xl border border-[#DFCDC0]">
+            {%- endif -%}
           </div>
         </dialog>
         <script>
@@ -524,7 +546,8 @@
                 tr.toggleAttribute('data-match', !!match);
                 if (match) rows.push(tr);
               });
-              dialog.querySelector('[data-size-fit-note]').classList.toggle('hidden', !rows.length);
+              var note = dialog.querySelector('[data-size-fit-note]');
+              if (note) note.classList.toggle('hidden', !rows.length);
               if (!rows.length) { fit.classList.add('hidden'); return; }
               fit.innerHTML = '<span class="font-semibold text-[#2C221E]">Fits:</span> Chest ' + rangeText(rows, 1) +
                 ' &middot; Waist ' + rangeText(rows, 2) + ' &middot; Below knee length ' + rangeText(rows, 3);
