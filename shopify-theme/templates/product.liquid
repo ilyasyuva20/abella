@@ -60,7 +60,7 @@
 
             <!-- Product Share (native share sheet on phones, menu on desktop) -->
             {%- capture share_url -%}{{ shop.url }}{{ product.url }}{%- endcapture -%}
-            {%- capture share_text -%}{{ product.title }} – {{ product.price | money | strip_html }} at {{ shop.name }}{%- endcapture -%}
+            {%- capture share_text -%}{{ product.title }} – {{ product.selected_or_first_available_variant.price | money | strip_html }} at {{ shop.name }}{%- endcapture -%}
             <div id="ProductShare" class="relative flex-shrink-0" data-url="{{ share_url | escape }}" data-title="{{ product.title | escape }}" data-text="{{ share_text | escape }}">
               <button type="button" id="ProductShareButton" aria-haspopup="true" aria-expanded="false" aria-controls="ProductShareMenu"
                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#DFCDC0] bg-[#FAF7F2] text-[#2C221E] text-[11px] font-sans font-semibold uppercase tracking-wider hover:bg-[#EADCD0] transition-colors">
@@ -140,21 +140,21 @@
               <span>No reviews yet &middot; <span class="underline">Be the first to review</span></span>
             {%- endif -%}
           </a>
+          {%- assign current_variant = product.selected_or_first_available_variant -%}
           <div class="flex items-center space-x-4">
-            <span class="text-2xl font-serif font-medium text-[#2C221E]">
-              {{ product.price | money }}
+            <span id="ProductPrice" class="text-2xl font-serif font-medium text-[#2C221E]">
+              {{ current_variant.price | money }}
             </span>
-            {% if product.compare_at_price > product.price %}
-              <span class="text-base text-[#7A6B60] line-through font-sans">
-                {{ product.compare_at_price | money }}
-              </span>
-              <span class="text-xs bg-[#2C221E] text-white px-2.5 py-0.5 rounded-full uppercase font-medium tracking-wider">
-                Sale
-              </span>
-            {% endif %}
+            <span id="ProductComparePrice" class="text-base text-[#7A6B60] line-through font-sans{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}">
+              {{ current_variant.compare_at_price | money }}
+            </span>
+            <span id="ProductSaleBadge" class="text-xs bg-[#2C221E] text-white px-2.5 py-0.5 rounded-full uppercase font-medium tracking-wider{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}">
+              Sale
+            </span>
           </div>
 
-          <!-- Stock status -->
+          <!-- Stock status (updated by the variant script below) -->
+          <div id="ProductStock">
           {%- assign stock_variant = product.selected_or_first_available_variant -%}
           {%- if stock_variant.available -%}
             {%- if stock_variant.inventory_management == 'shopify' and stock_variant.inventory_policy == 'deny' and stock_variant.inventory_quantity > 0 and stock_variant.inventory_quantity <= 5 -%}
@@ -171,11 +171,12 @@
               <span class="w-2 h-2 rounded-full bg-[#EF4444]"></span>Out of Stock
             </p>
           {%- endif -%}
+          </div>
         </div>
 
         <!-- Product Form -->
         {% form 'product', product, class: 'space-y-6' %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="id" id="ProductVariantId" value="{{ product.selected_or_first_available_variant.id }}">
 
           <!-- Variant Selector -->
           {% unless product.has_only_default_variant %}
@@ -222,6 +223,79 @@
             {{ form | payment_button }}
           </div>
         {% endform %}
+
+        <!-- Variant data + switching: keeps price, stock, cart variant, image and share/chat details in sync with the selected options -->
+        <script type="application/json" id="ProductVariantsJSON">
+          [
+            {%- for variant in product.variants -%}
+              {
+                "id": {{ variant.id }},
+                "options": {{ variant.options | json }},
+                "price": {{ variant.price }},
+                "compare_at_price": {{ variant.compare_at_price | default: 0 }},
+                "available": {{ variant.available }},
+                "low_stock": {% if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' and variant.inventory_quantity > 0 and variant.inventory_quantity <= 5 %}{{ variant.inventory_quantity }}{% else %}0{% endif %},
+                "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 1200 | json }}{% else %}null{% endif %}
+              }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        </script>
+        <script>
+          (function () {
+            var variants = JSON.parse(document.getElementById('ProductVariantsJSON').textContent);
+            var moneyFormat = {{ shop.money_format | strip_html | json }};
+            var radios = document.querySelectorAll('input[type="radio"][data-option-name]');
+            if (!radios.length) return;
+
+            function formatMoney(cents) {
+              var value = (cents / 100);
+              var withDecimals = value.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+              var noDecimals = Math.round(value).toLocaleString('en-IN');
+              return moneyFormat.replace(/\{\{\s*(\w+)\s*\}\}/, function (_, key) {
+                return key.indexOf('no_decimals') !== -1 ? noDecimals : withDecimals;
+              });
+            }
+            function stockHTML(v) {
+              if (!v.available) return '<p class="inline-flex items-center gap-2 text-xs font-sans font-semibold text-[#B91C1C]"><span class="w-2 h-2 rounded-full bg-[#EF4444]"></span>Out of Stock</p>';
+              if (v.low_stock) return '<p class="inline-flex items-center gap-2 text-xs font-sans font-semibold text-[#B45309]"><span class="w-2 h-2 rounded-full bg-[#F59E0B]"></span>Only ' + v.low_stock + ' left in stock</p>';
+              return '<p class="inline-flex items-center gap-2 text-xs font-sans font-semibold text-[#15803D]"><span class="w-2 h-2 rounded-full bg-[#22C55E]"></span>In Stock</p>';
+            }
+            function selected() {
+              var groups = {};
+              radios.forEach(function (r) { if (r.checked) groups[r.name] = r.value; });
+              return Object.keys(groups).sort().map(function (k) { return groups[k]; });
+            }
+            function update() {
+              var opts = selected();
+              var v = variants.find(function (x) { return x.options.join('||') === opts.join('||'); });
+              var addBtn = document.querySelector('button[name="add"]');
+              if (!v) {
+                if (addBtn) { addBtn.disabled = true; addBtn.classList.add('opacity-50'); }
+                document.getElementById('ProductStock').innerHTML = '<p class="text-xs font-sans font-semibold text-[#B91C1C]">Unavailable</p>';
+                return;
+              }
+              document.getElementById('ProductVariantId').value = v.id;
+              var priceText = formatMoney(v.price);
+              document.getElementById('ProductPrice').textContent = priceText;
+              var onSale = v.compare_at_price > v.price;
+              var cmp = document.getElementById('ProductComparePrice');
+              cmp.textContent = onSale ? formatMoney(v.compare_at_price) : '';
+              cmp.classList.toggle('hidden', !onSale);
+              document.getElementById('ProductSaleBadge').classList.toggle('hidden', !onSale);
+              document.getElementById('ProductStock').innerHTML = stockHTML(v);
+              if (addBtn) { addBtn.disabled = !v.available; addBtn.classList.toggle('opacity-50', !v.available); }
+              if (v.image) { var img = document.getElementById('mainProductImage'); if (img) img.src = v.image; }
+              var chat = document.getElementById('CustomizationChat');
+              if (chat) chat.dataset.price = priceText;
+              var share = document.getElementById('ProductShare');
+              if (share) share.dataset.text = share.dataset.title + ' \u2013 ' + priceText + ' at {{ shop.name | escape }}';
+              var url = new URL(window.location.href);
+              url.searchParams.set('variant', v.id);
+              window.history.replaceState({}, '', url.toString());
+            }
+            radios.forEach(function (r) { r.addEventListener('change', update); });
+          })();
+        </script>
 
         <!-- Customization Chat (WhatsApp / Instagram) - shares product name, price, options, link and image -->
         {%- capture product_share_image -%}{% if product.featured_image %}https:{{ product.featured_image | image_url: width: 1000 }}{% endif %}{%- endcapture -%}
