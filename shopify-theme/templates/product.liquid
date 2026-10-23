@@ -53,9 +53,71 @@
       <div class="lg:col-span-5 space-y-6">
         
         <div class="border-b border-[#DFCDC0] pb-6 space-y-3">
-          <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium block">
-            {{ product.type | default: "Custom Boutique Fit" }}
-          </span>
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-xs uppercase tracking-widest text-[#7A6B60] font-sans font-medium block">
+              {{ product.type | default: "Custom Boutique Fit" }}
+            </span>
+
+            <!-- Product Share (native share sheet on phones, menu on desktop) -->
+            {%- capture share_url -%}{{ shop.url }}{{ product.url }}{%- endcapture -%}
+            {%- capture share_text -%}{{ product.title }} – {{ product.price | money | strip_html }} at {{ shop.name }}{%- endcapture -%}
+            <div id="ProductShare" class="relative flex-shrink-0" data-url="{{ share_url | escape }}" data-title="{{ product.title | escape }}" data-text="{{ share_text | escape }}">
+              <button type="button" id="ProductShareButton" aria-haspopup="true" aria-expanded="false" aria-controls="ProductShareMenu"
+                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#DFCDC0] bg-[#FAF7F2] text-[#2C221E] text-[11px] font-sans font-semibold uppercase tracking-wider hover:bg-[#EADCD0] transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/></svg>
+                <span>Share</span>
+              </button>
+              <div id="ProductShareMenu" role="menu" class="hidden absolute right-0 top-full mt-2 z-30 w-52 bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl shadow-lg p-1.5 font-sans text-xs text-[#2C221E]">
+                <a role="menuitem" data-share="whatsapp" target="_blank" rel="noopener noreferrer" href="https://wa.me/?text={{ share_text | append: ' ' | append: share_url | url_encode }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-[#EADCD0]">
+                  <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>WhatsApp
+                </a>
+                <a role="menuitem" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-[#EADCD0]">
+                  <span class="w-2 h-2 rounded-full bg-[#1877F2]"></span>Facebook
+                </a>
+                <a role="menuitem" target="_blank" rel="noopener noreferrer" href="https://pinterest.com/pin/create/button/?url={{ share_url | url_encode }}&media={% if product.featured_image %}{{ product.featured_image | image_url: width: 1000 | prepend: 'https:' | url_encode }}{% endif %}&description={{ share_text | url_encode }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-[#EADCD0]">
+                  <span class="w-2 h-2 rounded-full bg-[#E60023]"></span>Pinterest
+                </a>
+                <a role="menuitem" target="_blank" rel="noopener noreferrer" href="https://twitter.com/intent/tweet?text={{ share_text | url_encode }}&url={{ share_url | url_encode }}" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-[#EADCD0]">
+                  <span class="w-2 h-2 rounded-full bg-[#2C221E]"></span>X (Twitter)
+                </a>
+                <button role="menuitem" type="button" data-share="copy" class="w-full text-left flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-[#EADCD0]">
+                  <span class="w-2 h-2 rounded-full bg-[#A88E7D]"></span><span data-copy-label>Copy link</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <script>
+            (function () {
+              var box = document.getElementById('ProductShare');
+              if (!box) return;
+              var btn = document.getElementById('ProductShareButton');
+              var menu = document.getElementById('ProductShareMenu');
+              function toggle(open) {
+                menu.classList.toggle('hidden', !open);
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+              }
+              btn.addEventListener('click', function () {
+                var d = box.dataset;
+                // Phones and supported browsers: open the device's own share sheet
+                if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+                  navigator.share({ title: d.title, text: d.text, url: d.url }).catch(function () {});
+                  return;
+                }
+                toggle(menu.classList.contains('hidden'));
+              });
+              document.addEventListener('click', function (e) { if (!box.contains(e.target)) toggle(false); });
+              document.addEventListener('keydown', function (e) { if (e.key === 'Escape') toggle(false); });
+              menu.querySelector('[data-share="copy"]').addEventListener('click', function () {
+                var label = this.querySelector('[data-copy-label]');
+                var done = function () { label.textContent = 'Link copied!'; setTimeout(function () { label.textContent = 'Copy link'; toggle(false); }, 1500); };
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                  navigator.clipboard.writeText(box.dataset.url).then(done, function () { window.prompt('Copy this link:', box.dataset.url); });
+                } else {
+                  window.prompt('Copy this link:', box.dataset.url);
+                }
+              });
+            })();
+          </script>
           <h1 class="font-serif text-3xl sm:text-4xl font-normal text-[#2C221E] leading-tight">
             {{ product.title }}
           </h1>
