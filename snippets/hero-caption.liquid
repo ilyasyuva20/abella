@@ -1,0 +1,24 @@
+{%- comment -%}
+  Hero banner text: a strip under the photo on phones, a cream card over the photo from sm up.
+  Params: label, title, text, button, link, side ('left' | 'right')
+{%- endcomment -%}
+<div class="relative z-10 bg-[#F5EFE8] px-6 pt-5 pb-10 text-center space-y-2.5
+            sm:absolute sm:bottom-12 lg:bottom-16 {% if side == 'right' %}sm:right-16 lg:right-24{% else %}sm:left-16 lg:left-24{% endif %}
+            sm:max-w-sm lg:max-w-md sm:text-left sm:p-7 lg:p-8 sm:space-y-3 sm:bg-[#F5EFE8]/90 sm:backdrop-blur-sm sm:rounded-2xl sm:border sm:border-[#DFCDC0]/70 sm:shadow-lg">
+  {%- if label != blank -%}
+    <span class="block text-[10px] sm:text-[11px] font-sans font-semibold uppercase tracking-[0.28em] text-[#7A6B60]">{{ label }}</span>
+  {%- endif -%}
+  {%- if title != blank -%}
+    <h2 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal leading-[1.1] text-[#2C221E]">{{ title }}</h2>
+  {%- endif -%}
+  {%- if text != blank -%}
+    <p class="text-xs sm:text-[13px] text-[#55473E] leading-relaxed">{{ text }}</p>
+  {%- endif -%}
+  {%- if button != blank -%}
+    <div class="pt-1.5 sm:pt-2">
+      <a href="{{ link }}" class="inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 bg-[#2C221E] text-[#F5EFE8] text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-sm">
+        {{ button }} &rarr;
+      </a>
+    </div>
+  {%- endif -%}
+</div>

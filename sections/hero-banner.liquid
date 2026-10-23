@@ -3,72 +3,86 @@
 
   {%- comment -%}
     Photo banner carousel. Theme editor slides (blocks) win; otherwise the 7 shoot photos in assets/hero-banner-N.jpg
-    (with a 900px -mobile version). Default slide data: number | kids/women | crop focus | button side
+    (with a 900px -mobile version). Desktop: text card over the photo; phones: text strip under the photo.
+    Default slide fields: number | collection handle | crop focus | card side | label | title | description | button
   {%- endcomment -%}
-  {%- liquid
-    assign kids_url = collections['kids-boutique'].url | default: routes.all_products_collection_url
-    assign women_url = collections['womens-collection'].url | default: routes.all_products_collection_url
-    assign default_slides = '1|kids|65% 50%|left,2|kids|55% 50%|left,3|kids|65% 50%|left,4|women|30% 50%|right,5|women|25% 50%|right,6|kids|45% 50%|left,7|kids|45% 50%|left' | split: ','
-  -%}
+  {%- capture default_slides -%}
+    1|kids-boutique|65% 50%|left|Kids Boutique|Little Festive Moments|Handcrafted ivory dresses for first birthdays, naming ceremonies and every celebration in between.|Shop Kids Boutique
+    2|kids-boutique|55% 50%|left|Party Dresses|Ruffles & Rosy Dreams|Layered tulle dresses that twirl, sparkle and make every little moment picture-perfect.|Shop Party Dresses
+    3|kids-boutique|65% 50%|left|Everyday Charm|Pretty in Lace|Soft, breathable lace frocks made for little feet that never stop dancing.|Shop Kids Boutique
+    4|sarees|30% 50%|right|Women's Collection|Grace in Organza|Hand-finished organza sarees with delicate embroidered borders for effortless elegance.|Shop Sarees
+    5|womens-collection|25% 50%|right|Women's Collection|Soft Hues, Timeless Drapes|Pastel hand-painted sarees for festive days, family gatherings and quiet celebrations.|Shop Women's Collection
+    6|kids-boutique|45% 50%|right|Princess Gowns|A Princess Moment|Dreamy tulle gowns in soft pastels, made to make her feel like royalty.|Shop Kids Boutique
+    7|kids-boutique|45% 50%|right|Birthday Specials|Made for Her Big Day|Birthday gowns tailored to her size — custom-made for her most special celebration.|Shop Birthday Gowns
+  {%- endcapture -%}
+  {%- assign default_slides = default_slides | strip | newline_to_br | split: '<br />' -%}
 
   <div id="heroSliderTrack" class="flex w-full transition-transform duration-700 ease-in-out">
     {%- if section.blocks.size > 0 -%}
       {%- for block in section.blocks -%}
-        <div class="w-full flex-shrink-0 relative aspect-[4/3] sm:aspect-[16/9] max-h-[85vh]" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            <picture>
-              {%- if block.settings.mobile_image != blank -%}
-                <source media="(max-width: 640px)" srcset="{{ block.settings.mobile_image | image_url: width: 900 }}">
-              {%- endif -%}
-              <img src="{{ block.settings.image | image_url: width: 2000 }}"
-                   srcset="{{ block.settings.image | image_url: width: 900 }} 900w, {{ block.settings.image | image_url: width: 1400 }} 1400w, {{ block.settings.image | image_url: width: 2000 }} 2000w"
-                   sizes="100vw" alt="{{ block.settings.alt | escape }}"
-                   {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
-                   class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ block.settings.focus | default: 'center' }};">
-            </picture>
-          {%- endif -%}
-          {%- if block.settings.button_text != blank -%}
-            <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#2C221E]/40 to-transparent pointer-events-none"></div>
-            <a href="{{ block.settings.button_link | default: routes.all_products_collection_url }}"
-               class="absolute bottom-8 sm:bottom-12 {% if block.settings.button_side == 'right' %}right-12 sm:right-20{% else %}left-12 sm:left-20{% endif %} z-10 inline-flex items-center gap-2.5 px-5 sm:px-8 py-2.5 sm:py-3 bg-[#F5EFE8]/95 text-[#2C221E] text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] hover:bg-[#2C221E] hover:text-[#F5EFE8] transition-all duration-300 shadow-md">
-              {{ block.settings.button_text }} &rarr;
-            </a>
-          {%- endif -%}
+        {%- liquid
+          assign slide_link = block.settings.button_link | default: routes.all_products_collection_url
+          assign slide_side = block.settings.button_side
+          assign slide_label = block.settings.eyebrow
+          assign slide_title = block.settings.title
+          assign slide_text = block.settings.description
+          assign slide_btn = block.settings.button_text
+          assign slide_alt = block.settings.alt | default: block.settings.title
+        -%}
+        <div class="w-full flex-shrink-0 relative" {{ block.shopify_attributes }}>
+          <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] sm:max-h-[85vh] overflow-hidden">
+            {%- if block.settings.image != blank -%}
+              <picture>
+                {%- if block.settings.mobile_image != blank -%}
+                  <source media="(max-width: 640px)" srcset="{{ block.settings.mobile_image | image_url: width: 900 }}">
+                {%- endif -%}
+                <img src="{{ block.settings.image | image_url: width: 2000 }}"
+                     srcset="{{ block.settings.image | image_url: width: 900 }} 900w, {{ block.settings.image | image_url: width: 1400 }} 1400w, {{ block.settings.image | image_url: width: 2000 }} 2000w"
+                     sizes="100vw" alt="{{ slide_alt | escape }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}"
+                     {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                     class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ block.settings.focus | default: 'center' }};">
+              </picture>
+            {%- endif -%}
+            <div class="hidden sm:block absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2C221E]/30 to-transparent pointer-events-none"></div>
+          </div>
+          {% render 'hero-caption', label: slide_label, title: slide_title, text: slide_text, button: slide_btn, link: slide_link, side: slide_side %}
         </div>
       {%- endfor -%}
     {%- else -%}
       {%- for slide in default_slides -%}
-        {%- assign d = slide | split: '|' -%}
-        {%- if d[1] == 'women' -%}
-          {%- assign slide_url = women_url -%}{%- assign slide_btn = "Shop Women's Collection" -%}{%- assign slide_alt = "Abella saree from the Women's Collection" -%}
-        {%- else -%}
-          {%- assign slide_url = kids_url -%}{%- assign slide_btn = 'Shop Kids Boutique' -%}{%- assign slide_alt = 'Little girl in an Abella Kids Boutique dress' -%}
-        {%- endif -%}
-        {%- capture desktop_img -%}hero-banner-{{ d[0] }}.jpg{%- endcapture -%}
-        {%- capture mobile_img -%}hero-banner-{{ d[0] }}-mobile.jpg{%- endcapture -%}
-        <div class="w-full flex-shrink-0 relative aspect-[4/3] sm:aspect-[16/9] max-h-[85vh]">
-          <picture>
-            <source media="(max-width: 640px)" srcset="{{ mobile_img | asset_url }}">
-            <img src="{{ desktop_img | asset_url }}" alt="{{ slide_alt }}" width="1672" height="941"
-                 {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
-                 class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ d[2] }};">
-          </picture>
-          <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#2C221E]/40 to-transparent pointer-events-none"></div>
-          <a href="{{ slide_url }}"
-             class="absolute bottom-8 sm:bottom-12 {% if d[3] == 'right' %}right-12 sm:right-20{% else %}left-12 sm:left-20{% endif %} z-10 inline-flex items-center gap-2.5 px-5 sm:px-8 py-2.5 sm:py-3 bg-[#F5EFE8]/95 text-[#2C221E] text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] hover:bg-[#2C221E] hover:text-[#F5EFE8] transition-all duration-300 shadow-md">
-            {{ slide_btn }} &rarr;
-          </a>
+        {%- liquid
+          assign d = slide | strip | split: '|'
+          assign slide_collection = collections[d[1]]
+          assign slide_link = slide_collection.url | default: routes.all_products_collection_url
+          capture desktop_img
+            echo 'hero-banner-' | append: d[0] | append: '.jpg'
+          endcapture
+          capture mobile_img
+            echo 'hero-banner-' | append: d[0] | append: '-mobile.jpg'
+          endcapture
+        -%}
+        <div class="w-full flex-shrink-0 relative">
+          <div class="relative w-full aspect-[4/3] sm:aspect-[16/9] sm:max-h-[85vh] overflow-hidden">
+            <picture>
+              <source media="(max-width: 640px)" srcset="{{ mobile_img | asset_url }}">
+              <img src="{{ desktop_img | asset_url }}" alt="{{ d[5] | escape }} – Abella {{ d[4] | escape }}" width="1672" height="941"
+                   {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                   class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ d[2] }};">
+            </picture>
+            <div class="hidden sm:block absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2C221E]/30 to-transparent pointer-events-none"></div>
+          </div>
+          {% render 'hero-caption', label: d[4], title: d[5], text: d[6], button: d[7], link: slide_link, side: d[3] %}
         </div>
       {%- endfor -%}
     {%- endif -%}
   </div>
 
   <!-- Carousel Arrow Buttons (Positioned neatly on mobile) -->
-  <button id="heroPrevBtn" aria-label="Previous Slide" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#F5EFE8]/90 hover:bg-white text-[#2C221E] border border-[#DFCDC0] shadow-sm flex items-center justify-center transition-all duration-300 hover:scale-110">
+  <button id="heroPrevBtn" aria-label="Previous Slide" class="absolute left-2 sm:left-6 top-[37.5vw] sm:top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#F5EFE8]/90 hover:bg-white text-[#2C221E] border border-[#DFCDC0] shadow-sm flex items-center justify-center transition-all duration-300 hover:scale-110">
     <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
   </button>
   
-  <button id="heroNextBtn" aria-label="Next Slide" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#F5EFE8]/90 hover:bg-white text-[#2C221E] border border-[#DFCDC0] shadow-sm flex items-center justify-center transition-all duration-300 hover:scale-110">
+  <button id="heroNextBtn" aria-label="Next Slide" class="absolute right-2 sm:right-6 top-[37.5vw] sm:top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#F5EFE8]/90 hover:bg-white text-[#2C221E] border border-[#DFCDC0] shadow-sm flex items-center justify-center transition-all duration-300 hover:scale-110">
     <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
   </button>
 
@@ -95,9 +109,12 @@
         { "type": "image_picker", "id": "mobile_image", "label": "Mobile image (optional)" },
         { "type": "text", "id": "alt", "label": "Image description (alt text)" },
         { "type": "text", "id": "focus", "label": "Crop focus (CSS object-position)", "default": "center", "info": "e.g. 30% 50% keeps the left side in view on phones" },
+        { "type": "text", "id": "eyebrow", "label": "Small label", "default": "Kids Boutique" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Little Festive Moments" },
+        { "type": "textarea", "id": "description", "label": "Description" },
         { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop Kids Boutique" },
         { "type": "url", "id": "button_link", "label": "Button link" },
-        { "type": "select", "id": "button_side", "label": "Button position", "default": "left", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }] }
+        { "type": "select", "id": "button_side", "label": "Text card position (desktop)", "default": "left", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }] }
       ]
     }
   ],
