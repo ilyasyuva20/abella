@@ -48,7 +48,7 @@
         "type": "checkbox",
         "id": "enable_bg_pattern",
         "label": "Show floral background pattern",
-        "default": true
+        "default": false
       },
       {
         "type": "range",
