@@ -22,10 +22,19 @@
       <div class="lg:col-span-7 space-y-4">
         <div class="abella-frame bg-[#EADCD0] rounded-2xl p-4 border border-[#DFCDC0] shadow-sm relative overflow-hidden group">
           {% if product.featured_image %}
-            <img id="mainProductImage" 
-                 src="{{ product.featured_image | image_url: width: 1200 }}" 
-                 alt="{{ product.title | escape }}" 
-                 class="w-full h-auto max-h-[650px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105">
+            <button type="button" id="GalleryOpen" aria-label="View full screen" class="block w-full cursor-zoom-in touch-pan-y">
+              <img id="mainProductImage"
+                   src="{{ product.featured_image | image_url: width: 1200 }}"
+                   alt="{{ product.title | escape }}"
+                   class="w-full h-auto max-h-[650px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105">
+            </button>
+            <span class="pointer-events-none absolute bottom-7 right-7 inline-flex items-center gap-1.5 bg-[#FAF7F2]/90 text-[#2C221E] text-[10px] uppercase font-semibold tracking-widest px-3 py-1.5 rounded-full shadow-sm">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2M10.5 7.5v6m3-3h-6M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+              Tap to zoom
+            </span>
+            {% if product.images.size > 1 %}
+              <span id="GalleryCounter" class="pointer-events-none absolute bottom-7 left-7 bg-[#2C221E]/80 text-[#F5EFE8] text-[10px] font-semibold tracking-widest px-2.5 py-1 rounded-full lg:hidden">1 / {{ product.images.size }}</span>
+            {% endif %}
           {% else %}
             <div class="w-full aspect-[3/4] bg-[#F5EFE8] rounded-xl flex items-center justify-center text-[#7A6B60] text-sm font-serif">
               High-Resolution Image Coming Soon
@@ -40,12 +49,133 @@
         {% if product.images.size > 1 %}
           <div class="flex items-center space-x-3 overflow-x-auto pb-2 scrollbar-thin">
             {% for image in product.images %}
-              <button onclick="document.getElementById('mainProductImage').src='{{ image | image_url: width: 1200 }}'" 
-                      class="flex-shrink-0 w-20 h-24 rounded-lg bg-[#EADCD0] border border-[#DFCDC0] p-1 overflow-hidden focus:ring-2 focus:ring-[#2C221E] transition-all">
+              <button type="button" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Show image {{ forloop.index }}"
+                      class="flex-shrink-0 w-20 h-24 rounded-lg bg-[#EADCD0] border-2 p-1 overflow-hidden transition-all {% if forloop.first %}border-[#2C221E]{% else %}border-[#DFCDC0] opacity-70 hover:opacity-100{% endif %}">
                 <img src="{{ image | image_url: width: 200 }}" alt="{{ product.title | escape }}" class="w-full h-full object-cover rounded-md">
               </button>
             {% endfor %}
           </div>
+        {% endif %}
+
+        <!-- Full-screen gallery: swipe / arrows to browse, tap image to zoom -->
+        {% if product.featured_image %}
+          <dialog id="GalleryLightbox" aria-label="{{ product.title | escape }} images"
+                  class="m-0 w-screen h-[100dvh] max-w-none max-h-none p-0 bg-[#1A1411] text-white backdrop:bg-black">
+            <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
+              <div id="LightboxStage" class="w-full h-full overflow-auto flex items-center justify-center touch-pan-y">
+                <img id="LightboxImage" src="{{ product.featured_image | image_url: width: 2000 }}" alt="{{ product.title | escape }}"
+                     class="max-w-full max-h-full object-contain cursor-zoom-in select-none transition-transform duration-200">
+              </div>
+              <button type="button" data-lightbox-close aria-label="Close" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 inline-flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+              {% if product.images.size > 1 %}
+                <button type="button" data-lightbox-step="-1" aria-label="Previous image" class="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 inline-flex items-center justify-center">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button type="button" data-lightbox-step="1" aria-label="Next image" class="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 inline-flex items-center justify-center">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <span id="LightboxCounter" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs font-sans tracking-widest bg-white/10 px-3 py-1 rounded-full">1 / {{ product.images.size }}</span>
+              {% endif %}
+            </div>
+          </dialog>
+          <script>
+            (function () {
+              var images = [
+                {%- for image in product.images -%}
+                  { "main": {{ image | image_url: width: 1200 | json }}, "full": {{ image | image_url: width: 2000 | json }} }{% unless forloop.last %},{% endunless %}
+                {%- endfor -%}
+              ];
+              var current = 0;
+              var main = document.getElementById('mainProductImage');
+              var thumbs = document.querySelectorAll('[data-gallery-thumb]');
+              var counter = document.getElementById('GalleryCounter');
+              var box = document.getElementById('GalleryLightbox');
+              var stage = document.getElementById('LightboxStage');
+              var big = document.getElementById('LightboxImage');
+              var boxCounter = document.getElementById('LightboxCounter');
+              var zoomed = false;
+
+              function setZoom(on, e) {
+                zoomed = on;
+                if (on && e) {
+                  var r = big.getBoundingClientRect();
+                  big.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + '% ' + ((e.clientY - r.top) / r.height * 100) + '%';
+                }
+                big.style.transform = on ? 'scale(2.5)' : '';
+                big.classList.toggle('cursor-zoom-in', !on);
+                big.classList.toggle('cursor-zoom-out', on);
+              }
+              function show(i) {
+                if (!images.length) return;
+                current = (i + images.length) % images.length;
+                main.src = images[current].main;
+                big.src = images[current].full;
+                setZoom(false);
+                var label = (current + 1) + ' / ' + images.length;
+                if (counter) counter.textContent = label;
+                if (boxCounter) boxCounter.textContent = label;
+                thumbs.forEach(function (t, n) {
+                  var on = n === current;
+                  t.classList.toggle('border-[#2C221E]', on);
+                  t.classList.toggle('border-[#DFCDC0]', !on);
+                  t.classList.toggle('opacity-70', !on);
+                  if (on) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                });
+              }
+              // Used by the variant script to jump to a variant's image
+              window.AbellaGallery = {
+                showSrc: function (src) {
+                  var base = function (u) { return u.split('?')[0].replace(/_\d+x\d*(?=\.)/, ''); };
+                  var i = images.findIndex(function (img) { return base(img.main) === base(src); });
+                  if (i > -1) show(i); else main.src = src;
+                }
+              };
+
+              thumbs.forEach(function (t) { t.addEventListener('click', function () { show(+t.dataset.galleryThumb); }); });
+
+              // Swipe on the main image (phones)
+              function swipe(el, onSwipe) {
+                var x0 = null, y0 = null;
+                el.addEventListener('touchstart', function (e) { if (e.touches.length === 1) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; } else { x0 = null; } }, { passive: true });
+                el.addEventListener('touchend', function (e) {
+                  if (x0 === null) return;
+                  var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+                  x0 = null;
+                  if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { el.dataset.swiped = '1'; onSwipe(dx < 0 ? 1 : -1); }
+                });
+              }
+              var opener = document.getElementById('GalleryOpen');
+              swipe(opener, function (dir) { show(current + dir); });
+              opener.addEventListener('click', function () {
+                if (opener.dataset.swiped) { delete opener.dataset.swiped; return; }
+                big.src = images[current] ? images[current].full : main.src;
+                box.showModal();
+              });
+
+              // Lightbox controls
+              swipe(stage, function (dir) { if (!zoomed && window.visualViewport && window.visualViewport.scale <= 1) show(current + dir); });
+              big.addEventListener('click', function (e) {
+                if (stage.dataset.swiped) { delete stage.dataset.swiped; return; }
+                setZoom(!zoomed, e);
+              });
+              big.addEventListener('mousemove', function (e) {
+                if (!zoomed) return;
+                var r = big.getBoundingClientRect();
+                big.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + '% ' + ((e.clientY - r.top) / r.height * 100) + '%';
+              });
+              box.querySelector('[data-lightbox-close]').addEventListener('click', function () { box.close(); });
+              box.querySelectorAll('[data-lightbox-step]').forEach(function (b) {
+                b.addEventListener('click', function () { show(current + (+b.dataset.lightboxStep)); });
+              });
+              box.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowRight') show(current + 1);
+                if (e.key === 'ArrowLeft') show(current - 1);
+              });
+              box.addEventListener('close', function () { setZoom(false); });
+            })();
+          </script>
         {% endif %}
       </div>
 
@@ -172,6 +302,38 @@
             </p>
           {%- endif -%}
           </div>
+
+          <!-- Highlights: per-product list from the custom.highlights metafield, with boutique-wide defaults -->
+          {%- assign highlights = product.metafields.custom.highlights.value -%}
+          {%- if highlights == blank -%}
+            {%- assign highlights = 'Handcrafted with care in our boutique|Customisation available on request|Shipped worldwide' | split: '|' -%}
+          {%- endif -%}
+          <ul class="pt-1 space-y-1.5 font-sans text-xs text-[#55473E]">
+            {%- for item in highlights -%}
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 flex-shrink-0 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span>{{ item }}</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          <!-- Occasions: custom.occasions metafield, otherwise a default set for kids / women's outfits -->
+          {%- assign occasions = product.metafields.custom.occasions.value -%}
+          {%- if occasions == blank -%}
+            {%- assign is_kids = false -%}
+            {%- for tag in product.tags -%}{%- if tag contains 'Age' -%}{%- assign is_kids = true -%}{%- endif -%}{%- endfor -%}
+            {%- if is_kids -%}
+              {%- assign occasions = 'Birthday|Party|Photoshoot|Festive' | split: '|' -%}
+            {%- else -%}
+              {%- assign occasions = 'Wedding|Party|Festive' | split: '|' -%}
+            {%- endif -%}
+          {%- endif -%}
+          <div class="flex flex-wrap items-center gap-2 pt-1 font-sans">
+            <span class="text-[11px] uppercase tracking-wider text-[#7A6B60] font-semibold">Perfect for</span>
+            {%- for occasion in occasions -%}
+              <span class="px-2.5 py-1 rounded-full border border-[#DFCDC0] bg-[#F5EFE8] text-[11px] text-[#2C221E]">{{ occasion }}</span>
+            {%- endfor -%}
+          </div>
         </div>
 
         <!-- Product Form -->
@@ -179,7 +341,13 @@
           <input type="hidden" name="id" id="ProductVariantId" value="{{ product.selected_or_first_available_variant.id }}">
 
           <!-- Size Chart trigger (opens #SizeChartDialog below) -->
-          <div class="flex justify-end -mb-3">
+          {%- capture size_help_text -%}Hi Abella, I need help choosing the right size for: {{ product.title }} - {{ shop.url }}{{ product.url }}{%- endcapture -%}
+          <div class="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 -mb-3">
+            <a href="https://wa.me/919446861646?text={{ size_help_text | url_encode }}" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs font-sans text-[#7A6B60] hover:text-[#2C221E] transition-colors">
+              <svg class="w-4 h-4 text-[#25D366] fill-current" viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.6-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+              <span>Not sure of the size? <span class="underline underline-offset-2">Ask us</span></span>
+            </a>
             <button type="button" id="SizeChartOpen" aria-haspopup="dialog" aria-controls="SizeChartDialog"
                     class="inline-flex items-center gap-1.5 text-xs font-sans font-semibold uppercase tracking-wider text-[#2C221E] underline underline-offset-4 decoration-[#DFCDC0] hover:decoration-[#2C221E] transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8.25h18v7.5H3zM7 8.25v3M11 8.25v4.5M15 8.25v3M19 8.25v4.5"/></svg>
@@ -207,6 +375,11 @@
                       </label>
                     {% endfor %}
                   </div>
+                  {%- assign option_name = option.name | downcase -%}
+                  {%- if option_name contains 'age' or option_name contains 'size' -%}
+                    <!-- Filled by the size chart script with the measurements for the selected age -->
+                    <p data-size-fit class="hidden text-[11px] font-sans text-[#55473E] bg-[#F5EFE8] border border-[#DFCDC0] rounded-lg px-3 py-2"></p>
+                  {%- endif -%}
                 </div>
               {% endfor %}
             </div>
@@ -230,24 +403,49 @@
 
             <!-- Direct Buy Now CTA -->
             {{ form | payment_button }}
+
+            <!-- Dispatch estimate (business days from custom.dispatch_days, default 10) + returns note -->
+            {%- assign dispatch_days = product.metafields.custom.dispatch_days.value | default: 10 -%}
+            <div class="rounded-xl border border-[#DFCDC0] bg-[#FAF7F2]/80 px-4 py-3 space-y-1.5 font-sans text-xs text-[#55473E]">
+              <p id="DispatchEstimate" data-days="{{ dispatch_days }}" class="flex items-start gap-2">
+                <svg class="w-4 h-4 flex-shrink-0 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                <span>Made to order &middot; dispatched within {{ dispatch_days }} business days</span>
+              </p>
+              <p class="flex items-start gap-2">
+                <svg class="w-4 h-4 flex-shrink-0 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                <span>No returns on any product &mdash; please check the <button type="button" data-size-chart-link class="underline underline-offset-2 font-semibold text-[#2C221E]">size chart</button> before ordering.</span>
+              </p>
+            </div>
+            <script>
+              (function () {
+                var el = document.getElementById('DispatchEstimate');
+                var days = parseInt(el.dataset.days, 10);
+                if (!days) return;
+                var d = new Date();
+                while (days > 0) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) days--; }
+                var when = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+                el.querySelector('span').innerHTML = 'Order today &middot; dispatched by <strong class="text-[#2C221E]">' + when + '</strong>';
+              })();
+            </script>
           </div>
         {% endform %}
 
         <!-- Size Chart modal: measurements table (cm / inches) + measuring guide image -->
         {%- capture size_chart_rows -%}
-          14 (upto 6M)|43.2|40.7|35.6
-          16 (6-11M)|45.7|43.2|40.6
-          18 (1-2yrs)|48.3|45.7|45.7
-          20 (2-3yrs)|50.8|48.3|50.8
-          22 (3-4yrs)|54.6|52.1|58.4
-          24 (4-5yrs)|57.2|54.6|63.5
-          26 (5-6yrs)|59.7|55.9|66
-          28 (6-7yrs)|62.2|58.4|68.6
-          30 (7-8yrs)|63.5|59.7|73.7
-          32 (8-9yrs)|66.4|62.2|78.7
-          S (9-10yrs)|68.6|64.8|83.8
-          M (10-11yrs)|71.1|67.3|88.9
+          14 (upto 6M)|43.2|40.7|35.6|0
+          16 (6-11M)|45.7|43.2|40.6|0
+          18 (1-2yrs)|48.3|45.7|45.7|1
+          20 (2-3yrs)|50.8|48.3|50.8|2
+          22 (3-4yrs)|54.6|52.1|58.4|3
+          24 (4-5yrs)|57.2|54.6|63.5|4
+          26 (5-6yrs)|59.7|55.9|66|5
+          28 (6-7yrs)|62.2|58.4|68.6|6
+          30 (7-8yrs)|63.5|59.7|73.7|7
+          32 (8-9yrs)|66.4|62.2|78.7|8
+          S (9-10yrs)|68.6|64.8|83.8|9
+          M (10-11yrs)|71.1|67.3|88.9|10
         {%- endcapture -%}
+        {%- comment -%} Columns: Age | Chest | Waist | Below knee (cm) | age in whole years the row starts at (used to match the Age option) {%- endcomment -%}
         <dialog id="SizeChartDialog" aria-labelledby="SizeChartTitle"
                 class="w-[calc(100%-2rem)] max-w-2xl max-h-[90vh] p-0 rounded-2xl border border-[#DFCDC0] bg-[#FAF7F2] text-[#2C221E] shadow-2xl backdrop:bg-[#2C221E]/60">
           <div class="sticky top-0 z-10 flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-[#DFCDC0] bg-[#FAF7F2]">
@@ -278,7 +476,7 @@
                   {%- assign size_chart_lines = size_chart_rows | strip | newline_to_br | split: '<br />' -%}
                   {%- for line in size_chart_lines -%}
                     {%- assign cells = line | strip | split: '|' -%}
-                    <tr class="border-t border-[#DFCDC0] odd:bg-[#F5EFE8]">
+                    <tr data-age-from="{{ cells[4] }}" class="border-t border-[#DFCDC0] odd:bg-[#F5EFE8] data-[match]:bg-[#EADCD0] data-[match]:font-semibold">
                       <th scope="row" class="px-3 py-2.5 text-left font-semibold whitespace-nowrap">{{ cells[0] }}</th>
                       {%- for i in (1..3) -%}
                         {%- assign cm = cells[i] | times: 1.0 -%}
@@ -289,6 +487,11 @@
                 </tbody>
               </table>
             </div>
+            <p data-size-fit-note class="hidden -mt-3 text-[11px] text-[#7A6B60]">Highlighted rows match the age you selected.</p>
+            <a href="https://wa.me/919446861646?text={{ size_help_text | url_encode }}" target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#25D366] bg-[#25D366]/10 text-[#128C7E] text-xs font-semibold hover:bg-[#25D366]/20 transition-all">
+              Not sure of the size? Send us your child's measurements on WhatsApp
+            </a>
             <img src="{{ 'size-chart.jpg' | asset_url }}" alt="How to measure: chest, waist, hips and dress lengths – floor, tia, below knee, knee and short length" loading="lazy" width="1254" height="1254" class="w-full h-auto rounded-xl border border-[#DFCDC0]">
           </div>
         </dialog>
@@ -298,14 +501,45 @@
             var open = document.getElementById('SizeChartOpen');
             if (!dialog || !open) return;
             open.addEventListener('click', function () { dialog.showModal(); });
+            // Inline "size chart" links elsewhere on the page (some render after this script)
+            document.addEventListener('click', function (e) { if (e.target.closest('[data-size-chart-link]')) dialog.showModal(); });
+
+            // Match the selected Age option ("0-1 Years", "2-3 Years"...) to chart rows and show the fit under the options
+            var unit = 'cm';
+            function rangeText(rows, col) {
+              var vals = rows.map(function (r) { return r.cells[col].dataset[unit]; });
+              var lo = vals[0], hi = vals[vals.length - 1];
+              return (lo === hi ? lo : lo + '–' + hi) + ' ' + (unit === 'cm' ? 'cm' : 'in');
+            }
+            function updateFit() {
+              var fit = document.querySelector('[data-size-fit]');
+              if (!fit) return;
+              var radio = fit.parentElement.querySelector('input[type="radio"]:checked');
+              var m = radio && radio.value.match(/(\d+)\s*(?:-|to)\s*(\d+)/i);
+              var rows = [];
+              dialog.querySelectorAll('tr[data-age-from]').forEach(function (tr) {
+                var from = +tr.dataset.ageFrom;
+                var match = m && from >= +m[1] && from < +m[2];
+                tr.toggleAttribute('data-match', !!match);
+                if (match) rows.push(tr);
+              });
+              dialog.querySelector('[data-size-fit-note]').classList.toggle('hidden', !rows.length);
+              if (!rows.length) { fit.classList.add('hidden'); return; }
+              fit.innerHTML = '<span class="font-semibold text-[#2C221E]">Fits:</span> Chest ' + rangeText(rows, 1) +
+                ' &middot; Waist ' + rangeText(rows, 2) + ' &middot; Below knee length ' + rangeText(rows, 3);
+              fit.classList.remove('hidden');
+            }
+            document.querySelectorAll('input[type="radio"][data-option-name]').forEach(function (r) { r.addEventListener('change', updateFit); });
+            updateFit();
             dialog.querySelector('[data-size-chart-close]').addEventListener('click', function () { dialog.close(); });
             // Close when clicking the backdrop
             dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
             dialog.querySelectorAll('[data-unit]').forEach(function (btn) {
               btn.addEventListener('click', function () {
-                var unit = btn.dataset.unit;
+                unit = btn.dataset.unit;
                 dialog.querySelectorAll('[data-unit]').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
                 dialog.querySelectorAll('td[data-cm]').forEach(function (td) { td.textContent = td.dataset[unit]; });
+                updateFit();
               });
             });
           })();
@@ -371,7 +605,10 @@
               document.getElementById('ProductSaleBadge').classList.toggle('hidden', !onSale);
               document.getElementById('ProductStock').innerHTML = stockHTML(v);
               if (addBtn) { addBtn.disabled = !v.available; addBtn.classList.toggle('opacity-50', !v.available); }
-              if (v.image) { var img = document.getElementById('mainProductImage'); if (img) img.src = v.image; }
+              if (v.image) {
+                if (window.AbellaGallery) window.AbellaGallery.showSrc(v.image);
+                else { var img = document.getElementById('mainProductImage'); if (img) img.src = v.image; }
+              }
               var chat = document.getElementById('CustomizationChat');
               if (chat) chat.dataset.price = priceText;
               var share = document.getElementById('ProductShare');
@@ -494,23 +731,52 @@
                 <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </span>
             </summary>
-            <div class="mt-3 text-[#55473E] leading-relaxed">
-              <p>• Premium Silk/Organza & Hand-embroidered Accents.</p>
-              <p>• Dry Clean Only to preserve delicate handwork and fabric texture.</p>
-              <p>• Store in breathable garment bags away from direct light.</p>
+            <!-- Per-product fabric / care from custom.fabric and custom.care metafields (multi-line text) -->
+            <div class="mt-3 text-[#55473E] leading-relaxed space-y-3">
+              {%- if product.metafields.custom.fabric != blank -%}
+                <div>
+                  <p class="font-semibold text-[#2C221E] mb-1">Fabric</p>
+                  <p>{{ product.metafields.custom.fabric.value | newline_to_br }}</p>
+                </div>
+              {%- endif -%}
+              <div>
+                <p class="font-semibold text-[#2C221E] mb-1">Care</p>
+                {%- if product.metafields.custom.care != blank -%}
+                  <p>{{ product.metafields.custom.care.value | newline_to_br }}</p>
+                {%- else -%}
+                  <p>• Dry clean recommended to protect delicate tulle, embroidery and embellishments.</p>
+                  <p>• Do not wring or tumble dry. Iron on low heat from the reverse, away from embellishments.</p>
+                  <p>• Store in a breathable garment bag away from direct sunlight.</p>
+                {%- endif -%}
+              </div>
             </div>
           </details>
 
           <details class="group bg-[#EADCD0]/40 rounded-xl border border-[#DFCDC0] p-4 [&_summary::-webkit-details-marker]:hidden">
             <summary class="flex items-center justify-between cursor-pointer font-semibold uppercase tracking-wider text-[#2C221E]">
-              <span>Shipping & Custom Tailoring Time</span>
+              <span>Shipping & Delivery</span>
               <span class="transition group-open:-rotate-180">
                 <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
               </span>
             </summary>
             <div class="mt-3 text-[#55473E] leading-relaxed">
-              <p>• Fast Pan-India Delivery (4-7 Business Days).</p>
-              <p>• Custom tailored orders dispatch within 7-10 business days.</p>
+              <p>• Every outfit is made to order and dispatched within {{ dispatch_days }} business days.</p>
+              <p>• India: delivered in 4-7 business days after dispatch.</p>
+              <p>• International: we ship worldwide &mdash; delivered in 10-15 business days after dispatch.</p>
+              <p>• You will receive a tracking link by email once your order is dispatched.</p>
+            </div>
+          </details>
+
+          <details class="group bg-[#EADCD0]/40 rounded-xl border border-[#DFCDC0] p-4 [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex items-center justify-between cursor-pointer font-semibold uppercase tracking-wider text-[#2C221E]">
+              <span>Returns Policy</span>
+              <span class="transition group-open:-rotate-180">
+                <svg class="w-4 h-4 text-[#2C221E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </span>
+            </summary>
+            <div class="mt-3 text-[#55473E] leading-relaxed">
+              <p>• We do not accept returns on any product.</p>
+              <p>• As every outfit is made to order, please check the <button type="button" data-size-chart-link class="underline underline-offset-2 font-semibold text-[#2C221E]">size chart</button> or message us on WhatsApp before ordering &mdash; we are happy to help you pick the right size.</p>
             </div>
           </details>
 
