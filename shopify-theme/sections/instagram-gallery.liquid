@@ -17,6 +17,43 @@
       <a href="https://instagram.com/{{ section.settings.handle_2 | remove: '@' }}" target="_blank" class="hover:text-[#2C221E] transition-colors">{{ section.settings.handle_2 | default: "@liittle_bella____" }}</a>
     </div>
 
+    <!-- Instagram reels / posts: one "Instagram post" block per link, embedded with Instagram's own player -->
+    {%- if section.blocks.size > 0 -%}
+      <div id="InstagramEmbeds-{{ section.id }}" class="instagram-embeds flex lg:grid lg:grid-cols-4 gap-4 overflow-x-auto snap-x snap-mandatory pb-3 mb-8 sm:mb-10">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.url != blank -%}
+            {%- assign post_url = block.settings.url | split: '?' | first -%}
+            <div class="snap-start flex-shrink-0 w-[85%] sm:w-[340px] lg:w-auto" {{ block.shopify_attributes }}>
+              <blockquote class="instagram-media" data-instgrm-permalink="{{ post_url }}?utm_source=ig_embed" data-instgrm-version="14"
+                          style="background:#FFF; border:1px solid #DFCDC0; border-radius:12px; margin:0; padding:0; width:100%;">
+                <a href="{{ post_url }}" target="_blank" rel="noopener noreferrer" class="block p-6 text-center text-xs font-sans text-[#7A6B60]">View this post on Instagram</a>
+              </blockquote>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <script>
+        (function () {
+          // Load Instagram's embed script only when the section scrolls near view
+          var box = document.getElementById('InstagramEmbeds-{{ section.id }}');
+          if (!box) return;
+          function load() {
+            if (window.instgrm) { window.instgrm.Embeds.process(); return; }
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.instagram.com/embed.js';
+            document.body.appendChild(s);
+          }
+          if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+              if (entries[0].isIntersecting) { io.disconnect(); load(); }
+            }, { rootMargin: '400px' });
+            io.observe(box);
+          } else { load(); }
+        })();
+      </script>
+    {%- endif -%}
+
     <!-- 8 Horizontal Square Instagram Tiles Grid with FLEUR Borders -->
     <div class="grid grid-cols-4 sm:grid-cols-8 gap-2.5 sm:gap-3 lg:gap-3.5">
       <a href="https://instagram.com/{{ section.settings.handle_1 | remove: '@' }}" target="_blank" class="abella-frame aspect-square overflow-hidden rounded-lg border border-[#DFCDC0] relative group bg-[#EADCD0] shadow-xs">
@@ -55,6 +92,16 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Follow Our Journey" },
     { "type": "text", "id": "handle_1", "label": "Instagram Handle 1", "default": "@abella_by_sebastians" },
     { "type": "text", "id": "handle_2", "label": "Instagram Handle 2", "default": "@liittle_bella____" }
+  ],
+  "blocks": [
+    {
+      "type": "instagram_post",
+      "name": "Instagram post / reel",
+      "limit": 8,
+      "settings": [
+        { "type": "url", "id": "url", "label": "Post or reel link", "info": "e.g. https://www.instagram.com/reel/XXXXXXXX/" }
+      ]
+    }
   ],
   "presets": [{ "name": "Instagram Gallery" }]
 }

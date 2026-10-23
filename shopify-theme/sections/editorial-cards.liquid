@@ -32,18 +32,18 @@
         </div>
       </div>
 
-      <!-- Card 3: Gifting Made Special (FLEUR Top Arch Card) -->
+      <!-- Card 3: Shipping Globally (FLEUR Top Arch Card) -->
       <div class="editorial-card group relative bg-[#EADCD0] p-4 rounded-t-[100px] rounded-b-2xl border border-[#DFCDC0] hover:bg-[#E5D2C2] transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
         <div class="abella-frame w-full aspect-[4/3] rounded-t-[90px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8] mb-4">
           {%- if section.settings.card_3_image != blank -%}
             <img src="{{ section.settings.card_3_image | image_url: width: 800 }}" alt="{{ section.settings.card_3_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
           {%- else -%}
-            <img src="{{ 'fhd-editorial-3.jpg' | asset_url }}" alt="Gifting Made Special" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <img src="{{ 'fhd-editorial-3.jpg' | asset_url }}" alt="Shipping Globally" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
           {%- endif -%}
         </div>
         <div class="space-y-1.5 p-2 text-center">
-          <h3 class="font-serif text-xl sm:text-2xl text-[#2C221E] font-normal leading-snug">{{ section.settings.card_3_title | default: "Gifting Made Special" }}</h3>
-          <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.card_3_desc | default: "Thoughtful pieces for every celebration." }}</p>
+          <h3 class="font-serif text-xl sm:text-2xl text-[#2C221E] font-normal leading-snug">{{ section.settings.card_3_title | default: "Shipping Globally" }}</h3>
+          <p class="text-xs text-[#7A6B60] leading-relaxed">{{ section.settings.card_3_desc | default: "Delivered with care, all over the world." }}</p>
         </div>
       </div>
 
@@ -61,8 +61,8 @@
     { "type": "text", "id": "card_2_title", "label": "Card 2 Title", "default": "Premium Fabrics" },
     { "type": "text", "id": "card_2_desc", "label": "Card 2 Description", "default": "Because comfort looks beautiful too." },
     { "type": "image_picker", "id": "card_2_image", "label": "Card 2 Image" },
-    { "type": "text", "id": "card_3_title", "label": "Card 3 Title", "default": "Gifting Made Special" },
-    { "type": "text", "id": "card_3_desc", "label": "Card 3 Description", "default": "Thoughtful pieces for every celebration." },
+    { "type": "text", "id": "card_3_title", "label": "Card 3 Title", "default": "Shipping Globally" },
+    { "type": "text", "id": "card_3_desc", "label": "Card 3 Description", "default": "Delivered with care, all over the world." },
     { "type": "image_picker", "id": "card_3_image", "label": "Card 3 Image" }
   ],
   "presets": [{ "name": "Editorial Feature Row" }]

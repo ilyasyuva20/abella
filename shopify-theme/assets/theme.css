@@ -48,6 +48,13 @@ body {
   transform: translateY(-2px);
 }
 
+/* Instagram embeds: let Instagram's player shrink to fit 4 per row on desktop */
+.instagram-embeds .instagram-media {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
 /* Collection list view (toggled by "View as" on the collection page) */
 .product-grid[data-view="list"] {
   grid-template-columns: 1fr !important;
