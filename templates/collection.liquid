@@ -18,23 +18,155 @@
       {% endif %}
     </div>
 
+    <!-- Shop by Age: uses an "Age" storefront filter when enabled (Search & Discovery app), otherwise the "Age …" collections -->
+    {%- assign age_filter = nil -%}
+    {%- for filter in collection.filters -%}
+      {%- assign filter_label = filter.label | downcase -%}
+      {%- if filter.type == 'list' and filter_label contains 'age' -%}{%- assign age_filter = filter -%}{%- endif -%}
+    {%- endfor -%}
+    {%- capture age_chip_class -%}px-3.5 py-1.5 rounded-full border text-xs font-sans whitespace-nowrap transition-colors{%- endcapture -%}
+    {%- capture age_chips -%}
+      {%- if age_filter -%}
+        <a href="{{ age_filter.url_to_remove }}" class="{{ age_chip_class }} {% if age_filter.active_values.size == 0 %}bg-[#2C221E] text-white border-[#2C221E]{% else %}border-[#DFCDC0] hover:border-[#2C221E]{% endif %}">All</a>
+        {%- for value in age_filter.values -%}
+          {%- if value.count > 0 or value.active -%}
+            <a href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}" class="{{ age_chip_class }} {% if value.active %}bg-[#2C221E] text-white border-[#2C221E]{% else %}border-[#DFCDC0] hover:border-[#2C221E]{% endif %}">{{ value.label }} <span class="opacity-60">({{ value.count }})</span></a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for c in collections -%}
+          {%- if c.title contains 'Age ' and c.products_count > 0 -%}
+            <a href="{{ c.url }}" class="{{ age_chip_class }} {% if c.handle == collection.handle %}bg-[#2C221E] text-white border-[#2C221E]{% else %}border-[#DFCDC0] hover:border-[#2C221E]{% endif %}">{{ c.title | remove: 'Age ' }} yrs <span class="opacity-60">({{ c.products_count }})</span></a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if age_chips contains '<a' -%}
+      <div class="space-y-2">
+        <p class="text-[11px] font-sans font-semibold uppercase tracking-wider text-[#7A6B60]">Shop by Age</p>
+        <div class="flex gap-2 overflow-x-auto pb-1">{{ age_chips }}</div>
+      </div>
+    {%- endif -%}
+
     <!-- Filter & Sort Bar -->
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-[#EADCD0]/50 p-4 rounded-2xl border border-[#DFCDC0] font-sans text-xs">
-      <div class="text-[#7A6B60] font-medium">
-        Showing <span class="text-[#2C221E] font-semibold">{{ collection.products_count }}</span> products
+    {%- assign active_filter_count = 0 -%}
+    {%- for filter in collection.filters -%}
+      {%- if filter.type == 'price_range' -%}
+        {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}{%- assign active_filter_count = active_filter_count | plus: 1 -%}{%- endif -%}
+      {%- else -%}
+        {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+      {%- endif -%}
+    {%- endfor -%}
+    <div class="space-y-3 font-sans text-xs">
+      <div class="flex flex-wrap justify-between items-center gap-3 border-y border-[#DFCDC0] py-3">
+        <div class="flex items-center gap-4">
+          {%- if collection.filters.size > 0 -%}
+            <button type="button" id="FilterToggle" aria-expanded="false" aria-controls="FilterPanel"
+                    class="inline-flex items-center gap-2 px-3 py-2 border border-[#DFCDC0] hover:border-[#2C221E] transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 6h18M6 12h12M10 18h4"/></svg>
+              <span>Filter{% if active_filter_count > 0 %} ({{ active_filter_count }}){% endif %}</span>
+            </button>
+          {%- endif -%}
+          <span class="text-[#7A6B60]"><span class="text-[#2C221E] font-semibold">{{ collection.products_count }}</span> {{ collection.products_count | pluralize: 'product', 'products' }}</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label for="SortBy" class="text-[#7A6B60] whitespace-nowrap">Sort by</label>
+          {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+          <select id="SortBy" class="bg-transparent border border-[#DFCDC0] px-3 py-2 text-[#2C221E] focus:outline-none focus:border-[#2C221E] cursor-pointer">
+            {%- for option in collection.sort_options -%}
+              {%- if option.value == 'manual' or option.value == 'price-ascending' or option.value == 'price-descending' or option.value == 'created-descending' or option.value == 'best-selling' -%}
+                <option value="{{ option.value }}"{% if option.value == current_sort %} selected{% endif %}>
+                  {%- case option.value -%}
+                    {%- when 'manual' -%}Featured
+                    {%- when 'price-ascending' -%}Price: Low to High
+                    {%- when 'price-descending' -%}Price: High to Low
+                    {%- when 'created-descending' -%}Newest Arrivals
+                    {%- else -%}Best Sellers
+                  {%- endcase -%}
+                </option>
+              {%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
       </div>
 
-      <div class="flex items-center space-x-3 w-full sm:w-auto">
-        <label for="SortBy" class="text-[#7A6B60] whitespace-nowrap font-medium">Sort by:</label>
-        <select id="SortBy" onchange="location.href = this.value;" class="bg-[#FAF7F2] border border-[#DFCDC0] rounded-xl px-3 py-2 text-[#2C221E] focus:outline-none focus:ring-1 focus:ring-[#2C221E] cursor-pointer">
-          <option value="{{ collection.url }}?sort_by=manual">Featured</option>
-          <option value="{{ collection.url }}?sort_by=price-ascending">Price: Low to High</option>
-          <option value="{{ collection.url }}?sort_by=price-descending">Price: High to Low</option>
-          <option value="{{ collection.url }}?sort_by=created-descending">Newest Arrivals</option>
-          <option value="{{ collection.url }}?sort_by=best-selling">Best Sellers</option>
-        </select>
-      </div>
+      {%- if collection.filters.size > 0 -%}
+        <!-- Filter panel (GET form: Shopify storefront filters) -->
+        <form id="FilterPanel" action="{{ collection.url }}" method="get" class="hidden border border-[#DFCDC0] p-4 sm:p-5 space-y-5">
+          <input type="hidden" name="sort_by" value="{{ current_sort }}">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {%- for filter in collection.filters -%}
+              <fieldset class="space-y-2">
+                <legend class="font-semibold uppercase tracking-wider text-[11px] text-[#2C221E] mb-2">{{ filter.label }}</legend>
+                {%- if filter.type == 'price_range' -%}
+                  <div class="flex items-center gap-2">
+                    <input type="number" min="0" name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}" placeholder="Min" class="w-24 bg-transparent border border-[#DFCDC0] px-2 py-1.5 focus:outline-none focus:border-[#2C221E]">
+                    <span class="text-[#7A6B60]">–</span>
+                    <input type="number" min="0" name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}" placeholder="{{ filter.range_max | divided_by: 100 }}" class="w-24 bg-transparent border border-[#DFCDC0] px-2 py-1.5 focus:outline-none focus:border-[#2C221E]">
+                  </div>
+                {%- else -%}
+                  {%- for value in filter.values -%}
+                    <label class="flex items-center gap-2 cursor-pointer {% if value.count == 0 and value.active == false %}opacity-40{% endif %}">
+                      <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %} class="accent-[#2C221E]">
+                      <span>{{ value.label }} <span class="text-[#7A6B60]">({{ value.count }})</span></span>
+                    </label>
+                  {%- endfor -%}
+                {%- endif -%}
+              </fieldset>
+            {%- endfor -%}
+          </div>
+          <div class="flex items-center gap-4">
+            <button type="submit" class="px-5 py-2 bg-[#2C221E] text-white uppercase tracking-widest text-[11px] hover:bg-[#4A3B32] transition-colors">Apply</button>
+            <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all</a>
+          </div>
+        </form>
+
+        <!-- Active filters -->
+        {%- if active_filter_count > 0 -%}
+          <div class="flex flex-wrap items-center gap-2">
+            {%- for filter in collection.filters -%}
+              {%- if filter.type == 'price_range' -%}
+                {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+                  <a href="{{ filter.url_to_remove }}" class="inline-flex items-center gap-1.5 px-3 py-1 border border-[#DFCDC0] hover:border-[#2C221E]">
+                    {{ filter.min_value.value | default: 0 | money_without_trailing_zeros }} – {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros }} <span aria-hidden="true">✕</span>
+                  </a>
+                {%- endif -%}
+              {%- else -%}
+                {%- for value in filter.active_values -%}
+                  <a href="{{ value.url_to_remove }}" class="inline-flex items-center gap-1.5 px-3 py-1 border border-[#DFCDC0] hover:border-[#2C221E]">{{ value.label }} <span aria-hidden="true">✕</span></a>
+                {%- endfor -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all</a>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
     </div>
+    <script>
+      (function () {
+        var sort = document.getElementById('SortBy');
+        sort.addEventListener('change', function () {
+          // Keep active filters, reset to page 1
+          var url = new URL(window.location.href);
+          url.searchParams.set('sort_by', sort.value);
+          url.searchParams.delete('page');
+          window.location.href = url.toString();
+        });
+        var toggle = document.getElementById('FilterToggle');
+        var panel = document.getElementById('FilterPanel');
+        if (toggle && panel) {
+          toggle.addEventListener('click', function () {
+            var open = panel.classList.toggle('hidden') === false;
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          });
+          // Drop empty price inputs so they don't add blank filters to the URL
+          panel.addEventListener('submit', function () {
+            panel.querySelectorAll('input[type="number"]').forEach(function (i) { if (i.value === '') i.disabled = true; });
+          });
+        }
+      })();
+    </script>
 
     <!-- Product Grid -->
     {% paginate collection.products by 12 %}
@@ -60,7 +192,7 @@
       {% else %}
         <div class="text-center py-16 bg-[#EADCD0]/30 rounded-2xl border border-[#DFCDC0] space-y-4">
           <p class="text-sm font-serif text-[#7A6B60]">No products currently available in this collection.</p>
-          <a href="/collections/all" class="inline-block px-6 py-3 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-colors">
+          <a href="{{ routes.all_products_collection_url }}" class="inline-block px-6 py-3 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-colors">
             Explore All Collections
           </a>
         </div>

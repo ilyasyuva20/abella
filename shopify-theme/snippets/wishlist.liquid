@@ -1,0 +1,73 @@
+<!-- Wishlist: hearts on product cards save items in this browser (localStorage); the header heart opens this list -->
+<dialog id="WishlistDialog" aria-labelledby="WishlistTitle"
+        class="!m-0 !ml-auto h-[100dvh] max-h-none w-full max-w-sm p-0 bg-[#FAF7F2] text-[#2C221E] border-l border-[#DFCDC0] backdrop:bg-[#2C221E]/50">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-[#DFCDC0]">
+    <h2 id="WishlistTitle" class="font-serif text-2xl font-normal">Wishlist</h2>
+    <button type="button" data-wishlist-close aria-label="Close wishlist" class="w-9 h-9 inline-flex items-center justify-center rounded-full hover:bg-[#EADCD0]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <ul id="WishlistItems" class="divide-y divide-[#DFCDC0] font-sans text-xs"></ul>
+  <p id="WishlistEmpty" class="hidden px-5 py-10 text-center text-xs font-sans text-[#7A6B60]">Your wishlist is empty. Tap the heart on any outfit to save it here.</p>
+</dialog>
+<script>
+  (function () {
+    var KEY = 'abella-wishlist';
+    var dialog = document.getElementById('WishlistDialog');
+    function read() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+    function write(items) { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {} }
+    function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+    function render() {
+      var items = read();
+      var handles = items.map(function (i) { return i.handle; });
+      document.querySelectorAll('[data-wishlist-toggle]').forEach(function (b) {
+        var on = handles.indexOf(b.dataset.wishlistToggle) > -1;
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.setAttribute('aria-label', on ? 'Remove from wishlist' : 'Save to wishlist');
+        var svg = b.querySelector('svg');
+        if (svg) svg.setAttribute('fill', on ? 'currentColor' : 'none');
+      });
+      document.querySelectorAll('[data-wishlist-count]').forEach(function (c) {
+        c.textContent = items.length;
+        c.classList.toggle('hidden', !items.length);
+      });
+      var list = document.getElementById('WishlistItems');
+      list.innerHTML = items.map(function (i) {
+        return '<li class="flex items-center gap-3 px-5 py-3">' +
+          '<a href="' + esc(i.url) + '" class="flex-shrink-0 w-16 h-20 bg-[#EADCD0] overflow-hidden">' +
+            (i.image ? '<img src="' + esc(i.image) + '" alt="" class="w-full h-full object-cover">' : '') + '</a>' +
+          '<div class="flex-1 min-w-0"><a href="' + esc(i.url) + '" class="font-serif text-sm leading-snug line-clamp-2 hover:underline">' + esc(i.title) + '</a>' +
+            '<p class="mt-1 text-[#7A6B60]">' + esc(i.price) + '</p></div>' +
+          '<button type="button" data-wishlist-remove="' + esc(i.handle) + '" aria-label="Remove ' + esc(i.title) + '" class="p-2 text-[#7A6B60] hover:text-[#2C221E]">' +
+            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg></button>' +
+        '</li>';
+      }).join('');
+      document.getElementById('WishlistEmpty').classList.toggle('hidden', items.length > 0);
+    }
+
+    document.addEventListener('click', function (e) {
+      var toggle = e.target.closest('[data-wishlist-toggle]');
+      if (toggle) {
+        e.preventDefault();
+        var d = toggle.dataset, items = read();
+        var idx = items.findIndex(function (i) { return i.handle === d.wishlistToggle; });
+        if (idx > -1) items.splice(idx, 1);
+        else items.unshift({ handle: d.wishlistToggle, title: d.title, url: d.url, image: d.image, price: d.price });
+        write(items); render();
+        return;
+      }
+      var remove = e.target.closest('[data-wishlist-remove]');
+      if (remove) {
+        write(read().filter(function (i) { return i.handle !== remove.dataset.wishlistRemove; }));
+        render();
+        return;
+      }
+      if (e.target.closest('[data-wishlist-open]')) { e.preventDefault(); render(); dialog.showModal(); return; }
+      if (e.target.closest('[data-wishlist-close]') || e.target === dialog) dialog.close();
+    });
+    // Keep hearts in sync across tabs
+    window.addEventListener('storage', function (e) { if (e.key === KEY) render(); });
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render); else render();
+  })();
+</script>
