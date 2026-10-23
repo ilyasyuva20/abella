@@ -58,7 +58,7 @@
         "max": 100,
         "step": 5,
         "unit": "%",
-        "default": 35
+        "default": 25
       },
       {
         "type": "checkbox",

@@ -50,7 +50,8 @@ body {
 
 /* ------------------------------------------------------------------
    Floral background pattern (toggle: Theme settings > Background & Photo Frames)
-   Active only when <body> has .abella-bg-pattern
+   Active only when <body> has .abella-bg-pattern. The pattern is a seamless tile
+   repeated at a fixed size so it is never stretched.
 ------------------------------------------------------------------- */
 body.abella-bg-pattern {
   isolation: isolate;
@@ -62,10 +63,10 @@ body.abella-bg-pattern::before {
   z-index: -1;
   pointer-events: none;
   background-image: var(--abella-bg-pattern);
-  background-size: cover;
-  background-position: center top;
+  background-size: 335px auto;
+  background-repeat: repeat;
   mix-blend-mode: multiply;
-  opacity: var(--abella-bg-opacity, 0.35);
+  opacity: var(--abella-bg-opacity, 0.25);
 }
 /* Let the pattern show through full-width page/section backgrounds that use the base ivory tones */
 body.abella-bg-pattern :is(#MainContent > section, #MainContent > .shopify-section > section, #MainContent > div)[class*="bg-[#F5EFE8]"],
@@ -75,12 +76,15 @@ body.abella-bg-pattern :is(#MainContent > section, #MainContent > .shopify-secti
 
 /* ------------------------------------------------------------------
    Rococo photo frame (toggle: Theme settings > Background & Photo Frames)
-   Add .abella-frame to an image wrapper; active only when <body> has .abella-photo-frames
+   Add .abella-frame to an image wrapper; active only when <body> has .abella-photo-frames.
+   The frame is always drawn at its true proportions (728 x 1115), fitted inside the
+   wrapper; landscape wrappers use the rotated frame. The photo fills the frame window.
 ------------------------------------------------------------------- */
 body.abella-photo-frames .abella-frame {
-  --abella-frame-b: min(24cqi, 130px);
+  --abella-frame-ratio: 728 / 1115;
+  --abella-frame-r: 0.6529;
   position: relative;
-  container-type: inline-size;
+  container: abella-frame / size;
   overflow: hidden;
   padding: 0 !important;
   background: transparent !important;
@@ -88,11 +92,26 @@ body.abella-photo-frames .abella-frame {
   border-radius: 0 !important;
   box-shadow: none !important;
 }
+/* The product page image wrapper has no fixed shape of its own */
+body.abella-photo-frames .abella-frame:has(> #mainProductImage) {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 720px;
+}
 body.abella-photo-frames .abella-frame > img,
 body.abella-photo-frames .abella-frame > svg {
+  position: absolute !important;
+  inset: 0;
+  margin: auto;
+  width: min(100cqw, 100cqh * var(--abella-frame-r)) !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  aspect-ratio: var(--abella-frame-ratio);
+  object-fit: cover;
   border-radius: 0 !important;
   transform: none !important;
-  clip-path: inset(calc(var(--abella-frame-b) * 0.37));
+  clip-path: inset(10% 10.5%);
 }
 body.abella-photo-frames .abella-frame::after {
   content: "";
@@ -100,10 +119,19 @@ body.abella-photo-frames .abella-frame::after {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  box-sizing: border-box;
-  border: var(--abella-frame-b) solid transparent;
-  border-image: var(--abella-frame-img) 230 stretch;
+  background: var(--abella-frame-img) center / contain no-repeat;
 }
 body.abella-photo-frames .abella-frame > :not(img):not(svg) {
   z-index: 2;
+}
+@container abella-frame (aspect-ratio > 1.1) {
+  body.abella-photo-frames .abella-frame > img,
+  body.abella-photo-frames .abella-frame > svg {
+    --abella-frame-ratio: 1115 / 728;
+    width: min(100cqw, 100cqh * 1.5316) !important;
+    clip-path: inset(10.5% 10%);
+  }
+  body.abella-photo-frames .abella-frame::after {
+    background-image: var(--abella-frame-img-landscape);
+  }
 }
