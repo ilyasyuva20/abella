@@ -45,7 +45,7 @@
         "settings": {
           "item_1": "Premium Quality",
           "item_2": "Custom Orders",
-          "item_3": "Shipping Across India",
+          "item_3": "Shipping Globally",
           "item_4": "Loved by Customers",
           "item_5": ""
         }
@@ -56,29 +56,15 @@
           "category_mt9xV4": {
             "type": "category",
             "settings": {
-              "title": "Frocks & Dresses",
+              "title": "Readily Available",
               "image": "shopify://shop_images/age_0_1_5000_c661b757-d524-45ea-8476-7499f095f1a9.jpg",
-              "link": "shopify://products/powder-blue-tulle-princess-gown"
+              "link": "shopify://collections/kids-boutique"
             }
           },
           "category_wEDLMc": {
             "type": "category",
             "settings": {
               "title": "Custom Outfits",
-              "link": ""
-            }
-          },
-          "category_KBr8yY": {
-            "type": "category",
-            "settings": {
-              "title": "Birthday Styles",
-              "link": ""
-            }
-          },
-          "category_DAD6cx": {
-            "type": "category",
-            "settings": {
-              "title": "Sets & Co-ords",
               "link": ""
             }
           },
@@ -106,10 +92,8 @@
           }
         },
         "block_order": [
-          "category_mt9xV4",
           "category_wEDLMc",
-          "category_KBr8yY",
-          "category_DAD6cx",
+          "category_mt9xV4",
           "category_mYcBGE",
           "category_44fPEk",
           "category_efqMbT"
