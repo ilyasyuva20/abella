@@ -47,3 +47,63 @@ body {
 .product-card:hover {
   transform: translateY(-2px);
 }
+
+/* ------------------------------------------------------------------
+   Floral background pattern (toggle: Theme settings > Background & Photo Frames)
+   Active only when <body> has .abella-bg-pattern
+------------------------------------------------------------------- */
+body.abella-bg-pattern {
+  isolation: isolate;
+}
+body.abella-bg-pattern::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--abella-bg-pattern);
+  background-size: cover;
+  background-position: center top;
+  mix-blend-mode: multiply;
+  opacity: var(--abella-bg-opacity, 0.35);
+}
+/* Let the pattern show through full-width page/section backgrounds that use the base ivory tones */
+body.abella-bg-pattern :is(#MainContent > section, #MainContent > .shopify-section > section, #MainContent > div)[class*="bg-[#F5EFE8]"],
+body.abella-bg-pattern :is(#MainContent > section, #MainContent > .shopify-section > section, #MainContent > div)[class*="bg-[#FAF7F2]"] {
+  background-color: transparent !important;
+}
+
+/* ------------------------------------------------------------------
+   Rococo photo frame (toggle: Theme settings > Background & Photo Frames)
+   Add .abella-frame to an image wrapper; active only when <body> has .abella-photo-frames
+------------------------------------------------------------------- */
+body.abella-photo-frames .abella-frame {
+  --abella-frame-b: min(24cqi, 130px);
+  position: relative;
+  container-type: inline-size;
+  overflow: hidden;
+  padding: 0 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+body.abella-photo-frames .abella-frame > img,
+body.abella-photo-frames .abella-frame > svg {
+  border-radius: 0 !important;
+  transform: none !important;
+  clip-path: inset(calc(var(--abella-frame-b) * 0.37));
+}
+body.abella-photo-frames .abella-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: var(--abella-frame-b) solid transparent;
+  border-image: var(--abella-frame-img) 230 stretch;
+}
+body.abella-photo-frames .abella-frame > :not(img):not(svg) {
+  z-index: 2;
+}

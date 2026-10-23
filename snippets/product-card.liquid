@@ -5,7 +5,7 @@
   </button>
 
   <!-- Product Image -->
-  <a href="{{ product.url }}" class="product-image-wrap aspect-[4/5] overflow-hidden mb-3 border border-sand/40 bg-champagne-light block">
+  <a href="{{ product.url }}" class="product-image-wrap abella-frame aspect-[4/5] overflow-hidden mb-3 border border-sand/40 bg-champagne-light block">
     {%- if product.featured_image != blank -%}
       <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" class="w-full h-full object-cover">
     {%- else -%}

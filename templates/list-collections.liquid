@@ -15,7 +15,7 @@
       {% for collection in collections %}
         {% unless collection.handle == 'frontpage' %}
           <a href="{{ collection.url }}" class="group bg-[#EADCD0] rounded-2xl border border-[#DFCDC0] overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between p-4">
-            <div class="aspect-[4/3] rounded-xl overflow-hidden bg-[#FAF7F2] relative mb-4">
+            <div class="abella-frame aspect-[4/3] rounded-xl overflow-hidden bg-[#FAF7F2] relative mb-4">
               {% if collection.image %}
                 <img src="{{ collection.image | image_url: width: 800 }}" alt="{{ collection.title | escape }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               {% elsif collection.products.first.featured_image %}

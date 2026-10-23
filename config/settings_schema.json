@@ -40,5 +40,32 @@
         "default": "#696652"
       }
     ]
+  },
+  {
+    "name": "Background & Photo Frames",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_bg_pattern",
+        "label": "Show floral background pattern",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "bg_pattern_opacity",
+        "label": "Background pattern strength",
+        "min": 10,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "default": 35
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_photo_frames",
+        "label": "Show rococo frame around photos",
+        "default": true
+      }
+    ]
   }
 ]

@@ -24,7 +24,7 @@
 
         <!-- Image Right Side (FLEUR Top-Arched Photo Frame) -->
         <div class="w-full sm:w-1/2 min-h-[260px] sm:min-h-[340px] p-4 flex-shrink-0 relative overflow-hidden">
-          <div class="w-full h-full rounded-t-[100px] sm:rounded-t-[130px] rounded-b-xl overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
+          <div class="abella-frame w-full h-full rounded-t-[100px] sm:rounded-t-[130px] rounded-b-xl overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
             {%- if section.settings.left_image != blank -%}
               <img src="{{ section.settings.left_image | image_url: width: 1000 }}" alt="{{ section.settings.left_tag }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
             {%- else -%}
@@ -56,7 +56,7 @@
 
         <!-- Image Right Side (FLEUR Top-Arched Photo Frame) -->
         <div class="w-full sm:w-1/2 min-h-[260px] sm:min-h-[340px] p-4 flex-shrink-0 relative overflow-hidden">
-          <div class="w-full h-full rounded-t-[100px] sm:rounded-t-[130px] rounded-b-xl overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
+          <div class="abella-frame w-full h-full rounded-t-[100px] sm:rounded-t-[130px] rounded-b-xl overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
             {%- if section.settings.right_image != blank -%}
               <img src="{{ section.settings.right_image | image_url: width: 1000 }}" alt="{{ section.settings.right_tag }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
             {%- else -%}
