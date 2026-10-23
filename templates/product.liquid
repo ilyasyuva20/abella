@@ -665,7 +665,7 @@
              class="grid grid-cols-1 sm:grid-cols-2 gap-3"
              data-title="{{ product.title | escape }}"
              data-price="{{ product.selected_or_first_available_variant.price | money | strip_html | escape }}"
-             data-url="{{ shop.url }}{{ product.url }}"
+             data-url="{{ request.origin }}{{ product.url }}"
              data-image="{{ product_share_image | escape }}">
           <a href="https://wa.me/919446861646" data-chat="whatsapp"
              target="_blank"
@@ -696,12 +696,26 @@
               });
               return picked;
             }
+            // Link, price and image follow the currently selected variant
+            function currentVariant() {
+              var input = document.getElementById('ProductVariantId');
+              var json = document.getElementById('ProductVariantsJSON');
+              if (!input || !json) return null;
+              try {
+                var id = +input.value;
+                return JSON.parse(json.textContent).filter(function (v) { return v.id === id; })[0] || { id: id };
+              } catch (e) { return { id: +input.value }; }
+            }
             function message() {
               var d = box.dataset;
-              var lines = ['Hi Abella, I would like to customize this product:', '', d.title, 'Price: ' + d.price];
+              var v = currentVariant();
+              var link = d.url + (v && v.id ? '?variant=' + v.id : '');
+              var priceEl = document.getElementById('ProductPrice');
+              var price = (priceEl && priceEl.textContent.replace(/\s+/g, ' ').trim()) || d.price;
+              var image = v && v.image ? (v.image.indexOf('//') === 0 ? 'https:' + v.image : v.image) : d.image;
+              var lines = ['Hi Abella, I would like to customize this product:', '', link, '', d.title, 'Price: ' + price];
               selectedOptions().forEach(function (o) { lines.push(o); });
-              lines.push('', 'Product link: ' + d.url);
-              if (d.image) lines.push('Image: ' + d.image);
+              if (image) lines.push('Image: ' + image);
               return lines.join('\n');
             }
             function note(text) {
