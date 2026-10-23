@@ -654,7 +654,18 @@
           })();
         </script>
 
-        <!-- Customization Chat (WhatsApp / Instagram) - shares product name, price, options, link and image -->
+        <!-- Customization Chat (WhatsApp / Instagram) - product link first (chat apps show its photo preview), then the request -->
+        {%- assign chat_variant = product.selected_or_first_available_variant -%}
+        {%- capture nl %}
+{% endcapture -%}
+        {%- capture chat_text -%}
+          {{- request.origin }}{{ product.url }}{{ nl }}{{ nl -}}
+          Hi Abella, I would like to customize this product:{{ nl }}{{ product.title }}{{ nl -}}
+          Price: {{ chat_variant.price | money | strip_html -}}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options -%}{{ nl }}{{ option }}: {{ chat_variant.options[forloop.index0] }}{%- endfor -%}
+          {%- endunless -%}
+        {%- endcapture -%}
         {%- capture product_share_image -%}{% if product.featured_image %}https:{{ product.featured_image | image_url: width: 1000 }}{% endif %}{%- endcapture -%}
         <div id="CustomizationChat"
              class="grid grid-cols-1 sm:grid-cols-2 gap-3"
@@ -662,7 +673,7 @@
              data-price="{{ product.selected_or_first_available_variant.price | money | strip_html | escape }}"
              data-url="{{ request.origin }}{{ product.url }}"
              data-image="{{ product_share_image | escape }}">
-          <a href="https://wa.me/919446861646" data-chat="whatsapp"
+          <a href="https://wa.me/919446861646?text={{ chat_text | url_encode }}" data-chat="whatsapp"
              target="_blank"
              rel="noopener noreferrer"
              class="w-full py-3 px-4 rounded-xl border border-[#25D366] bg-[#25D366]/10 text-[#128C7E] font-sans text-xs font-semibold flex items-center justify-center space-x-2 hover:bg-[#25D366]/20 transition-all">
@@ -691,16 +702,22 @@
               });
               return picked;
             }
-            // Same text for WhatsApp and Instagram: name, price, selected options, then the product link
+            // Same text for WhatsApp and Instagram: the product link first (shows the photo preview), then the request
             function message() {
               var d = box.dataset;
               var priceEl = document.getElementById('ProductPrice');
               var price = (priceEl && priceEl.textContent.replace(/\s+/g, ' ').trim()) || d.price;
-              var lines = ['Hi Abella, I would like to customize this product:', '', d.title, 'Price: ' + price];
+              var lines = [d.url, '', 'Hi Abella, I would like to customize this product:', d.title, 'Price: ' + price];
               selectedOptions().forEach(function (o) { lines.push(o); });
-              lines.push('', 'Product link: ' + d.url);
               return lines.join('\n');
             }
+            var waLink = box.querySelector('[data-chat="whatsapp"]');
+            function syncWhatsApp() { waLink.href = 'https://wa.me/919446861646?text=' + encodeURIComponent(message()); }
+            // Keep the link current as options change (price updates first, so sync on the next tick)
+            document.querySelectorAll('input[type="radio"][data-option-name]').forEach(function (r) {
+              r.addEventListener('change', function () { setTimeout(syncWhatsApp, 0); });
+            });
+            syncWhatsApp();
             function note(text) {
               var n = document.getElementById('CustomizationChatNote');
               n.textContent = text;
@@ -708,9 +725,7 @@
               clearTimeout(note.t);
               note.t = setTimeout(function () { n.classList.add('hidden'); }, 6000);
             }
-            box.querySelector('[data-chat="whatsapp"]').addEventListener('click', function () {
-              this.href = 'https://wa.me/919446861646?text=' + encodeURIComponent(message());
-            });
+            waLink.addEventListener('click', syncWhatsApp);
             // Copy synchronously inside the click so it still works when Instagram opens in a new tab or the app
             function copyText(text) {
               var ok = false;
