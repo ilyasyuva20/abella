@@ -74,7 +74,7 @@
         "max": 100,
         "step": 5,
         "unit": "%",
-        "default": 85
+        "default": 100
       }
     ]
   }
