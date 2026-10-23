@@ -432,17 +432,25 @@
         {% endform %}
 
         <!-- Size Chart modal: kids get a measurements table (cm / inches) + measuring guide image;
-             sarees and blouses (Women's Collection) get the saree & blouse size guide image -->
+             semi partywear gets the party wear size guide image; other Women's Collection products
+             (sarees, blouses) get the saree & blouse size guide image -->
         {%- liquid
           assign women_size_chart = false
+          assign party_size_chart = false
           assign product_type_lc = product.type | downcase
           if product_type_lc contains 'saree' or product_type_lc contains 'blouse'
             assign women_size_chart = true
+          endif
+          if product_type_lc contains 'party'
+            assign party_size_chart = true
           endif
           for tag in product.tags
             assign tag_lc = tag | downcase
             if tag_lc == 'women' or tag_lc == 'sarees' or tag_lc == 'saree' or tag_lc == 'blouses' or tag_lc == 'blouse'
               assign women_size_chart = true
+            endif
+            if tag_lc contains 'semi party' or tag_lc contains 'semi-party' or tag_lc contains 'partywear' or tag_lc contains 'party wear'
+              assign party_size_chart = true
             endif
           endfor
         -%}
@@ -470,7 +478,13 @@
             </button>
           </div>
           <div class="px-5 sm:px-6 py-5 space-y-6 font-sans">
-            {%- if women_size_chart -%}
+            {%- if party_size_chart -%}
+            <img src="{{ 'size-chart-party.jpg' | asset_url }}" alt="Semi party wear size guide (inches): S bust 34 waist 28 hip 38, M 36/30/40, L 38/32/42, XL 40/34/44; measure bust and hips at the fullest part, waist at the narrowest" width="1390" height="1063" class="w-full h-auto rounded-xl border border-[#DFCDC0]">
+            <a href="https://wa.me/919446861646?text={{ size_help_text | url_encode }}" target="_blank" rel="noopener noreferrer"
+               class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#25D366] bg-[#25D366]/10 text-[#128C7E] text-xs font-semibold hover:bg-[#25D366]/20 transition-all">
+              Need custom sizing? Send us your measurements on WhatsApp
+            </a>
+            {%- elsif women_size_chart -%}
             <img src="{{ 'size-chart-saree.jpg' | asset_url }}" alt="Size guide: saree length 216 in (5.5 m), width 44 in, blouse piece 36 in; blouse sizes S bust 34 waist 28 hip 38, M 36/30/40, L 38/32/42, XL 40/34/44 inches" width="1386" height="1065" class="w-full h-auto rounded-xl border border-[#DFCDC0]">
             <a href="https://wa.me/919446861646?text={{ size_help_text | url_encode }}" target="_blank" rel="noopener noreferrer"
                class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#25D366] bg-[#25D366]/10 text-[#128C7E] text-xs font-semibold hover:bg-[#25D366]/20 transition-all">
