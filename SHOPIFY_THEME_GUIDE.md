@@ -99,7 +99,7 @@ All text, images, product collections, and links are 100% editable via the nativ
 
 #### 9. Footer & Business Info
 - Update business address (*Embassy House, 9/115, Fortkochi, Veli, Cochin - 1*).
-- Update phone numbers (*8089153124 / +91 9446861646*).
+- Update phone numbers (*+91 9446861646*).
 - Update GSTIN (*32CYPS751B1C129*).
 - Customize handwritten thank-you script: *"Thank you for being a part of our story."*
 
