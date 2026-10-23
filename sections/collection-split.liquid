@@ -1,3 +1,19 @@
+{%- liquid
+  assign kids_collection = collections['kids-boutique']
+  assign women_collection = collections['womens-collection']
+
+  assign left_img = section.settings.left_image
+  if left_img == blank
+    assign left_img = kids_collection.image | default: kids_collection.products.first.featured_image
+  endif
+  assign right_img = section.settings.right_image
+  if right_img == blank
+    assign right_img = women_collection.image | default: women_collection.products.first.featured_image
+  endif
+
+  assign left_url = section.settings.left_link | default: kids_collection.url | default: routes.all_products_collection_url
+  assign right_url = section.settings.right_link | default: women_collection.url | default: routes.all_products_collection_url
+-%}
 <section class="py-12 sm:py-16 bg-[#F5EFE8] border-b border-[#DFCDC0]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
@@ -16,7 +32,7 @@
             </p>
           </div>
           <div class="pt-2">
-            <a href="{{ section.settings.left_link | default: '/collections/kids-boutique' }}" class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#2C221E] text-[#F5EFE8] text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-xs">
+            <a href="{{ left_url }}" class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#2C221E] text-[#F5EFE8] text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-xs">
               {{ section.settings.left_btn_text | default: "EXPLORE KIDS" }} &rarr;
             </a>
           </div>
@@ -25,8 +41,8 @@
         <!-- Image Right Side (FLEUR Top-Arched Photo Frame) -->
         <div class="w-full sm:w-1/2 min-h-[260px] sm:min-h-[340px] p-4 flex-shrink-0 relative overflow-hidden">
           <div class="abella-frame w-full h-full rounded-t-[100px] sm:rounded-t-[130px] rounded-b-xl overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            {%- if section.settings.left_image != blank -%}
-              <img src="{{ section.settings.left_image | image_url: width: 1000 }}" alt="{{ section.settings.left_tag }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+            {%- if left_img != blank -%}
+              <img src="{{ left_img | image_url: width: 1000 }}" alt="{{ section.settings.left_tag | escape }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
             {%- else -%}
               <img src="{{ 'kids-boutique-portrait.jpg' | asset_url }}" alt="Kids Boutique" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
             {%- endif -%}
@@ -48,7 +64,7 @@
             </p>
           </div>
           <div class="pt-2">
-            <a href="{{ section.settings.right_link | default: '/collections/womens-collection' }}" class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#2C221E] text-[#F5EFE8] text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-xs">
+            <a href="{{ right_url }}" class="inline-flex items-center gap-2.5 px-6 py-3 bg-[#2C221E] text-[#F5EFE8] text-[11px] font-medium uppercase tracking-[0.2em] hover:bg-[#4A3B32] transition-all duration-300 shadow-xs">
               {{ section.settings.right_btn_text | default: "EXPLORE WOMEN" }} &rarr;
             </a>
           </div>
@@ -57,8 +73,8 @@
         <!-- Image Right Side (FLEUR Top-Arched Photo Frame) -->
         <div class="w-full sm:w-1/2 min-h-[260px] sm:min-h-[340px] p-4 flex-shrink-0 relative overflow-hidden">
           <div class="abella-frame w-full h-full rounded-t-[100px] sm:rounded-t-[130px] rounded-b-xl overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            {%- if section.settings.right_image != blank -%}
-              <img src="{{ section.settings.right_image | image_url: width: 1000 }}" alt="{{ section.settings.right_tag }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+            {%- if right_img != blank -%}
+              <img src="{{ right_img | image_url: width: 1000 }}" alt="{{ section.settings.right_tag | escape }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
             {%- else -%}
               <img src="{{ 'womens-collection-portrait.jpg' | asset_url }}" alt="Women's Collection" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
             {%- endif -%}

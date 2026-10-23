@@ -14,111 +14,37 @@
     <div class="hidden sm:grid grid-cols-5 gap-4 lg:gap-6 mb-10 items-center">
       <div class="col-span-2 flex items-center justify-center">
         <div class="flex-1 h-[1px] bg-[#DFCDC0]"></div>
-        <span class="px-3 lg:px-4 text-[11px] lg:text-[12px] font-sans font-semibold uppercase tracking-[0.22em] text-[#7A6B60] whitespace-nowrap">
+        <a href="{{ collections['kids-boutique'].url | default: routes.all_products_collection_url }}" class="px-3 lg:px-4 text-[11px] lg:text-[12px] font-sans font-semibold uppercase tracking-[0.22em] text-[#7A6B60] whitespace-nowrap hover:text-[#2C221E] transition-colors">
           KIDS BOUTIQUE
-        </span>
+        </a>
         <div class="flex-1 h-[1px] bg-[#DFCDC0]"></div>
       </div>
       <div class="col-span-3 flex items-center justify-center">
         <div class="flex-1 h-[1px] bg-[#DFCDC0]"></div>
-        <span class="px-3 lg:px-4 text-[11px] lg:text-[12px] font-sans font-semibold uppercase tracking-[0.22em] text-[#7A6B60] whitespace-nowrap">
+        <a href="{{ collections['womens-collection'].url | default: routes.all_products_collection_url }}" class="px-3 lg:px-4 text-[11px] lg:text-[12px] font-sans font-semibold uppercase tracking-[0.22em] text-[#7A6B60] whitespace-nowrap hover:text-[#2C221E] transition-colors">
           WOMEN'S COLLECTION
-        </span>
+        </a>
         <div class="flex-1 h-[1px] bg-[#DFCDC0]"></div>
       </div>
     </div>
 
     <!-- Mobile Sub Group Dividers (Clean & Spacious) -->
     <div class="sm:hidden flex flex-wrap justify-center gap-3 mb-6 text-[10px] font-sans font-semibold uppercase tracking-[0.18em] text-[#7A6B60]">
-      <span class="px-3 py-1 bg-[#EADCD0] rounded-full border border-[#DFCDC0]">KIDS BOUTIQUE (2)</span>
-      <span class="px-3 py-1 bg-[#EADCD0] rounded-full border border-[#DFCDC0]">WOMEN'S COLLECTION (3)</span>
+      <a href="{{ collections['kids-boutique'].url | default: routes.all_products_collection_url }}" class="px-3 py-1 bg-[#EADCD0] rounded-full border border-[#DFCDC0]">KIDS BOUTIQUE (2)</a>
+      <a href="{{ collections['womens-collection'].url | default: routes.all_products_collection_url }}" class="px-3 py-1 bg-[#EADCD0] rounded-full border border-[#DFCDC0]">WOMEN'S COLLECTION (3)</a>
     </div>
 
     <!-- FLEUR Top-Arched Category Cards: 2 Kids Boutique + 3 Women's Collection -->
     <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 lg:gap-5 items-stretch">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
-          {%- assign cat_default_link = '#featured' -%}
-          {%- if block.settings.title contains 'Custom' -%}{%- assign cat_default_link = '#custom' -%}{%- endif -%}
-          <a href="{{ block.settings.link | default: cat_default_link }}" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none" {{ block.shopify_attributes }}>
-            
-            <!-- FLEUR Signature Top-Arched Frame -->
-            <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-              {%- if block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-              {%- else -%}
-                {%- assign cat_img = 'cat-frocks.jpg' -%}
-                {%- if block.settings.title contains 'Custom' %}{% assign cat_img = 'cat-custom.jpg' %}{% endif -%}
-                {%- if block.settings.title contains 'Birthday' %}{% assign cat_img = 'cat-birthday.jpg' %}{% endif -%}
-                {%- if block.settings.title contains 'Co-ord' %}{% assign cat_img = 'cat-coords.jpg' %}{% endif -%}
-                {%- if block.settings.title contains 'Saree' %}{% assign cat_img = 'cat-sarees.jpg' %}{% endif -%}
-                {%- if block.settings.title contains 'Blouse' %}{% assign cat_img = 'cat-blouses.jpg' %}{% endif -%}
-                {%- if block.settings.title contains 'Semi' %}{% assign cat_img = 'cat-semi-partywear.jpg' %}{% endif -%}
-                <img src="{{ cat_img | asset_url }}" alt="{{ block.settings.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-              {%- endif -%}
-            </div>
-            
-            <div class="space-y-1 py-1">
-              <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">
-                {{ block.settings.title }}
-              </span>
-              <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
-            </div>
-          </a>
+          {% render 'category-card', title: block.settings.title, image: block.settings.image, link: block.settings.link, index: forloop.index0, attributes: block.shopify_attributes %}
         {%- endfor -%}
       {%- else -%}
-        <!-- Fallback FLEUR Arched Cards -->
-        <a href="{{ routes.collections_url }}/kids-boutique" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none">
-          <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            <img src="{{ 'cat-frocks.jpg' | asset_url }}" alt="Readily Available" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          </div>
-          <div class="space-y-1 py-1">
-            <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">Readily Available</span>
-            <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
-          </div>
-        </a>
-
-        <a href="#custom" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none">
-          <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            <img src="{{ 'cat-custom.jpg' | asset_url }}" alt="Custom Outfits" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          </div>
-          <div class="space-y-1 py-1">
-            <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">Custom Outfits</span>
-            <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
-          </div>
-        </a>
-
-
-
-        <a href="{{ routes.collections_url }}/womens-collection" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none">
-          <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            <img src="{{ 'cat-sarees.jpg' | asset_url }}" alt="Sarees" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          </div>
-          <div class="space-y-1 py-1">
-            <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">Sarees</span>
-            <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
-          </div>
-        </a>
-
-        <a href="{{ routes.collections_url }}/womens-collection" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none">
-          <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            <img src="{{ 'cat-blouses.jpg' | asset_url }}" alt="Blouses" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          </div>
-          <div class="space-y-1 py-1">
-            <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">Blouses</span>
-            <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
-          </div>
-        </a>
-
-        <a href="{{ routes.collections_url }}/womens-collection" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none">
-          <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
-            <img src="{{ 'cat-semi-partywear.jpg' | asset_url }}" alt="Semi Partywear" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-          </div>
-          <div class="space-y-1 py-1">
-            <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">Semi Partywear</span>
-            <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
-          </div>
-        </a>
+        {%- assign default_titles = 'Readily Available,Custom Outfits,Sarees,Blouses,Semi Partywear' | split: ',' -%}
+        {%- for cat_title in default_titles -%}
+          {% render 'category-card', title: cat_title, index: forloop.index0 %}
+        {%- endfor -%}
       {%- endif -%}
     </div>
 

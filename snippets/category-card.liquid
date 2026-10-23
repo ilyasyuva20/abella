@@ -1,0 +1,89 @@
+{%- comment -%}
+  Shop by Category card, filled from live store data.
+  Params: title, image (optional image_picker), link (optional url), index (position, varies the fallback photo)
+  Link: given link → collection matching the title → Kids Boutique / Women's Collection by keyword.
+  Image: given image → collection image → a product photo from that collection → theme asset.
+{%- endcomment -%}
+{%- liquid
+  assign cat_link = link
+  assign cat_collection = nil
+  assign exact_match = false
+
+  if cat_link contains '/collections/'
+    assign cat_handle = cat_link | split: '/collections/' | last | split: '?' | first | split: '#' | first
+    assign cat_collection = collections[cat_handle]
+    assign exact_match = true
+  endif
+
+  if cat_collection == nil or cat_collection.products_count == 0
+    assign title_handle = title | handleize
+    assign by_title = collections[title_handle]
+    if by_title != nil and by_title.products_count > 0
+      assign cat_collection = by_title
+      assign exact_match = true
+    endif
+  endif
+
+  assign is_custom = false
+  if title contains 'Custom'
+    assign is_custom = true
+  endif
+
+  if cat_collection == nil or cat_collection.products_count == 0
+    assign exact_match = false
+    if is_custom or title contains 'Readily' or title contains 'Kid' or title contains 'Frock' or title contains 'Birthday' or title contains 'Co-ord'
+      assign cat_collection = collections['kids-boutique']
+    elsif title contains 'Saree'
+      assign cat_collection = collections['sarees']
+    else
+      assign cat_collection = collections['womens-collection']
+    endif
+  endif
+
+  if cat_link == blank
+    if is_custom
+      assign cat_link = '#custom'
+    elsif cat_collection != nil
+      assign cat_link = cat_collection.url
+    else
+      assign cat_link = routes.all_products_collection_url
+    endif
+  endif
+
+  assign cat_image = image
+  if cat_image == blank and cat_collection != nil
+    if exact_match and cat_collection.image != blank
+      assign cat_image = cat_collection.image
+    elsif cat_collection.products_count > 0
+      assign pick = 0
+      unless exact_match
+        assign pick = index | modulo: cat_collection.products.size
+      endunless
+      assign cat_image = cat_collection.products[pick].featured_image
+    endif
+  endif
+
+  assign cat_asset = 'cat-frocks.jpg'
+  if is_custom
+    assign cat_asset = 'cat-custom.jpg'
+  elsif title contains 'Saree'
+    assign cat_asset = 'cat-sarees.jpg'
+  elsif title contains 'Blouse'
+    assign cat_asset = 'cat-blouses.jpg'
+  elsif title contains 'Semi'
+    assign cat_asset = 'cat-semi-partywear.jpg'
+  endif
+-%}
+<a href="{{ cat_link }}" class="category-card group bg-[#EADCD0] p-3 sm:p-4 flex flex-col items-center text-center space-y-3 rounded-t-[70px] sm:rounded-t-[90px] rounded-b-xl border border-[#DFCDC0]/60 hover:bg-[#E5D2C2] shadow-xs hover:shadow-md transition-all duration-300 focus:outline-none" {{ attributes }}>
+  <div class="abella-frame w-full aspect-[4/5] rounded-t-[60px] sm:rounded-t-[80px] rounded-b-lg overflow-hidden border border-[#DFCDC0] bg-[#F5EFE8]">
+    {%- if cat_image != blank -%}
+      <img src="{{ cat_image | image_url: width: 500 }}" alt="{{ title | escape }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+    {%- else -%}
+      <img src="{{ cat_asset | asset_url }}" alt="{{ title | escape }}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+    {%- endif -%}
+  </div>
+  <div class="space-y-1 py-1">
+    <span class="font-serif text-sm sm:text-base font-normal text-[#2C221E] group-hover:text-[#4A3B32] transition-colors leading-tight block">{{ title }}</span>
+    <span class="text-[10px] uppercase font-sans tracking-widest text-[#7A6B60] block group-hover:underline">Explore &rarr;</span>
+  </div>
+</a>
