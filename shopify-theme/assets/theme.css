@@ -77,61 +77,40 @@ body.abella-bg-pattern :is(#MainContent > section, #MainContent > .shopify-secti
 /* ------------------------------------------------------------------
    Rococo photo frame (toggle: Theme settings > Background & Photo Frames)
    Add .abella-frame to an image wrapper; active only when <body> has .abella-photo-frames.
-   The frame is always drawn at its true proportions (728 x 1115), fitted inside the
-   wrapper; landscape wrappers use the rotated frame. The photo fills the frame window.
+   The photo keeps filling its box; four rococo corner ornaments (never stretched)
+   and a hairline border are overlaid at reduced opacity.
 ------------------------------------------------------------------- */
 body.abella-photo-frames .abella-frame {
-  --abella-frame-ratio: 728 / 1115;
-  --abella-frame-r: 0.6529;
+  --abella-corner: min(26cqi, 120px);
   position: relative;
-  container: abella-frame / size;
+  container-type: inline-size;
   overflow: hidden;
   padding: 0 !important;
-  background: transparent !important;
-  border-color: transparent !important;
   border-radius: 0 !important;
-  box-shadow: none !important;
 }
-/* The product page image wrapper has no fixed shape of its own */
-body.abella-photo-frames .abella-frame:has(> #mainProductImage) {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  max-height: 720px;
-}
-body.abella-photo-frames .abella-frame > img,
-body.abella-photo-frames .abella-frame > svg {
-  position: absolute !important;
-  inset: 0;
-  margin: auto;
-  width: min(100cqw, 100cqh * var(--abella-frame-r)) !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  aspect-ratio: var(--abella-frame-ratio);
-  object-fit: cover;
+body.abella-photo-frames .abella-frame > img {
   border-radius: 0 !important;
-  transform: none !important;
-  clip-path: inset(10% 10.5%);
 }
+body.abella-photo-frames .abella-frame::before,
 body.abella-photo-frames .abella-frame::after {
   content: "";
   position: absolute;
-  inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: var(--abella-frame-img) center / contain no-repeat;
+  opacity: var(--abella-frame-opacity, 0.85);
+}
+body.abella-photo-frames .abella-frame::before {
+  inset: calc(var(--abella-corner) * 0.1);
+  border: 1.5px solid #D28C8C;
+}
+body.abella-photo-frames .abella-frame::after {
+  inset: 0;
+  background:
+    var(--abella-frame-tl) left top / var(--abella-corner) auto no-repeat,
+    var(--abella-frame-tr) right top / var(--abella-corner) auto no-repeat,
+    var(--abella-frame-bl) left bottom / var(--abella-corner) auto no-repeat,
+    var(--abella-frame-br) right bottom / var(--abella-corner) auto no-repeat;
 }
 body.abella-photo-frames .abella-frame > :not(img):not(svg) {
   z-index: 2;
-}
-@container abella-frame (aspect-ratio > 1.1) {
-  body.abella-photo-frames .abella-frame > img,
-  body.abella-photo-frames .abella-frame > svg {
-    --abella-frame-ratio: 1115 / 728;
-    width: min(100cqw, 100cqh * 1.5316) !important;
-    clip-path: inset(10.5% 10%);
-  }
-  body.abella-photo-frames .abella-frame::after {
-    background-image: var(--abella-frame-img-landscape);
-  }
 }

@@ -61,7 +61,7 @@
 </head>
 
 <body class="bg-[#F5EFE8] text-[#2C221E] font-sans antialiased{% if settings.enable_bg_pattern %} abella-bg-pattern{% endif %}{% if settings.enable_photo_frames %} abella-photo-frames{% endif %}"
-      style="--abella-bg-pattern: url('{{ 'abella-bg-pattern.jpg' | asset_url }}'); --abella-bg-opacity: {{ settings.bg_pattern_opacity | default: 25 | divided_by: 100.0 }}; --abella-frame-img: url('{{ 'abella-photo-frame.webp' | asset_url }}'); --abella-frame-img-landscape: url('{{ 'abella-photo-frame-landscape.webp' | asset_url }}');">
+      style="--abella-bg-pattern: url('{{ 'abella-bg-pattern.jpg' | asset_url }}'); --abella-bg-opacity: {{ settings.bg_pattern_opacity | default: 25 | divided_by: 100.0 }}; --abella-frame-opacity: {{ settings.photo_frame_opacity | default: 85 | divided_by: 100.0 }}; --abella-frame-tl: url('{{ 'abella-frame-tl.webp' | asset_url }}'); --abella-frame-tr: url('{{ 'abella-frame-tr.webp' | asset_url }}'); --abella-frame-bl: url('{{ 'abella-frame-bl.webp' | asset_url }}'); --abella-frame-br: url('{{ 'abella-frame-br.webp' | asset_url }}');">
   {% section 'announcement-bar' %}
   {% section 'header' %}
 

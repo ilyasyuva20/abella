@@ -63,8 +63,18 @@
       {
         "type": "checkbox",
         "id": "enable_photo_frames",
-        "label": "Show rococo frame around photos",
+        "label": "Show rococo corner frame on photos",
         "default": true
+      },
+      {
+        "type": "range",
+        "id": "photo_frame_opacity",
+        "label": "Photo frame strength",
+        "min": 20,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "default": 85
       }
     ]
   }
