@@ -60,7 +60,7 @@
         <!-- Full-screen gallery: swipe / arrows to browse, tap image to zoom -->
         {% if product.featured_image %}
           <dialog id="GalleryLightbox" aria-label="{{ product.title | escape }} images"
-                  class="m-0 w-screen h-[100dvh] max-w-none max-h-none p-0 bg-[#1A1411] text-white backdrop:bg-black">
+                  class="!m-0 w-screen h-[100dvh] max-w-none max-h-none p-0 bg-[#1A1411] text-white backdrop:bg-black">
             <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
               <div id="LightboxStage" class="w-full h-full overflow-auto flex items-center justify-center touch-pan-y">
                 <img id="LightboxImage" src="{{ product.featured_image | image_url: width: 2000 }}" alt="{{ product.title | escape }}"
@@ -121,7 +121,8 @@
                   t.classList.toggle('border-[#2C221E]', on);
                   t.classList.toggle('border-[#DFCDC0]', !on);
                   t.classList.toggle('opacity-70', !on);
-                  if (on) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                  // Scroll only the thumbnail strip, not the page
+                  if (on) t.parentElement.scrollTo({ left: t.offsetLeft - t.parentElement.offsetLeft, behavior: 'smooth' });
                 });
               }
               // Used by the variant script to jump to a variant's image
