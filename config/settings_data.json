@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "enable_photo_frames": false,
     "favicon": "shopify://shop_images/Logo.png",
     "color_ivory": "#FDFBF7",
     "color_champagne": "#FAF6EE",

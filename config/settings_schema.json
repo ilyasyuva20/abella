@@ -64,7 +64,7 @@
         "type": "checkbox",
         "id": "enable_photo_frames",
         "label": "Show rococo corner frame on photos",
-        "default": true
+        "default": false
       },
       {
         "type": "range",
