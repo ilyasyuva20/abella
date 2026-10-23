@@ -91,7 +91,7 @@
     {%- assign total_slides = section.blocks.size -%}
     {%- if total_slides == 0 %}{% assign total_slides = default_slides.size %}{% endif -%}
     {%- for i in (1..total_slides) -%}
-      <button class="hero-dot w-2.5 h-2.5 rounded-full {% if forloop.first %}bg-[#2C221E]{% else %}bg-[#7A6B60]/40 hover:bg-[#7A6B60]/80{% endif %} transition-all duration-300" data-slide="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+      <button class="{% if forloop.first %}hero-dot w-6 h-2 rounded-full bg-[#2C221E] sm:bg-white sm:shadow-[0_0_4px_rgba(0,0,0,0.45)] transition-all duration-300{% else %}hero-dot w-2 h-2 rounded-full bg-[#7A6B60]/40 hover:bg-[#7A6B60]/80 sm:bg-white/60 sm:hover:bg-white sm:shadow-[0_0_4px_rgba(0,0,0,0.45)] transition-all duration-300{% endif %}" data-slide="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
     {%- endfor -%}
   </div>
 

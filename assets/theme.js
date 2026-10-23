@@ -23,11 +23,12 @@ function initHeroSlider() {
     currentSlide = (index + slideCount) % slideCount;
     track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
+    // Dark dots on the cream caption strip (phones), white dots over the photo (sm and up)
     dots.forEach((dot, idx) => {
       if (idx === currentSlide) {
-        dot.className = 'hero-dot w-6 h-2 rounded-full bg-[#2C221E] transition-all duration-300';
+        dot.className = 'hero-dot w-6 h-2 rounded-full bg-[#2C221E] sm:bg-white sm:shadow-[0_0_4px_rgba(0,0,0,0.45)] transition-all duration-300';
       } else {
-        dot.className = 'hero-dot w-2 h-2 rounded-full bg-[#7A6B60]/40 hover:bg-[#7A6B60]/80 transition-all duration-300';
+        dot.className = 'hero-dot w-2 h-2 rounded-full bg-[#7A6B60]/40 hover:bg-[#7A6B60]/80 sm:bg-white/60 sm:hover:bg-white sm:shadow-[0_0_4px_rgba(0,0,0,0.45)] transition-all duration-300';
       }
     });
   }
