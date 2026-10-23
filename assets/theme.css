@@ -48,8 +48,8 @@ body {
   transform: translateY(-2px);
 }
 
-/* Instagram embeds: let Instagram's player shrink to fit 4 per row on desktop */
-.instagram-embeds .instagram-media {
+/* Instagram reel pop-up: let Instagram's player fit the dialog width */
+.reel-embed .instagram-media {
   min-width: 0 !important;
   max-width: 100% !important;
   width: 100% !important;
