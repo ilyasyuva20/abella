@@ -48,7 +48,7 @@
       </div>
     {%- endif -%}
 
-    <!-- Filter & Sort Bar -->
+    <!-- Toolbar: Filter toggle + count | Sort + View as (grid / list) -->
     {%- assign active_filter_count = 0 -%}
     {%- for filter in collection.filters -%}
       {%- if filter.type == 'price_range' -%}
@@ -57,28 +57,28 @@
         {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
       {%- endif -%}
     {%- endfor -%}
-    <div class="space-y-3 font-sans text-xs">
-      <div class="flex flex-wrap justify-between items-center gap-3 border-y border-[#DFCDC0] py-3">
-        <div class="flex items-center gap-4">
-          {%- if collection.filters.size > 0 -%}
-            <button type="button" id="FilterToggle" aria-expanded="false" aria-controls="FilterPanel"
-                    class="inline-flex items-center gap-2 px-3 py-2 border border-[#DFCDC0] hover:border-[#2C221E] transition-colors">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 6h18M6 12h12M10 18h4"/></svg>
-              <span>Filter{% if active_filter_count > 0 %} ({{ active_filter_count }}){% endif %}</span>
-            </button>
-          {%- endif -%}
-          <span class="text-[#7A6B60]"><span class="text-[#2C221E] font-semibold">{{ collection.products_count }}</span> {{ collection.products_count | pluralize: 'product', 'products' }}</span>
-        </div>
+    {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+    <div class="flex flex-wrap justify-between items-center gap-3 border-y border-[#DFCDC0] py-3 font-sans text-xs">
+      <div class="flex items-center gap-4">
+        {%- if collection.filters.size > 0 -%}
+          <button type="button" id="FilterToggle" aria-expanded="true" aria-controls="FilterSidebar"
+                  class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full border border-[#DFCDC0] hover:border-[#2C221E] transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 4.5h18l-7 8.25V19.5l-4 1.5v-8.25L3 4.5z"/></svg>
+            <span class="font-semibold">Filter{% if active_filter_count > 0 %} ({{ active_filter_count }}){% endif %}</span>
+          </button>
+        {%- endif -%}
+        <span class="text-[#7A6B60]">{{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}</span>
+      </div>
 
+      <div class="flex items-center gap-4 sm:gap-6">
         <div class="flex items-center gap-2">
-          <label for="SortBy" class="text-[#7A6B60] whitespace-nowrap">Sort by</label>
-          {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
-          <select id="SortBy" class="bg-transparent border border-[#DFCDC0] px-3 py-2 text-[#2C221E] focus:outline-none focus:border-[#2C221E] cursor-pointer">
+          <label for="SortBy" class="hidden sm:inline font-semibold whitespace-nowrap">Sort by:</label>
+          <select id="SortBy" class="bg-transparent border border-[#DFCDC0] rounded-full pl-3 pr-8 py-2 text-[#2C221E] focus:outline-none focus:border-[#2C221E] cursor-pointer">
             {%- for option in collection.sort_options -%}
-              {%- if option.value == 'manual' or option.value == 'price-ascending' or option.value == 'price-descending' or option.value == 'created-descending' or option.value == 'best-selling' -%}
+              {%- if option.value == 'manual' or option.value == 'best-selling' or option.value == 'price-ascending' or option.value == 'price-descending' or option.value == 'created-descending' -%}
                 <option value="{{ option.value }}"{% if option.value == current_sort %} selected{% endif %}>
                   {%- case option.value -%}
-                    {%- when 'manual' -%}Featured
+                    {%- when 'manual' -%}Most relevant
                     {%- when 'price-ascending' -%}Price: Low to High
                     {%- when 'price-descending' -%}Price: High to Low
                     {%- when 'created-descending' -%}Newest Arrivals
@@ -89,115 +89,188 @@
             {%- endfor -%}
           </select>
         </div>
+        <div class="flex items-center gap-2" role="group" aria-label="View as">
+          <span class="hidden sm:inline font-semibold whitespace-nowrap">View as:</span>
+          <button type="button" data-view-btn="grid" aria-label="Grid view" aria-pressed="true"
+                  class="w-9 h-9 inline-flex items-center justify-center rounded-full border border-[#DFCDC0] aria-pressed:bg-[#2C221E] aria-pressed:text-white aria-pressed:border-[#2C221E] transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>
+          </button>
+          <button type="button" data-view-btn="list" aria-label="List view" aria-pressed="false"
+                  class="w-9 h-9 inline-flex items-center justify-center rounded-full border border-[#DFCDC0] aria-pressed:bg-[#2C221E] aria-pressed:text-white aria-pressed:border-[#2C221E] transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
+          </button>
+        </div>
       </div>
+    </div>
 
+    <div class="flex gap-8 items-start">
       {%- if collection.filters.size > 0 -%}
-        <!-- Filter panel (GET form: Shopify storefront filters) -->
-        <form id="FilterPanel" action="{{ collection.url }}" method="get" class="hidden border border-[#DFCDC0] p-4 sm:p-5 space-y-5">
-          <input type="hidden" name="sort_by" value="{{ current_sort }}">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Filter sidebar: left column on desktop, slide-in drawer on phones. Checkboxes apply instantly. -->
+        <div id="FilterBackdrop" class="hidden fixed inset-0 z-40 bg-[#2C221E]/50 lg:hidden"></div>
+        <aside id="FilterSidebar" aria-label="Filters"
+               class="fixed inset-y-0 left-0 z-50 w-[85%] max-w-xs -translate-x-full overflow-y-auto bg-[#FAF7F2] p-5 transition-transform duration-300
+                      lg:z-auto lg:w-60 lg:max-w-none lg:flex-shrink-0 lg:translate-x-0 lg:overflow-visible lg:bg-transparent lg:p-0 lg:sticky lg:top-28">
+          <div class="flex items-center justify-between mb-4 lg:hidden">
+            <span class="font-serif text-2xl">Filter</span>
+            <button type="button" data-filter-close aria-label="Close filters" class="w-9 h-9 inline-flex items-center justify-center rounded-full hover:bg-[#EADCD0]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <form id="FilterForm" action="{{ collection.url }}" method="get" class="font-sans text-xs divide-y divide-[#DFCDC0]">
+            <input type="hidden" name="sort_by" value="{{ current_sort }}">
             {%- for filter in collection.filters -%}
-              <fieldset class="space-y-2">
-                <legend class="font-semibold uppercase tracking-wider text-[11px] text-[#2C221E] mb-2">{{ filter.label }}</legend>
-                {%- if filter.type == 'price_range' -%}
-                  <div class="flex items-center gap-2">
-                    <input type="number" min="0" name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}" placeholder="Min" class="w-24 bg-transparent border border-[#DFCDC0] px-2 py-1.5 focus:outline-none focus:border-[#2C221E]">
-                    <span class="text-[#7A6B60]">–</span>
-                    <input type="number" min="0" name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}" placeholder="{{ filter.range_max | divided_by: 100 }}" class="w-24 bg-transparent border border-[#DFCDC0] px-2 py-1.5 focus:outline-none focus:border-[#2C221E]">
-                  </div>
-                {%- else -%}
-                  {%- for value in filter.values -%}
-                    <label class="flex items-center gap-2 cursor-pointer {% if value.count == 0 and value.active == false %}opacity-40{% endif %}">
-                      <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %} class="accent-[#2C221E]">
-                      <span>{{ value.label }} <span class="text-[#7A6B60]">({{ value.count }})</span></span>
-                    </label>
-                  {%- endfor -%}
-                {%- endif -%}
-              </fieldset>
+              <details class="group py-4 first:pt-0" {% if forloop.index <= 3 or filter.active_values.size > 0 %}open{% endif %}>
+                <summary class="flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <span class="font-semibold text-sm text-[#2C221E]">{{ filter.label }}</span>
+                  <span class="text-lg leading-none text-[#2C221E] group-open:hidden">+</span>
+                  <span class="text-lg leading-none text-[#2C221E] hidden group-open:inline">&minus;</span>
+                </summary>
+                <div class="pt-3 space-y-2.5">
+                  {%- if filter.type == 'price_range' -%}
+                    <p class="text-[#7A6B60]">The highest price is {{ filter.range_max | money }}</p>
+                    <div class="flex items-center gap-2">
+                      <label class="flex items-center gap-1 flex-1 rounded-full border border-[#DFCDC0] px-3 py-2 focus-within:border-[#2C221E]">
+                        <span class="text-[#7A6B60]">₹</span>
+                        <input type="number" min="0" data-price-input name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}" placeholder="0" aria-label="Minimum price" class="w-full bg-transparent focus:outline-none">
+                      </label>
+                      <span class="text-[#7A6B60]">–</span>
+                      <label class="flex items-center gap-1 flex-1 rounded-full border border-[#DFCDC0] px-3 py-2 focus-within:border-[#2C221E]">
+                        <span class="text-[#7A6B60]">₹</span>
+                        <input type="number" min="0" data-price-input name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}" placeholder="{{ filter.range_max | divided_by: 100 }}" aria-label="Maximum price" class="w-full bg-transparent focus:outline-none">
+                      </label>
+                    </div>
+                    <button type="submit" class="px-4 py-1.5 rounded-full bg-[#2C221E] text-white text-[11px] uppercase tracking-wider hover:bg-[#4A3B32] transition-colors">Apply</button>
+                  {%- else -%}
+                    {%- for value in filter.values -%}
+                      {%- assign disabled = false -%}
+                      {%- if value.count == 0 and value.active == false -%}{%- assign disabled = true -%}{%- endif -%}
+                      <label class="flex items-center justify-between gap-2 cursor-pointer {% if disabled %}opacity-40 cursor-default{% endif %}">
+                        <span class="flex items-center gap-2.5">
+                          <input type="checkbox" data-auto-submit name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if disabled %} disabled{% endif %} class="w-4 h-4 accent-[#2C221E]">
+                          <span class="text-[#2C221E]">{{ value.label }}</span>
+                        </span>
+                        <span class="text-[#7A6B60]">{{ value.count }}</span>
+                      </label>
+                    {%- endfor -%}
+                  {%- endif -%}
+                </div>
+              </details>
             {%- endfor -%}
-          </div>
-          <div class="flex items-center gap-4">
-            <button type="submit" class="px-5 py-2 bg-[#2C221E] text-white uppercase tracking-widest text-[11px] hover:bg-[#4A3B32] transition-colors">Apply</button>
-            <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all</a>
-          </div>
-        </form>
+            {%- if active_filter_count > 0 -%}
+              <div class="pt-4">
+                <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all filters</a>
+              </div>
+            {%- endif -%}
+          </form>
+        </aside>
+      {%- endif -%}
 
+      <div class="flex-1 min-w-0 space-y-5">
         <!-- Active filters -->
         {%- if active_filter_count > 0 -%}
-          <div class="flex flex-wrap items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2 font-sans text-xs">
             {%- for filter in collection.filters -%}
               {%- if filter.type == 'price_range' -%}
                 {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
-                  <a href="{{ filter.url_to_remove }}" class="inline-flex items-center gap-1.5 px-3 py-1 border border-[#DFCDC0] hover:border-[#2C221E]">
+                  <a href="{{ filter.url_to_remove }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#DFCDC0] hover:border-[#2C221E]">
                     {{ filter.min_value.value | default: 0 | money_without_trailing_zeros }} – {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros }} <span aria-hidden="true">✕</span>
                   </a>
                 {%- endif -%}
               {%- else -%}
                 {%- for value in filter.active_values -%}
-                  <a href="{{ value.url_to_remove }}" class="inline-flex items-center gap-1.5 px-3 py-1 border border-[#DFCDC0] hover:border-[#2C221E]">{{ value.label }} <span aria-hidden="true">✕</span></a>
+                  <a href="{{ value.url_to_remove }}" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#DFCDC0] hover:border-[#2C221E]">{{ value.label }} <span aria-hidden="true">✕</span></a>
                 {%- endfor -%}
               {%- endif -%}
             {%- endfor -%}
             <a href="{{ collection.url }}?sort_by={{ current_sort }}" class="underline underline-offset-2 text-[#7A6B60] hover:text-[#2C221E]">Clear all</a>
           </div>
         {%- endif -%}
-      {%- endif -%}
+
+        <!-- Product Grid (data-view switches grid / list, see theme.css) -->
+        {% paginate collection.products by 12 %}
+          {% if collection.products.size > 0 %}
+            <div id="ProductGrid" data-view="grid" class="product-grid grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
+              {% for product in collection.products %}
+                {% render 'product-card', product: product %}
+              {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if paginate.pages > 1 %}
+              <div class="flex justify-center items-center space-x-2 pt-8 font-sans text-xs">
+                {% if paginate.previous %}
+                  <a href="{{ paginate.previous.url }}" class="px-4 py-2 rounded-full border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-colors">Previous</a>
+                {% endif %}
+                <span class="px-4 py-2 font-medium text-[#7A6B60]">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+                {% if paginate.next %}
+                  <a href="{{ paginate.next.url }}" class="px-4 py-2 rounded-full border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-colors">Next</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% else %}
+            <div class="text-center py-16 border border-[#DFCDC0] space-y-4">
+              <p class="text-sm font-serif text-[#7A6B60]">{% if active_filter_count > 0 %}No products match these filters.{% else %}No products currently available in this collection.{% endif %}</p>
+              <a href="{% if active_filter_count > 0 %}{{ collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="inline-block px-6 py-3 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest rounded-full hover:bg-[#4A3B32] transition-colors">
+                {% if active_filter_count > 0 %}Clear filters{% else %}Explore All Collections{% endif %}
+              </a>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      </div>
     </div>
+
     <script>
       (function () {
+        // Sort: keep active filters, reset to page 1
         var sort = document.getElementById('SortBy');
         sort.addEventListener('change', function () {
-          // Keep active filters, reset to page 1
           var url = new URL(window.location.href);
           url.searchParams.set('sort_by', sort.value);
           url.searchParams.delete('page');
           window.location.href = url.toString();
         });
-        var toggle = document.getElementById('FilterToggle');
-        var panel = document.getElementById('FilterPanel');
-        if (toggle && panel) {
-          toggle.addEventListener('click', function () {
-            var open = panel.classList.toggle('hidden') === false;
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-          });
-          // Drop empty price inputs so they don't add blank filters to the URL
-          panel.addEventListener('submit', function () {
-            panel.querySelectorAll('input[type="number"]').forEach(function (i) { if (i.value === '') i.disabled = true; });
-          });
+
+        // Grid / list view, remembered in this browser
+        var grid = document.getElementById('ProductGrid');
+        var viewBtns = document.querySelectorAll('[data-view-btn]');
+        function setView(view) {
+          if (grid) grid.dataset.view = view;
+          viewBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.viewBtn === view ? 'true' : 'false'); });
+          try { localStorage.setItem('abella-collection-view', view); } catch (e) {}
         }
+        viewBtns.forEach(function (b) { b.addEventListener('click', function () { setView(b.dataset.viewBtn); }); });
+        try { if (localStorage.getItem('abella-collection-view') === 'list') setView('list'); } catch (e) {}
+
+        // Filters: sidebar toggle (desktop) / drawer (phones)
+        var toggle = document.getElementById('FilterToggle');
+        var sidebar = document.getElementById('FilterSidebar');
+        var backdrop = document.getElementById('FilterBackdrop');
+        var form = document.getElementById('FilterForm');
+        if (!toggle || !sidebar) return;
+        var desktop = window.matchMedia('(min-width: 1024px)');
+        function setOpen(open) {
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          if (desktop.matches) {
+            sidebar.classList.toggle('lg:hidden', !open);
+            grid && grid.classList.toggle('lg:grid-cols-4', !open);
+          } else {
+            sidebar.classList.toggle('-translate-x-full', !open);
+            backdrop.classList.toggle('hidden', !open);
+            document.body.style.overflow = open ? 'hidden' : '';
+          }
+        }
+        if (!desktop.matches) toggle.setAttribute('aria-expanded', 'false');
+        toggle.addEventListener('click', function () { setOpen(toggle.getAttribute('aria-expanded') !== 'true'); });
+        backdrop.addEventListener('click', function () { setOpen(false); });
+        sidebar.querySelector('[data-filter-close]').addEventListener('click', function () { setOpen(false); });
+
+        // Apply checkbox filters instantly; drop empty price inputs from the URL
+        form.addEventListener('change', function (e) { if (e.target.matches('[data-auto-submit]')) form.requestSubmit(); });
+        form.addEventListener('submit', function () {
+          form.querySelectorAll('[data-price-input]').forEach(function (i) { if (i.value === '') i.disabled = true; });
+        });
       })();
     </script>
-
-    <!-- Product Grid -->
-    {% paginate collection.products by 12 %}
-      {% if collection.products.size > 0 %}
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {% for product in collection.products %}
-            {% render 'product-card', product: product %}
-          {% endfor %}
-        </div>
-
-        <!-- Pagination -->
-        {% if paginate.pages > 1 %}
-          <div class="flex justify-center items-center space-x-2 pt-8 font-sans text-xs">
-            {% if paginate.previous %}
-              <a href="{{ paginate.previous.url }}" class="px-4 py-2 rounded-xl bg-[#EADCD0] text-[#2C221E] border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-colors">Previous</a>
-            {% endif %}
-            <span class="px-4 py-2 font-medium text-[#7A6B60]">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
-            {% if paginate.next %}
-              <a href="{{ paginate.next.url }}" class="px-4 py-2 rounded-xl bg-[#EADCD0] text-[#2C221E] border border-[#DFCDC0] hover:bg-[#2C221E] hover:text-white transition-colors">Next</a>
-            {% endif %}
-          </div>
-        {% endif %}
-      {% else %}
-        <div class="text-center py-16 bg-[#EADCD0]/30 rounded-2xl border border-[#DFCDC0] space-y-4">
-          <p class="text-sm font-serif text-[#7A6B60]">No products currently available in this collection.</p>
-          <a href="{{ routes.all_products_collection_url }}" class="inline-block px-6 py-3 bg-[#2C221E] text-white text-xs font-sans uppercase tracking-widest rounded-xl hover:bg-[#4A3B32] transition-colors">
-            Explore All Collections
-          </a>
-        </div>
-      {% endif %}
-    {% endpaginate %}
 
   </div>
 </div>

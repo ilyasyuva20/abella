@@ -48,6 +48,28 @@ body {
   transform: translateY(-2px);
 }
 
+/* Collection list view (toggled by "View as" on the collection page) */
+.product-grid[data-view="list"] {
+  grid-template-columns: 1fr !important;
+}
+.product-grid[data-view="list"] .product-card {
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
+}
+.product-grid[data-view="list"] .product-image-wrap {
+  width: 140px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+.product-grid[data-view="list"] .product-card h3 {
+  font-size: 1rem;
+}
+@media (min-width: 640px) {
+  .product-grid[data-view="list"] .product-image-wrap { width: 200px; }
+  .product-grid[data-view="list"] .product-card h3 { font-size: 1.125rem; }
+}
+
 /* ------------------------------------------------------------------
    Floral background pattern (toggle: Theme settings > Background & Photo Frames)
    Active only when <body> has .abella-bg-pattern. The pattern is a seamless tile
